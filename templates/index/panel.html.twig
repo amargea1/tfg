@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form action="{{ path('app_logout') }}" method="post">
+        <button type="submit" class="btn btn-primary w-100">Cerrar sesión</button>
+    </form>
+{% endblock %}

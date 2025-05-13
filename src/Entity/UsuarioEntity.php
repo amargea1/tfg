@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Table(name: "usuario")]
-#[ORM\InheritanceType("SINGLE_TABLE")]
+#[ORM\InheritanceType("JOINED")]
 #[ORM\DiscriminatorColumn(name: "tipo_usuario", type: "string")] //Esta columna llamada "tipo" se usará en la tabla usuario para saber qué tipo exacto de objeto es cada fila.
 //Por ejemplo: "socio", "familiar" o "no_socio".
 #[ORM\DiscriminatorMap([

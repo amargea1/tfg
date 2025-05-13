@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="form-login">
+        <div class="cabecera">
+            <img src="{{ asset('image/ChatGPT_Image_8_abr_2025__09_32_14-removebg-preview.png') }}" alt="logo" class="img-logo">
+            <h1>Acceso Administrador</h1>
+        </div>
+            <form method="post">
+            <div class="mb-3">
+                <div class="alertRed">
+                    {% for mensaje in app.flashes('error') %}
+                         {{ mensaje }}
+                    {% endfor %}
+                </div>
+                <label for="email"  class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+        </form>
+    </div>
+
+{% endblock %}

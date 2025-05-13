@@ -1,0 +1,50 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('../image/stacked-waves-haikei.svg');
+    background-size: cover;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* horizontalmente */
+    justify-content: flex-start; /* Alinea los elementos hacia arriba */
+    padding: 50px;
+    padding-top: 0px;
+    background: white;
+    max-width: 500px;
+    margin: 50px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.alertRed {
+    color: red;
+}
+
+.img-logo{
+    width: 200px;
+    height: 180px;
+}
+
+.cabecera h1{
+    font-size: 20px;
+}
+
+.cabecera{
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* horizontalmente */
+    justify-content: flex-start;
+}
+
+.btn.btn-primary{
+    background-color: #EF6330;
+    border: #EF6330;
+}
+
+.btn.btn-primary:hover{
+    background-color: #B0413E;
+    border: #B0413E;
+}
+
