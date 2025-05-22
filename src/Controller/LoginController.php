@@ -33,6 +33,7 @@ class LoginController extends AbstractController
                     // ✅ Guardar datos en sesión
                     $session->set('user_id', $usuario->getId());
                     $session->set('user_email', $usuario->getEmail());
+                    $session->set('user_nombre', $usuario->getNombre());
 
                     return $this->redirectToRoute('admin_panel');
 

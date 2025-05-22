@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        {% block head %}
         <meta charset="UTF-8">
         <title>{% block title %}ConsuNet{% endblock %}</title>
 
@@ -16,6 +17,7 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+        {% endblock %}
         {% endblock %}
     </head>
     <body>

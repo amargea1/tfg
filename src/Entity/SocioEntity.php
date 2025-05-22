@@ -36,6 +36,9 @@ class SocioEntity extends UsuarioEntity
     #[Assert\Choice(choices: ['Jubilado', 'Cta. Ajena', 'Funcionario', 'Empresario', 'Desempleado'], message: 'Colectivo inválido')]
     private ?string $colectivo = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $numSocio = null;
+
 
 
     public function __construct()
@@ -114,6 +117,16 @@ class SocioEntity extends UsuarioEntity
     public function setColectivo(?string $colectivo): void
     {
         $this->colectivo = $colectivo;
+    }
+
+    public function getNumSocio(): ?string
+    {
+        return $this->numSocio;
+    }
+
+    public function setNumSocio(?string $numSocio): void
+    {
+        $this->numSocio = $numSocio;
     }
 
     public function addConsulta(ConsultaEntity $consulta): self

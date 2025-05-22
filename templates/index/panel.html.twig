@@ -1,7 +1,68 @@
 {% extends 'base.html.twig' %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/stylesPanel.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
 {% block body %}
-    <form action="{{ path('app_logout') }}" method="post">
-        <button type="submit" class="btn btn-primary w-100">Cerrar sesión</button>
-    </form>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo">
+            <ul class="menu">
+                <li><i class="fa-solid fa-gauge"></i> Panel de control</li>
+                <li><i class="fa-solid fa-users"></i> Socios</li>
+                <li><i class="fa-solid fa-coins"></i> Cuotas</li>
+                <li><i class="fa-solid fa-comments"></i> Consultas</li>
+                <li><i class="fa-solid fa-file-lines"></i> Reclamaciones</li>
+                <li><i class="fa-solid fa-gear"></i> Configuración</li>
+            </ul>
+        </aside>
+
+        <main class="main-panel">
+            <div class="top-bar">
+                <a href="{{ path('app_logout') }}" class="btn-logout">Cerrar sesión</a>
+            </div>
+
+            <h2>Hola, {{ nombre }}</h2>
+
+            <div class="stats">
+                <div class="stat-box">
+                    <strong>{{ total_socios }}</strong>
+                    <span>Socios totales</span>
+                </div>
+                <div class="stat-box">
+                    <strong>{{ rec_abiertas }}</strong>
+                    <span>Reclamaciones pendientes</span>
+                </div>
+                <div class="stat-box">
+                    <strong>{{ rec_abiertas }}</strong>
+                    <span>Consultas pendientes</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <div class="action-card">
+                    <h3>Abrir reclamación</h3>
+                    <p>Presentar una nueva reclamación</p>
+                    <a href="{{ path('admin_panel') }}" class="btn-orange">+ Crear</a>
+                </div>
+                <div class="action-card">
+                    <h3>Registrar socio</h3>
+                    <p>Dar de alta un nuevo socio</p>
+                    <a href="{{ path('admin_panel') }}" class="btn-orange">+ Registrar</a>
+                </div>
+                <div class="action-card">
+                    <h3>Ver reclamaciones</h3>
+                    <p>Ver reclamaciones pendientes</p>
+                    <a href="{{ path('admin_panel') }}" class="btn-orange">Ver</a>
+                </div>
+                <div class="action-card">
+                    <h3>Ver consultas</h3>
+                    <p>Ver consultas recientes</p>
+                    <a href="{{ path('admin_panel') }}" class="btn-orange">Ver</a>
+                </div>
+            </div>
+        </main>
+    </div>
 {% endblock %}

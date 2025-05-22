@@ -41,8 +41,8 @@ class ConsultaEntity
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $fechaApertura;
 
-    #[ORM\Column(type: 'datetime')]
-    private \DateTimeInterface $fechaCierre;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $fechaCierre = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     private String $estado;

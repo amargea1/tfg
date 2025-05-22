@@ -35,8 +35,8 @@ class ReclamacionEntity
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $fechaApertura;
 
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $fechaCierre =null;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $fechaCierre = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\Choice(choices: ['online', 'telefónica', 'presencial'], message: 'Atención inválida')]
