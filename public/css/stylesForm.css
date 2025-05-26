@@ -1,12 +1,11 @@
-
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .dashboard-container {
     display: flex;
-    height: 100vh;
+    height: 100%;
 }
 
 .sidebar {
@@ -54,7 +53,7 @@ body {
     padding: 8px 15px;
     text-decoration: none;
     border-radius: 5px;
-
+    font-weight: bold;
 }
 
 h2 {
@@ -108,6 +107,44 @@ h2 {
     padding: 8px 15px;
     border-radius: 5px;
     text-decoration: none;
-
-    width: 100px;
+    width: 550px;
+    border-style: hidden;
 }
+
+.btn-blue{
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #b9e6e3;
+    color: black;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    width: 550px;
+    border-style: hidden;
+}
+
+.btn-blue a {
+    text-decoration: none;
+    color: black;
+}
+
+.label-textarea {
+    display: block;
+    margin-bottom: 0.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+
+}
+
+.rec-panel{
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #fafafa;
+    position: relative;
+    height: 100%;
+}
+
+
+
+
+
