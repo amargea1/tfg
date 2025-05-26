@@ -49,6 +49,11 @@ class SocioEntity extends UsuarioEntity
         $this->fechaRegistro = new \DateTime(); // Asignar fecha actual en el constructor
     }
 
+    public function __toString(): string
+    {
+        return $this->getNombre() ?? 'Socio sin nombre';
+    }
+
     public function getConsultas(): Collection
     {
         return $this->consultas;

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/stylesPanel.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+
+{% block body %}
+    <h2>Nueva Reclamación</h2>
+
+    <div class="alertRed">
+        {% for mensaje in app.flashes('error') %}
+            {{ mensaje }}
+        {% endfor %}
+    </div>
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.fechaApertura) }}
+    {{ form_row(form.atencion) }}
+    {{ form_row(form.numeroSocio) }}
+
+    {{ form_row(form.esFamiliar) }}
+
+    <div id="familiar_fields" style="display: none;">
+        {{ form_row(form.familiar) }}
+    </div>
+
+
+    {{ form_row(form.sector) }}
+    {{ form_row(form.prioridad) }}
+    {{ form_row(form.asunto) }}
+    {{ form_row(form.reclamacion) }}
+
+    {{ form_row(form.submit) }}
+
+
+    {{ form_end(form) }}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkbox = document.querySelector('#{{ form.esFamiliar.vars.id }}');
+            const familiarFields = document.querySelector('#familiar_fields');
+
+            // Mostrar el formulario familiar si el checkbox está marcado
+            if (checkbox.checked) {
+                familiarFields.style.display = 'block';
+            }
+
+            checkbox.addEventListener('change', function () {
+                familiarFields.style.display = checkbox.checked ? 'block' : 'none';
+            });
+        });
+
+    </script>
+{% endblock %}

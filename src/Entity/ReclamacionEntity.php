@@ -83,6 +83,11 @@ class ReclamacionEntity
         return $this->socio;
     }
 
+    public function setSocio(?SocioEntity $socio): void
+    {
+        $this->socio = $socio;
+    }
+
     public function getFamiliar(): ?FamiliarEntity
     {
         return $this->familiar;

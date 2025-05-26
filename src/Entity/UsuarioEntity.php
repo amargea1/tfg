@@ -25,7 +25,7 @@ abstract class UsuarioEntity
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 20, nullable: true)]
     #[Assert\Choice(choices: ['ROLE_ADMIN', 'ROLE_SUPERADMIN'], message: 'Rol inválido')]
     private ?string $rol = null;
 
@@ -46,7 +46,7 @@ abstract class UsuarioEntity
     private ?string $sexo = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private string $dirección;
+    private string $direccion;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $localidad;
@@ -128,14 +128,14 @@ abstract class UsuarioEntity
         $this->sexo = $sexo;
     }
 
-    public function getDirección(): string
+    public function getDireccion(): string
     {
-        return $this->dirección;
+        return $this->direccion;
     }
 
-    public function setDirección(string $dirección): void
+    public function setDireccion(string $direccion): void
     {
-        $this->dirección = $dirección;
+        $this->direccion = $direccion;
     }
 
     public function getLocalidad(): string

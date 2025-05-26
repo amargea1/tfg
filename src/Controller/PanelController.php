@@ -42,7 +42,7 @@ class PanelController extends AbstractController
         $consAbiertas = $consultaRepository->contarConsultasAbiertas();
 
 
-        return $this->render('index/panel.html.twig', [
+        return $this->render('panel/panel.html.twig', [
             'nombre' => $nombre,
             'total_socios' => $totalSocios,
             'rec_abiertas' => $recAbiertas,
