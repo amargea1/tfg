@@ -19,9 +19,6 @@ class CuotaEntity
     #[ORM\Column(type: "decimal", precision: 8, scale: 2)]
     private ?string $importe;
 
-    #[ORM\Column(length: 50)]
-    #[Assert\Choice(choices: ['efectivo', 'bizum', 'transferencia'], message: 'Modo de pago inválido')]
-    private ?string $modoPago = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\Choice(choices: ['socio', 'familiar'], message: 'Tipo de cuota inválida')]
@@ -29,14 +26,6 @@ class CuotaEntity
 
     #[ORM\Column(length: 50)]
     private ?string $periodicidad = null;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $iban = null; //hacer condicional segun modo pago
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $bizum = null; //hacer condicional segun modo pago
-
-    #[ORM\Column(type: "datetime")]
-    private \DateTimeInterface $fechaPago;
 
     #[ORM\OneToMany(targetEntity: SocioEntity::class, mappedBy: "cuota")]
     private Collection $socios;
@@ -70,15 +59,6 @@ class CuotaEntity
         $this->importe = $importe;
     }
 
-    public function getModoPago(): ?string
-    {
-        return $this->modoPago;
-    }
-
-    public function setModoPago(?string $modoPago): void
-    {
-        $this->modoPago = $modoPago;
-    }
 
     public function getTipo(): ?string
     {
@@ -100,35 +80,6 @@ class CuotaEntity
         $this->periodicidad = $periodicidad;
     }
 
-    public function getIban(): ?string
-    {
-        return $this->iban;
-    }
-
-    public function setIban(?string $iban): void
-    {
-        $this->iban = $iban;
-    }
-
-    public function getBizum(): ?string
-    {
-        return $this->bizum;
-    }
-
-    public function setBizum(?string $bizum): void
-    {
-        $this->bizum = $bizum;
-    }
-
-    public function getFechaPago(): \DateTimeInterface
-    {
-        return $this->fechaPago;
-    }
-
-    public function setFechaPago(\DateTimeInterface $fechaPago): void
-    {
-        $this->fechaPago = $fechaPago;
-    }
 
     public function getSocios(): Collection
     {

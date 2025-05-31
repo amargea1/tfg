@@ -31,12 +31,64 @@ class FamiliarEntity extends UsuarioEntity
     #[Assert\Choice(choices: ['Hijo/a', 'Cónyuge', 'Padre', 'Madre', 'Hermano/a', 'Otro'], message: 'Relación inválida')]
     private ?string $relacion = null;
 
+    #[ORM\Column(length: 50)]
+    #[Assert\Choice(choices: ['efectivo', 'bizum', 'transferencia'], message: 'Modo de pago inválido')]
+    private ?string $modoPago = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $iban = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $bizum = null;
+
+    #[ORM\Column(type: "datetime")]
+    private \DateTimeInterface $fechaPago;
 
     public function __construct()
     {
         $this->consultas = new ArrayCollection();
         $this->reclamaciones = new ArrayCollection();
     }
+
+    public function getModoPago(): ?string
+    {
+        return $this->modoPago;
+    }
+
+    public function setModoPago(?string $modoPago): void
+    {
+        $this->modoPago = $modoPago;
+    }
+
+    public function getIban(): ?string
+    {
+        return $this->iban;
+    }
+
+    public function setIban(?string $iban): void
+    {
+        $this->iban = $iban;
+    }
+
+    public function getBizum(): ?string
+    {
+        return $this->bizum;
+    }
+
+    public function setBizum(?string $bizum): void
+    {
+        $this->bizum = $bizum;
+    }
+
+    public function getFechaPago(): \DateTimeInterface
+    {
+        return $this->fechaPago;
+    }
+
+    public function setFechaPago(\DateTimeInterface $fechaPago): void
+    {
+        $this->fechaPago = $fechaPago;
+    }
+
 
     public function getSocio(): ?SocioEntity
     {

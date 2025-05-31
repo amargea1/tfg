@@ -26,6 +26,18 @@ class SocioEntity extends UsuarioEntity
     #[ORM\ManyToOne(targetEntity: CuotaEntity::class, inversedBy: "socios")]
     private ?CuotaEntity $cuota = null;
 
+    #[ORM\Column(length: 50)]
+    #[Assert\Choice(choices: ['efectivo', 'bizum', 'transferencia'], message: 'Modo de pago inválido')]
+    private ?string $modoPago = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $iban = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $bizum = null;
+
+    #[ORM\Column(type: "datetime")]
+    private \DateTimeInterface $fechaPago;
+
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $fechaRegistro;
 
@@ -47,12 +59,54 @@ class SocioEntity extends UsuarioEntity
         $this->consultas = new ArrayCollection();
         $this->reclamaciones = new ArrayCollection();
         $this->fechaRegistro = new \DateTime(); // Asignar fecha actual en el constructor
+        $this->fechaPago = new \DateTime(); // Asignar fecha actual en el constructor
     }
 
     public function __toString(): string
     {
         return $this->getNombre() ?? 'Socio sin nombre';
     }
+
+    public function getModoPago(): ?string
+    {
+        return $this->modoPago;
+    }
+
+    public function setModoPago(?string $modoPago): void
+    {
+        $this->modoPago = $modoPago;
+    }
+
+    public function getIban(): ?string
+    {
+        return $this->iban;
+    }
+
+    public function setIban(?string $iban): void
+    {
+        $this->iban = $iban;
+    }
+
+    public function getBizum(): ?string
+    {
+        return $this->bizum;
+    }
+
+    public function setBizum(?string $bizum): void
+    {
+        $this->bizum = $bizum;
+    }
+
+    public function getFechaPago(): \DateTimeInterface
+    {
+        return $this->fechaPago;
+    }
+
+    public function setFechaPago(\DateTimeInterface $fechaPago): void
+    {
+        $this->fechaPago = $fechaPago;
+    }
+
 
     public function getConsultas(): Collection
     {

@@ -2,16 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\FamiliarEntity;
 use App\Entity\SocioEntity;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FamiliarType extends AbstractType
+class SocioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -31,7 +30,7 @@ class FamiliarType extends AbstractType
                     'Indeterminado' => 'Indeterminado',
 
                 ],
-                'placeholder' => 'Sexo del familiar',
+                'placeholder' => 'Seleccionar sexo',
             ])
             ->add('direccion')
             ->add('localidad')
@@ -39,31 +38,34 @@ class FamiliarType extends AbstractType
             ->add('codigoPostal')
             ->add('telefono')
             ->add('email')
-            ->add('relacion', ChoiceType::class, [
+            ->add('fechaRegistro', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
+            ])
+            ->add('ordenRegistro')
+            ->add('colectivo', ChoiceType::class, [
                 'choices' => [
-                    'Hijo/a' => 'Hijo/a',
-                    'Cónyuge' => 'Cónyuge',
-                    'Padre' => 'Padre',
-                    'Madre' => 'Madre',
-                    'Hermano/a' => 'Hermano/a',
-                    'Otro' => 'Otro',
+                    'Jubilado' => 'Jubilado',
+                    'Cta. Ajena' => 'Cta. Ajena',
+                    'Funcionario' => 'Funcionario',
+                    'Empresario' => 'Empresario',
+                    'Desempleado' => 'Desempleado',
 
                 ],
-                'placeholder' => 'Relación con el socio',
+                'placeholder' => 'Seleccionar colectivo',
             ])
+            ->add('numSocio')
             ->add('modoPago', ChoiceType::class, [
                 'choices' => [
-                    'Efectivo' => 'Efectivo',
-                    'Bizum' => 'Bizum',
-                    'Transferencia' => 'Transferencia',
-
+                    'Efectivo' => 'efectivo',
+                    'Bizum' => 'bizum',
+                    'Transferencia' => 'transferencia'
                 ],
-                'placeholder' => 'Elegir modo de pago',
+                'placeholder' => 'Seleccionar forma de pago',
             ])
             ->add('iban')
             ->add('bizum')
             ->add('fechaPago', DateType::class, [
-                'data' => new \DateTimeImmutable(),
                 'widget' => 'single_text',
                 'html5' => true,
             ])
@@ -73,7 +75,7 @@ class FamiliarType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => FamiliarEntity::class,
+            'data_class' => SocioEntity::class,
         ]);
     }
 }

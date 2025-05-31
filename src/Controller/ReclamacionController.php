@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ConsultaEntity;
 use App\Entity\ReclamacionEntity;
 use App\Entity\SocioEntity;
 use App\Entity\UsuarioEntity;
@@ -26,7 +27,7 @@ class ReclamacionController extends AbstractController
     {
 
         $reclamacion = new ReclamacionEntity();
-        $reclamacion->setEstado('Abierta');
+        $reclamacion->setEstado('Pendiente');
 
         $form = $this->createForm(ReclamacionType::class, $reclamacion);
 
@@ -72,5 +73,15 @@ class ReclamacionController extends AbstractController
         ]);
     }
 
+    #[Route('/reclamacion/ver', name: 'reclamacion_ver')]
+    public function ver(EntityManagerInterface $em): Response
+    {
+
+        $reclamacion = $em->getRepository(ReclamacionEntity::class)->findAll();
+
+        return $this->render('panel/verReclamacion.html.twig', [
+            'reclamaciones' => $reclamacion,
+        ]);
+    }
 
 }

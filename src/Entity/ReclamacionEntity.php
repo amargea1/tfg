@@ -60,6 +60,7 @@ class ReclamacionEntity
     private string $reclamacion;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Choice(choices: ['Pendiente', 'Asignada', 'Resuelta'], message: 'Estado inválido')]
     private string $estado;
 
     #[ORM\Column(length: 50)]

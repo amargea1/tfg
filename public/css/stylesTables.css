@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #163245;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar .logo {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu li {
+    margin: 15px 0;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-panel {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #f9f9f9;
+    position: relative;
+}
+
+.top-bar {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+h2 {
+    margin-bottom: 25px;
+    color: #163245;
+}
+
+.reclamaciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.reclamaciones-table thead {
+    background-color: #bce3df;
+}
+
+.reclamaciones-table th,
+.reclamaciones-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.reclamaciones-table tbody tr:nth-child(odd) {
+    background-color: #f8fefe;
+}
+
+.reclamaciones-table tbody tr:nth-child(even) {
+    background-color: #eaf9f8;
+}
+
+.estado {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Estilos de estado según valor */
+.estado-pendiente {
+    background-color: #eee0aa;
+    color: #5a4c00;
+}
+.estado-resuelta {
+    background-color: #c8e6c9;
+    color: #1b5e20;
+}
+.estado-enproceso {
+    background-color: #ffd180;
+    color: #bf360c;
+}
+
+.btn-detalles {
+    background-color: #e45826;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.btn-detalles:hover {
+    background-color: #cc3e0f;
+}
+
+.estado {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado-pendiente {
+    background-color:#ffe082;
+    color: #8d6e63;
+}
+
+.estado-asignada {
+    background-color: #b3e5fc;
+    color: #0277bd;
+}
+
+.estado-resuelta {
+    background-color:#c8e6c9;
+    color:#2e7d32;
+}
+
+
+.prioridad {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.prioridad-baja {
+    background-color: #e0f7fa;
+    color: #00796b;
+}
+
+.prioridad-media {
+    background-color: #fff9c4;
+    color: #f57f17;
+}
+
+.prioridad-alta {
+    background-color: #ffe0b2 ;
+    color: #e65100;
+}
+
+.prioridad-urgente {
+    background-color: #ffcdd2;
+    color: #b71c1c;
+}
