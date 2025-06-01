@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\FamiliarEntity;
 use App\Entity\ReclamacionEntity;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -44,6 +46,16 @@ class ReclamacionType extends AbstractType
                 'required' => false,
                 'mapped' => false,
             ])
+
+            ->add('familiar', EntityType::class, [
+                'class' => FamiliarEntity::class,
+                'choice_label' => function ($familiar) {
+                    return $familiar->getNombre() . ' ' . $familiar->getApellidos();
+                },
+                'label' => 'Nombre del familiar',
+                'placeholder' => 'Selecciona un familiar',
+            ])
+
 
             ->add('sector', ChoiceType::class, [
                 'choices' => [
