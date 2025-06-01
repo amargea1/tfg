@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Entity\FamiliarEntity;
 use App\Entity\SocioEntity;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,6 +25,7 @@ class FamiliarType extends AbstractType
             ->add('fechaNacimiento', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
+
             ])
             ->add('sexo', ChoiceType::class, [
                 'choices' => [
@@ -50,6 +53,11 @@ class FamiliarType extends AbstractType
 
                 ],
                 'placeholder' => 'Relación con el socio',
+            ])
+            ->add('numSocio', TextType::class, [
+                'mapped' => false,
+                'label' => 'Número de socio',
+                'required' => true,
             ])
             ->add('modoPago', ChoiceType::class, [
                 'choices' => [

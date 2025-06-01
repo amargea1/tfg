@@ -75,15 +75,17 @@
                                         {{ reclamacion.prioridad }}</span>
                                 </td>
                                 <td>
-                                    {% for admin in reclamacion.admins %}
-
+                                    {% if reclamacion.admins is empty %}
+                                        Sin asignar
+                                    {% else %}
+                                        {% for admin in reclamacion.admins %}
                                             {{ admin.nombre }} {{ admin.apellidos }}<br>
-
-                                    {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
                                 </td>
 
 
-                                <td><a href="{{ path('admin_panel', {id: reclamacion.id}) }}" class="btn-detalles">Detalles</a></td>
+                                <td><a href="{{ path('reclamacion_detalle', {id: reclamacion.id}) }}" class="btn-detalles">Detalles</a></td>
                             </tr>
                         {% else %}
                             <tr>

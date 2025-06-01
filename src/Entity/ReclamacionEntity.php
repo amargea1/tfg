@@ -244,19 +244,24 @@ class ReclamacionEntity
 
     public function addAdmin(AdministradorEntity $admin): self
     {
-    if (!$this->admins->contains($admin)) {
-        $this->admins[] = $admin;
-    }
-
-    return $this;
-}
-
-    public function removeAdmin(AdministradorEntity $admin): self
-    {
-        $this->admins->removeElement($admin);
+        if (!$this->admins->contains($admin)) {
+            $this->admins[] = $admin;
+            $admin->addReclamacion($this);
+        }
 
         return $this;
     }
+
+
+    public function removeAdmin(AdministradorEntity $admin): self
+    {
+        if ($this->admins->removeElement($admin)) {
+            $admin->removeReclamacion($this);
+        }
+
+        return $this;
+    }
+
 
 
 }

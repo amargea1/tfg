@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/stylesTables.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo">
+            <ul class="menu">
+                <li><i class="fa-solid fa-gauge"></i> Panel de control</li>
+                <li><i class="fa-solid fa-users"></i> Socios</li>
+                <li><i class="fa-solid fa-coins"></i> Cuotas</li>
+                <li><i class="fa-solid fa-comments"></i> Consultas</li>
+                <li><i class="fa-solid fa-file-lines"></i> Reclamaciones</li>
+                <li><i class="fa-solid fa-gear"></i> Configuración</li>
+            </ul>
+        </aside>
+
+        <main class="main-panel">
+            <div class="top-bar text-end">
+                <a href="{{ path('reclamacion_ver') }}" class="btn btn-outline-info me-3">Volver</a>
+                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
+            </div>
+
+            <div class="container my-5">
+                <h3 class="mb-4">Reclamación con ID: {{ reclamacion.id }}</h3>
+
+                <table class="reclamaciones-table">
+                    <tr>
+                        <th>Nombre</th>
+                        <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.nombre : reclamacion.socio.nombre }}
+                            <a href="{{ path('reclamacion_detalle', {id: reclamacion.esFamiliar ? reclamacion.familiar.id : reclamacion.socio.id }) }}"
+                               class="btn-detalles">Detalles</a></td>
+                    </tr>
+                    <tr>
+                        <th>Apellidos</th>
+                        <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.apellidos : reclamacion.socio.apellidos }}</td>
+                    </tr>
+                    <tr>
+                        <th>Correo</th>
+                        <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.email : reclamacion.socio.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Teléfono</th>
+                        <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.telefono : reclamacion.socio.telefono }}</td>
+                    </tr>
+                    <tr>
+                        <th>DNI</th>
+                        <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.dni : reclamacion.socio.dni }}</td>
+                    </tr>
+                    <tr>
+                        <th>Número Socio</th>
+                        <td>{{ reclamacion.numeroSocio }}</td>
+                    </tr>
+                    <tr>
+                        <th>Asunto</th>
+                        <td>{{ reclamacion.asunto }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha</th>
+                        <td>{{ reclamacion.fechaApertura|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sector</th>
+                        <td>{{ reclamacion.sector }}</td>
+                    </tr>
+                    <tr>
+                        <th>Estado</th>
+                        <td>
+                            <form method="post" action="{{ path('reclamacion_cambiar_estado', { id: reclamacion.id }) }}">
+                                <select name="estado" class="form-select form-select-sm d-inline w-auto me-2">
+                                    <option value="Pendiente" {{ reclamacion.estado == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                    <option value="Asignada" {{ reclamacion.estado == 'Asignada' ? 'selected' : '' }}>Asignada</option>
+                                    <option value="Resuelta" {{ reclamacion.estado == 'Resuelta' ? 'selected' : '' }}>Resuelta</option>
+                                </select>
+                                <button type="submit" class="btn-detalles">Cambiar</button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>¿Es familiar?</th>
+                        <td>{{ reclamacion.esFamiliar ? 'Sí' : 'No' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Forma de pago</th>
+                        <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.modoPago : reclamacion.socio.modoPago }}</td>
+                    </tr>
+                    <tr>
+                        <th>Reclamación</th>
+                        <td style="white-space: pre-wrap;">{{ reclamacion.reclamacion }}</td>
+                    </tr>
+                    <tr>
+                        <th>Asignado a</th>
+                        <td>
+                            {% if reclamacion.admins is empty %}
+                                Sin asignar
+                            {% else %}
+                                {% for admin in reclamacion.admins %}
+                                    {{ admin.nombre }} {{ admin.apellidos }}<br>
+                                {% endfor %}
+                            {% endif %}
+
+                            <form method="post" action="{{ path('reclamacion_cambiar_asignacion', { id: reclamacion.id }) }}" class="mt-2">
+                                <select name="admins" class="form-select form-select-sm d-inline w-auto me-2">
+                                    {% for admin in admins %}
+                                        <option value="{{ admin.id }}">{{ admin.nombre }} {{ admin.apellidos }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn-detalles">Cambiar</button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>Seguimiento</th>
+                        <td>
+                            {% for entrada in reclamacion.seguimientos %}
+                                {{ entrada.fecha|date('d/m/Y') }} - {{ entrada.comentario }}<br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Añadir seguimiento</th>
+                        <td>
+                            <form method="post" action="{{ path('admin_panel', { id: reclamacion.id }) }}">
+                                <div class="d-flex gap-2">
+                                    <input type="date" name="fecha" class="form-control" required>
+                                    <input type="text" name="comentario" class="form-control" placeholder="Comentario" required>
+                                </div>
+                                <button type="submit" class="btn btn-warning mt-2">Guardar nuevo estado</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    </div>
+{% endblock %}

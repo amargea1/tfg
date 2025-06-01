@@ -22,7 +22,8 @@
 
         <main class="rec-panel">
             <div class="top-bar text-end">
-                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger me-3">Cerrar sesión</a>
+                <a href="{{ path('admin_panel') }}" class="btn btn-outline-info me-3">Volver</a>
+                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
             </div>
 
             <div class="container my-5">
@@ -55,87 +56,87 @@
                         {{ form_widget(form.esFamiliar, {'attr': {'class': 'form-check-input ms-2'}}) }}
                     </div>
 
-                    <div id="familiar_fields" style="display: none;">
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.nombre) }}
-                            {{ form_widget(form.familiar.nombre, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                    <div id="familiar_fields" style="display: none;">#}
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.nombre) }}#}
+{#                            {{ form_widget(form.familiar.nombre, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.apellidos) }}
-                            {{ form_widget(form.familiar.apellidos, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.apellidos) }}#}
+{#                            {{ form_widget(form.familiar.apellidos, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.dni) }}
-                            {{ form_widget(form.familiar.dni, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.dni) }}#}
+{#                            {{ form_widget(form.familiar.dni, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.fechaNacimiento) }}
-                            {{ form_widget(form.familiar.fechaNacimiento, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.fechaNacimiento) }}#}
+{#                            {{ form_widget(form.familiar.fechaNacimiento, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.sexo) }}
-                            {{ form_widget(form.familiar.sexo, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.sexo) }}#}
+{#                            {{ form_widget(form.familiar.sexo, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.direccion) }}
-                            {{ form_widget(form.familiar.direccion, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.direccion) }}#}
+{#                            {{ form_widget(form.familiar.direccion, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.localidad) }}
-                            {{ form_widget(form.familiar.localidad, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.localidad) }}#}
+{#                            {{ form_widget(form.familiar.localidad, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.provincia) }}
-                            {{ form_widget(form.familiar.provincia, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.provincia) }}#}
+{#                            {{ form_widget(form.familiar.provincia, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.codigoPostal) }}
-                            {{ form_widget(form.familiar.codigoPostal, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.codigoPostal) }}#}
+{#                            {{ form_widget(form.familiar.codigoPostal, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.telefono) }}
-                            {{ form_widget(form.familiar.telefono, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.telefono) }}#}
+{#                            {{ form_widget(form.familiar.telefono, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.email) }}
-                            {{ form_widget(form.familiar.email, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.email) }}#}
+{#                            {{ form_widget(form.familiar.email, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.relacion) }}
-                            {{ form_widget(form.familiar.relacion, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.relacion) }}#}
+{#                            {{ form_widget(form.familiar.relacion, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.modoPago) }}
-                            {{ form_widget(form.familiar.modoPago, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.modoPago) }}#}
+{#                            {{ form_widget(form.familiar.modoPago, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.iban) }}
-                            {{ form_widget(form.familiar.iban, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.iban) }}#}
+{#                            {{ form_widget(form.familiar.iban, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.bizum) }}
-                            {{ form_widget(form.familiar.bizum, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.bizum) }}#}
+{#                            {{ form_widget(form.familiar.bizum, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
 
-                        <div class="mb-3">
-                            {{ form_label(form.familiar.fechaPago) }}
-                            {{ form_widget(form.familiar.fechaPago, {'attr': {'class': 'form-control'}}) }}
-                        </div>
-                    </div>
+{#                        <div class="mb-3">#}
+{#                            {{ form_label(form.familiar.fechaPago) }}#}
+{#                            {{ form_widget(form.familiar.fechaPago, {'attr': {'class': 'form-control'}}) }}#}
+{#                        </div>#}
+{#                    </div>#}
 
 
                     <div class="mb-3">
@@ -162,9 +163,7 @@
                         <button type="submit" class="btn-orange">
                             Guardar
                         </button>
-                        <button type="button" class="btn-blue">
-                            <a href="{{ path('admin_panel') }}" >Volver</a>
-                        </button>
+
 
                     </div>
 
@@ -174,18 +173,18 @@
         </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkbox = document.querySelector('#{{ form.esFamiliar.vars.id }}');
-            const familiarFields = document.querySelector('#familiar_fields');
+{#    <script>#}
+{#        document.addEventListener('DOMContentLoaded', function () {#}
+{#            const checkbox = document.querySelector('#{{ form.esFamiliar.vars.id }}');#}
+{#            const familiarFields = document.querySelector('#familiar_fields');#}
 
-            if (checkbox.checked) {
-                familiarFields.style.display = 'block';
-            }
+{#            if (checkbox.checked) {#}
+{#                familiarFields.style.display = 'block';#}
+{#            }#}
 
-            checkbox.addEventListener('change', function () {
-                familiarFields.style.display = checkbox.checked ? 'block' : 'none';
-            });
-        });
-    </script>
+{#            checkbox.addEventListener('change', function () {#}
+{#                familiarFields.style.display = checkbox.checked ? 'block' : 'none';#}
+{#            });#}
+{#        });#}
+{#    </script>#}
 {% endblock %}

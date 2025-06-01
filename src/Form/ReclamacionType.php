@@ -44,10 +44,6 @@ class ReclamacionType extends AbstractType
                 'required' => false,
                 'mapped' => false,
             ])
-            ->add('familiar', FamiliarType::class, [
-                'label' => false,
-                'required' => false,
-            ])
 
             ->add('sector', ChoiceType::class, [
                 'choices' => [

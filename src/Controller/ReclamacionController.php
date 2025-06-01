@@ -7,6 +7,7 @@ use App\Entity\ReclamacionEntity;
 use App\Entity\SocioEntity;
 use App\Entity\UsuarioEntity;
 use App\Form\ReclamacionType;
+use App\Repository\AdministradorRepository;
 use App\Repository\ConsultaRepository;
 use App\Repository\ReclamacionRepository;
 use App\Repository\SocioRepository;
@@ -52,11 +53,11 @@ class ReclamacionController extends AbstractController
             $reclamacion->setSocio($socio);
             $reclamacion->setNumeroSocio($socio->getNumSocio());
 
-            $familiar = $reclamacion->getFamiliar();
-            if ($familiar) {
-                $familiar->setSocio($socio);
-                $em->persist($familiar);
-            }
+//            $familiar = $reclamacion->getFamiliar();
+//            if ($familiar) {
+//                $familiar->setSocio($socio);
+//                $em->persist($familiar);
+//            }
 
             $reclamacion->setSocio($socio);
 
@@ -83,5 +84,66 @@ class ReclamacionController extends AbstractController
             'reclamaciones' => $reclamacion,
         ]);
     }
+
+    #[Route('/admin/reclamacion/{id}', name: 'reclamacion_detalle')]
+    public function verDetalle(int $id, ReclamacionRepository $reclamacionRepository, AdministradorRepository $adminRepo): Response
+    {
+
+        $reclamacion = $reclamacionRepository->find($id);
+        $admins = $adminRepo->findAll();
+
+        if (!$reclamacion) {
+            throw $this->createNotFoundException('Reclamación no encontrada.');
+        }
+
+        return $this->render('panel/verReclamacionDetalle.html.twig', [
+            'reclamacion' => $reclamacion,
+            'admins' => $admins,
+        ]);
+    }
+
+    #[Route('/reclamacion/{id}/cambiar-estado', name: 'reclamacion_cambiar_estado', methods: ['POST'])]
+    public function cambiarEstado(Request $request, ReclamacionRepository $repo, EntityManagerInterface $em, int $id): Response
+    {
+        $reclamacion = $repo->find($id);
+        $nuevoEstado = $request->request->get('estado');
+
+        if ($reclamacion && $nuevoEstado) {
+            $reclamacion->setEstado($nuevoEstado);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('reclamacion_ver');
+    }
+
+    #[Route('/reclamacion/{id}/cambiar-asignacion', name: 'reclamacion_cambiar_asignacion', methods: ['POST'])]
+    public function cambiarAsignacion(
+        Request $request,
+        ReclamacionRepository $repo,
+        AdministradorRepository $adminRepo,
+        EntityManagerInterface $em,
+        int $id
+    ): Response {
+        $reclamacion = $repo->find($id);
+        $adminId = $request->request->get('admins'); // usa 'admin' si el select es name="admin"
+
+        if ($reclamacion && $adminId) {
+            $admin = $adminRepo->find($adminId);
+
+            if ($admin) {
+                // Como es ManyToMany, limpia admins actuales y añade el nuevo admin
+                foreach ($reclamacion->getAdmins () as $adminActual) {
+                    $reclamacion->removeAdmin($adminActual);
+                }
+                $reclamacion->addAdmin($admin);
+                $em->flush();
+            }
+        }
+
+        return $this->redirectToRoute('reclamacion_ver');
+    }
+
+
+
 
 }
