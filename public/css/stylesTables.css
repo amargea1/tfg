@@ -58,6 +58,31 @@ h2 {
     font-size: 0.95rem;
 }
 
+.reclamaciones-table2 {
+    width: 75%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.reclamaciones-table2 thead {
+    background-color: #bce3df;
+}
+
+.reclamaciones-table2 th,
+.reclamaciones-table2 td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.reclamaciones-table2 tbody tr:nth-child(odd) {
+    background-color: #f8fefe;
+}
+
+.reclamaciones-table2 tbody tr:nth-child(even) {
+    background-color: #eaf9f8;
+}
+
 .reclamaciones-table thead {
     background-color: #bce3df;
 }
@@ -104,11 +129,29 @@ h2 {
     border: none;
     color: white;
     padding: 5px 12px;
-    margin-left: 10px;
+    margin-right: 10px;
     text-decoration: none;
+    text-align: center;
     border-radius: 4px;
     display: inline-block;
     transition: background-color 0.2s;
+    float: right;
+    width: 100px;
+}
+
+.btn-detalles2 {
+    background-color: #e45826;
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    margin-right: 10px;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.2s;
+    float: right;
+    width: 300px;
 }
 
 .btn-detalles:hover {

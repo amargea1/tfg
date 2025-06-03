@@ -36,55 +36,24 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Apellidos</th>
-                            <th>Nº Socio</th>
                             <th>Asunto</th>
                             <th>Fecha</th>
                             <th>Estado</th>
-                            <th>Prioridad</th>
-                            <th>Asignado a</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for reclamacion in reclamaciones %}
+                        {% for consulta in consultas %}
                             <tr>
-                                <td>{{ reclamacion.id }}</td>
-                                <td>
-                                    {% if reclamacion.familiar %}
-                                        {{ reclamacion.familiar.nombre }} (Familiar)
-                                    {% else %}
-                                        {{ reclamacion.socio.nombre }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if reclamacion.familiar %}
-                                        {{ reclamacion.familiar.apellidos }}
-                                    {% else %}
-                                        {{ reclamacion.socio.apellidos }}
-                                    {% endif %}
-                                </td>
-                                <td>{{ reclamacion.numeroSocio }}</td>
-                                <td>{{ reclamacion.asunto }}</td>
-                                <td>{{ reclamacion.fechaApertura|date('d/m/Y') }}</td>
+                                <td>{{ consulta.id }}</td>
+                                <td>{{ consulta.nombre }}</td>
+                                <td>{{ consulta.apellidos }}</td>
+                                <td>{{ consulta.asunto }}</td>
+                                <td>{{ consulta.fechaApertura|date('d/m/Y') }}</td>
                                 <td>
                                     <span class="estado estado-{{ reclamacion.estado|lower|replace({' ': '-'}) }}">
                                         {{ reclamacion.estado }}</span>
                                 </td>
-                                <td>
-                                    <span class="prioridad prioridad-{{ reclamacion.prioridad|lower|replace({' ': '-'}) }}">
-                                        {{ reclamacion.prioridad }}</span>
-                                </td>
-                                <td>
-                                    {% if reclamacion.admins is empty %}
-                                        Sin asignar
-                                    {% else %}
-                                        {% for admin in reclamacion.admins %}
-                                            {{ admin.nombre }} {{ admin.apellidos }}<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                </td>
-
-
                                 <td><a href="{{ path('reclamacion_detalle', {id: reclamacion.id}) }}" class="btn-detalles">Detalles</a></td>
                             </tr>
                         {% else %}

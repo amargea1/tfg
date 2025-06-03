@@ -36,7 +36,7 @@
                     <span>Reclamaciones pendientes</span>
                 </div>
                 <div class="stat-box">
-                    <strong>{{ rec_abiertas }}</strong>
+                    <strong>{{ cons_abiertas }}</strong>
                     <span>Consultas pendientes</span>
                 </div>
             </div>
@@ -64,8 +64,8 @@
                 </div>
                 <div class="action-card">
                     <h3>Ver consultas</h3>
-                    <p>Ver consultas recientes</p>
-                    <a href="{{ path('admin_panel') }}" class="btn-orange">Ver</a>
+                    <p>Ver consultas pendientes</p>
+                    <a href="{{ path('consultas_ver') }}" class="btn-orange">Ver</a>
                 </div>
             </div>
         </main>

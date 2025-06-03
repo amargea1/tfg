@@ -22,4 +22,5 @@ class ConsultaRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+
 }

@@ -23,4 +23,13 @@ class ReclamacionRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function findAllWithFamiliar(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->leftJoin('r.familiar', 'f')
+            ->addSelect('f')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
