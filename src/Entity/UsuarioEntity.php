@@ -13,12 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\DiscriminatorMap([
     "socio" => SocioEntity::class,
     "familiar" => FamiliarEntity::class,
-    "no_socio" => NoSocioEntity::class,
     "admin" => AdministradorEntity::class
 ])]
 abstract class UsuarioEntity
 {
-
     //No pongo relaciones: Porque Usuario es una clase abstracta y no tiene relaciones directas. Las relaciones las tienen sus hijas
     #[ORM\Id]
     #[ORM\GeneratedValue]

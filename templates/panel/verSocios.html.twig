@@ -54,68 +54,40 @@
 
             <div class="container my-5">
 
-                    <h2 class="text-center mb-4">Listado de Reclamaciones</h2>
+                    <h2 class="text-center mb-4">Listado de Consultas</h2>
 
-                    <table class="reclamaciones-table">
+                    <table class="reclamaciones-table2">
                         <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Apellidos</th>
-                            <th>Nº Socio</th>
-                            <th>Asunto</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Prioridad</th>
-                            <th>Asignado a</th>
+                            <th>Fecha registro</th>
+                            <th>Colectivo</th>
+                            <th>Nº de socio</th>
+                            <th>Provincia</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for reclamacion in reclamaciones %}
+                        {% for socio in socios %}
                             <tr>
-                                <td>{{ reclamacion.id }}</td>
+                                <td>{{ socio.id }}</td>
                                 <td>
-                                    {% if reclamacion.familiar %}
-                                        {{ reclamacion.familiar.nombre }} (Familiar)
-                                    {% else %}
-                                        {{ reclamacion.socio.nombre }}
-                                    {% endif %}
+                                    {{ socio.nombre }}
                                 </td>
-                                <td>
-                                    {% if reclamacion.familiar %}
-                                        {{ reclamacion.familiar.apellidos }}
-                                    {% else %}
-                                        {{ reclamacion.socio.apellidos }}
-                                    {% endif %}
-                                </td>
-                                <td>{{ reclamacion.numeroSocio }}</td>
-                                <td>{{ reclamacion.asunto }}</td>
-                                <td>{{ reclamacion.fechaApertura|date('d/m/Y') }}</td>
-                                <td>
-                                    <span class="estado estado-{{ reclamacion.estado|lower|replace({' ': '-'}) }}">
-                                        {{ reclamacion.estado }}</span>
-                                </td>
-                                <td>
-                                    <span class="prioridad prioridad-{{ reclamacion.prioridad|lower|replace({' ': '-'}) }}">
-                                        {{ reclamacion.prioridad }}</span>
-                                </td>
-                                <td>
-                                    {% if reclamacion.admins is empty %}
-                                        Sin asignar
-                                    {% else %}
-                                        {% for admin in reclamacion.admins %}
-                                            {{ admin.nombre }} {{ admin.apellidos }}<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                </td>
+                                <td>{{ socio.apellidos }}</td>
+                                <td>{{ socio.fechaRegistro|date('d/m/Y')  }}</td>
+                                <td>{{ socio.colectivo }}</td>
+                                <td>{{ socio.numSocio }}</td>
+                                <td>{{ socio.provincia }}</td>
 
+                                <td>
+                                    <a href="{{ path('socio_detalle', {id: socio.id}) }}" class="btn-detalles">Detalles</a></td>
 
-                                <td><a href="{{ path('reclamacion_detalle', {id: reclamacion.id}) }}" class="btn-detalles">Detalles</a></td>
-                            </tr>
                         {% else %}
                             <tr>
-                                <td colspan="9" class="text-center">No hay reclamaciones registradas.</td>
+                                <td colspan="9" class="text-center">No hay consultas registradas.</td>
                             </tr>
                         {% endfor %}
                         </tbody>

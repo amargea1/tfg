@@ -111,3 +111,8 @@ h2 {
 
     width: 100px;
 }
+
+.menu a {
+    color: inherit;          /* Hereda el color del texto del contenedor */
+    text-decoration: none;   /* Quita el subrayado */
+}

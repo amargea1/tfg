@@ -144,6 +144,10 @@ h2 {
     height: 100%;
 }
 
+.menu a {
+    color: inherit; !important;
+    text-decoration: none;
+}
 
 
 

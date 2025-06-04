@@ -11,12 +11,38 @@
         <aside class="sidebar">
             <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo">
             <ul class="menu">
-                <li><i class="fa-solid fa-gauge"></i> Panel de control</li>
-                <li><i class="fa-solid fa-users"></i> Socios</li>
-                <li><i class="fa-solid fa-coins"></i> Cuotas</li>
-                <li><i class="fa-solid fa-comments"></i> Consultas</li>
-                <li><i class="fa-solid fa-file-lines"></i> Reclamaciones</li>
-                <li><i class="fa-solid fa-gear"></i> Configuración</li>
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-gauge"></i> Panel de control
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-users"></i> Socios
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-coins"></i> Cuotas
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('consultas_ver') }}">
+                        <i class="fa-solid fa-comments"></i> Consultas
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('reclamacion_ver') }}">
+                        <i class="fa-solid fa-file-lines"></i> Reclamaciones
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-gear"></i> Configuración
+                    </a>
+                </li>
+
             </ul>
         </aside>
 
@@ -28,9 +54,9 @@
 
             <div class="container my-5">
 
-                    <h2 class="text-center mb-4">Listado de Reclamaciones</h2>
+                    <h2 class="text-center mb-4">Listado de Consultas</h2>
 
-                    <table class="reclamaciones-table">
+                    <table class="reclamaciones-table2">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -46,19 +72,26 @@
                         {% for consulta in consultas %}
                             <tr>
                                 <td>{{ consulta.id }}</td>
-                                <td>{{ consulta.nombre }}</td>
+                                <td>
+                                    {{ consulta.nombre }}
+                                    {% if consulta.socio %}
+                                        (Socio)
+                                    {% elseif consulta.familiar %}
+                                        (Familiar)
+                                    {% endif %}
+                                </td>
                                 <td>{{ consulta.apellidos }}</td>
                                 <td>{{ consulta.asunto }}</td>
                                 <td>{{ consulta.fechaApertura|date('d/m/Y') }}</td>
                                 <td>
-                                    <span class="estado estado-{{ reclamacion.estado|lower|replace({' ': '-'}) }}">
-                                        {{ reclamacion.estado }}</span>
+                                    <span class="estado estado-{{ consulta.estado|lower|replace({' ': '-'}) }}">
+                                        {{ consulta.estado }}</span>
                                 </td>
-                                <td><a href="{{ path('reclamacion_detalle', {id: reclamacion.id}) }}" class="btn-detalles">Detalles</a></td>
+                                <td><a href="{{ path('consulta_detalle', {id: consulta.id}) }}" class="btn-detalles">Detalles</a></td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="9" class="text-center">No hay reclamaciones registradas.</td>
+                                <td colspan="9" class="text-center">No hay consultas registradas.</td>
                             </tr>
                         {% endfor %}
                         </tbody>

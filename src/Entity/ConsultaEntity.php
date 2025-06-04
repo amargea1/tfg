@@ -27,14 +27,6 @@ class ConsultaEntity
     #[ORM\ManyToMany(targetEntity: AdministradorEntity::class, mappedBy: "consultas")]
     private Collection $admins;
 
-    #[ORM\ManyToOne(targetEntity: NoSocioEntity::class, inversedBy: "consultas")]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?NoSocioEntity $noSocio = null;
-
-    #[ORM\Column(length: 50)]
-    #[Assert\Choice(choices: ['online', 'telefónica', 'presencial'], message: 'Atención inválida')]
-    private ?string $atencion = null;
-
     #[ORM\Column(type: 'string', length: 255)]
     private String $asunto;
 
@@ -45,11 +37,23 @@ class ConsultaEntity
     private ?\DateTimeInterface $fechaCierre = null;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private String $estado;
+    #[Assert\Choice(choices: ['Pendiente', 'Resuelta'], message: 'Estado inválido')]
+    private string $estado;
 
     #[ORM\Column(type: 'string', length: 500)]
     private String $consulta;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private String $nombre;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private String $apellidos;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private String $email;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $telefono = null;
 
     public function __construct()
     {
@@ -96,25 +100,6 @@ class ConsultaEntity
         $this->admins = $admins;
     }
 
-    public function getNoSocio(): ?NoSocioEntity
-    {
-        return $this->noSocio;
-    }
-
-    public function setNoSocio(?NoSocioEntity $noSocio): void
-    {
-        $this->noSocio = $noSocio;
-    }
-
-    public function getAtencion(): ?string
-    {
-        return $this->atencion;
-    }
-
-    public function setAtencion(?string $atencion): void
-    {
-        $this->atencion = $atencion;
-    }
 
     public function getAsunto(): string
     {
@@ -136,14 +121,26 @@ class ConsultaEntity
         $this->fechaApertura = $fechaApertura;
     }
 
-    public function getFechaCierre(): \DateTimeInterface
+    public function getFechaCierre(): ?\DateTimeInterface
     {
         return $this->fechaCierre;
     }
 
-    public function setFechaCierre(\DateTimeInterface $fechaCierre): void
+    public function setFechaCierre(?\DateTimeInterface $fechaCierre): void
     {
         $this->fechaCierre = $fechaCierre;
+    }
+
+
+
+    public function getConsulta(): string
+    {
+        return $this->consulta;
+    }
+
+    public function setConsulta(string $consulta): void
+    {
+        $this->consulta = $consulta;
     }
 
     public function getEstado(): string
@@ -156,14 +153,44 @@ class ConsultaEntity
         $this->estado = $estado;
     }
 
-    public function getConsulta(): string
+    public function getNombre(): string
     {
-        return $this->consulta;
+        return $this->nombre;
     }
 
-    public function setConsulta(string $consulta): void
+    public function setNombre(string $nombre): void
     {
-        $this->consulta = $consulta;
+        $this->nombre = $nombre;
+    }
+
+    public function getApellidos(): string
+    {
+        return $this->apellidos;
+    }
+
+    public function setApellidos(string $apellidos): void
+    {
+        $this->apellidos = $apellidos;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(?string $telefono): void
+    {
+        $this->telefono = $telefono;
     }
 
 

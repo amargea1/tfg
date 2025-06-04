@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/stylesTables.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+{% endblock %}
+
+{% block body %}
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo">
+            <ul class="menu">
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-gauge"></i> Panel de control
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-users"></i> Socios
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-coins"></i> Cuotas
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('consultas_ver') }}">
+                        <i class="fa-solid fa-comments"></i> Consultas
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('reclamacion_ver') }}">
+                        <i class="fa-solid fa-file-lines"></i> Reclamaciones
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_panel') }}">
+                        <i class="fa-solid fa-gear"></i> Configuración
+                    </a>
+                </li>
+
+            </ul>
+        </aside>
+
+        <main class="main-panel">
+            <div class="top-bar text-end">
+                <a href="{{ path('consultas_ver') }}" class="btn btn-outline-info me-3">Volver</a>
+                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
+            </div>
+
+            <div class="container my-5">
+                <h3 class="text-center mb-4">Consulta con ID: {{ consulta.id }}</h3>
+
+                <table class="reclamaciones-table2">
+                    <tr>
+                        <th>Nombre</th>
+                        <td>
+                            {{ consulta.nombre }}
+                            {% if tipoConsulta %}
+                                ({{ tipoConsulta }})
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Apellidos</th>
+                        <td>{{ consulta.apellidos }}</td>
+                    </tr>
+                    <tr>
+                        <th>Correo</th>
+                        <td>{{ consulta.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Teléfono</th>
+                        <td>{{ consulta.telefono }}</td>
+                    </tr>
+                    <tr>
+                        <th>Asunto</th>
+                        <td>{{ consulta.asunto }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de apertura</th>
+                        <td>{{ consulta.fechaApertura|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha de cierre</th>
+                        <td>
+                            {{ consulta.fechaCierre ? consulta.fechaCierre|date('d/m/Y') : 'Sin cerrar' }}
+                            {% if consulta.estado != 'Resuelta' %}
+
+                                <form method="post" action="{{ path('consulta_cerrar', { id: consulta.id }) }}" onsubmit="return confirm('¿Seguro que quieres cerrar esta consulta?');" style="display: inline;">
+                                    <button class="btn-detalles">
+                                        Cerrar <i class="bi bi-lock"></i>
+                                    </button>
+                                </form>
+
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>Estado</th>
+                        <td>
+                            {% if consulta.estado != 'Resuelta' %}
+                            <form method="post" action="{{ path('consulta_cambiar_estado', { id: consulta.id }) }}">
+                                <select name="estado" class="form-select form-select-sm d-inline w-auto me-2">
+                                    <option value="Pendiente" {{ consulta.estado == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                    <option value="Resuelta" {{ consulta.estado == 'Resuelta' ? 'selected' : '' }}>Resuelta</option>
+                                </select>
+
+
+                                    <button type="submit" class="btn-detalles">Cambiar</button>
+                                {% else %}
+                                {{ consulta.estado }}
+                                {% endif %}
+                            </form>
+                        </td>
+                    </tr>
+
+
+                    </tr>
+                    <tr>
+                        <th>Consulta</th>
+                        <td style="white-space: pre-wrap;">{{ consulta.consulta }}</td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td>
+                            <a href="mailto:{{ consulta.email }}?subject=Respuesta a tu consulta&body=Hola {{ consulta.nombre }},%0A%0A[Escribe aquí tu respuesta...]%0A%0AConsulta:%0A{{ consulta.consulta | url_encode }}" class="btn-detalles2">
+                                Responder por correo
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+            </div>
+        </main>
+    </div>
+{% endblock %}

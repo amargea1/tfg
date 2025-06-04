@@ -59,7 +59,8 @@ h2 {
 }
 
 .reclamaciones-table2 {
-    width: 75%;
+    width: 80%;
+    margin: 0 auto;
     border-collapse: collapse;
     font-size: 0.95rem;
 }
@@ -210,4 +211,7 @@ h2 {
     color: #b71c1c;
 }
 
-
+.menu a {
+    color: inherit;          /* Hereda el color del texto del contenedor */
+    text-decoration: none;   /* Quita el subrayado */
+}

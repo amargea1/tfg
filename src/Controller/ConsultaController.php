@@ -10,6 +10,7 @@ use App\Entity\UsuarioEntity;
 use App\Form\ReclamacionType;
 use App\Repository\AdministradorRepository;
 use App\Repository\ConsultaRepository;
+use App\Repository\FamiliarRepository;
 use App\Repository\ReclamacionRepository;
 use App\Repository\SeguimientoRepository;
 use App\Repository\SocioRepository;
@@ -30,127 +31,92 @@ class ConsultaController extends AbstractController
     {
         $consultas = $consultaRepository->findAll();
 
+
         return $this->render('panel/verConsultas.html.twig', [
             'consultas' => $consultas,
         ]);
     }
 
-//    #[Route('/admin/reclamacion/{id}', name: 'reclamacion_detalle')]
-//    public function verDetalle(int $id, ReclamacionRepository $reclamacionRepository, AdministradorRepository $adminRepo): Response
-//    {
-//
-//        $reclamacion = $reclamacionRepository->find($id);
-//        $admins = $adminRepo->findAll();
-//
-//        if (!$reclamacion) {
-//            throw $this->createNotFoundException('Reclamación no encontrada.');
-//        }
-//
-//        return $this->render('panel/verReclamacionDetalle.html.twig', [
-//            'reclamacion' => $reclamacion,
-//            'admins' => $admins,
-//        ]);
-//    }
-//
-//    #[Route('/reclamacion/{id}/cambiar-estado', name: 'reclamacion_cambiar_estado', methods: ['POST'])]
-//    public function cambiarEstado(Request $request, ReclamacionRepository $repo, EntityManagerInterface $em, int $id): Response
-//    {
-//        $reclamacion = $repo->find($id);
-//        $nuevoEstado = $request->request->get('estado');
-//
-//        if ($reclamacion && $nuevoEstado) {
-//            $reclamacion->setEstado($nuevoEstado);
-//            $em->flush();
-//        }
-//
-//        return $this->redirect($request->headers->get('referer'));
-//    }
-//
-//    #[Route('/reclamacion/{id}/cambiar-asignacion', name: 'reclamacion_cambiar_asignacion', methods: ['POST'])]
-//    public function cambiarAsignacion(
-//        Request $request,
-//        ReclamacionRepository $repo,
-//        AdministradorRepository $adminRepo,
-//        EntityManagerInterface $em,
-//        int $id
-//    ): Response {
-//        $reclamacion = $repo->find($id);
-//        $adminId = $request->request->get('admins'); // usa 'admin' si el select es name="admin"
-//
-//        if ($reclamacion && $adminId) {
-//            $admin = $adminRepo->find($adminId);
-//
-//            if ($admin) {
-//                // Como es ManyToMany, limpia admins actuales y añade el nuevo admin
-//                foreach ($reclamacion->getAdmins () as $adminActual) {
-//                    $reclamacion->removeAdmin($adminActual);
-//                }
-//                $reclamacion->addAdmin($admin);
-//                $em->flush();
-//            }
-//        }
-//
-//        return $this->redirect($request->headers->get('referer'));
-//    }
-//
-//    #[Route('/reclamacion/{id}/nuevo-estado', name: 'reclamacion_nuevo_estado', methods: ['POST'])]
-//    public function nuevoEstado(
-//        Request $request,
-//        ReclamacionRepository $repo,
-//        EntityManagerInterface $em,
-//        int $id
-//    ): Response {
-//        $reclamacion = $repo->find($id);
-//        $fecha = $request->request->get('fecha');
-//        $comentario = $request->request->get('comentario');
-//
-//        if ($reclamacion && $fecha && $comentario) {
-//            $seguimiento = new SeguimientoEntity();
-//            $seguimiento->setFecha(new \DateTimeImmutable($fecha));
-//            $seguimiento->setComentario($comentario);
-//            $seguimiento->setReclamacion($reclamacion);
-//
-//            $em->persist($seguimiento);
-//            $em->flush();
-//        }
-//
-//        return $this->redirect($request->headers->get('referer'));
-//    }
-//
-//    #[Route('/seguimiento/{id}/eliminar', name: 'seguimiento_eliminar', methods: ['POST'])]
-//    public function eliminar(
-//        int $id,
-//        SeguimientoRepository $repo,
-//        EntityManagerInterface $em,
-//        Request $request
-//    ): Response {
-//        $seguimiento = $repo->find($id);
-//
-//        if ($seguimiento) {
-//            $em->remove($seguimiento);
-//            $em->flush();
-//        }
-//
-//        return $this->redirect($request->headers->get('referer')); // Vuelve a la página anterior
-//    }
-//
-//    #[Route('/reclamacion/{id}/cerrar', name: 'reclamacion_cerrar', methods: ['POST'])]
-//    public function cerrarReclamacion(
-//        int $id,
-//        ReclamacionRepository $repo,
-//        EntityManagerInterface $em,
-//        Request $request
-//    ): Response {
-//        $reclamacion = $repo->find($id);
-//
-//        if ($reclamacion && $reclamacion->getEstado() !== 'resuelta') {
-//            $reclamacion->setEstado('resuelta'); // o el valor que uses para “cerrado”
-//            $reclamacion->setFechaCierre(new \DateTimeImmutable('now'));
-//            $em->flush();
-//        }
-//
-//        return $this->redirect($request->headers->get('referer'));
-//    }
+    #[Route('/admin/consulta/{id}', name: 'consulta_detalle')]
+    public function verDetalle(
+        int $id,
+        ConsultaRepository $consultaRepository,
+        AdministradorRepository $adminRepo,
+        SocioRepository $socioRepository,
+        FamiliarRepository $familiarRepository,
+
+    ): Response
+    {
+
+        $consulta = $consultaRepository->find($id);
+        $admins = $adminRepo->findAll();
+
+        $socio = null;
+        $familiar = null;
+
+        if ($consulta->getSocio()) {
+            $socio = $socioRepository->find($consulta->getSocio()->getId());
+        }
+
+        if ($consulta->getFamiliar()) {
+            $familiar = $familiarRepository->find($consulta->getFamiliar()->getId());
+        }
+
+        $tipoConsulta = null;
+
+        if ($socio) {
+            $tipoConsulta = 'Socio';
+        } elseif ($familiar) {
+            $tipoConsulta = 'Familiar';
+        }
+
+        if (!$consulta) {
+            throw $this->createNotFoundException('Consulta no encontrada.');
+        }
+
+        return $this->render('panel/verConsultaDetalle.html.twig', [
+            'consulta' => $consulta,
+            'admins' => $admins,
+            'tipoConsulta' => $tipoConsulta,
+        ]);
+    }
+
+    #[Route('/consulta/{id}/cambiar-estado', name: 'consulta_cambiar_estado', methods: ['POST'])]
+    public function cambiarEstado(Request $request, ConsultaRepository $repo, EntityManagerInterface $em, int $id): Response
+    {
+        $consulta = $repo->find($id);
+        $nuevoEstado = $request->request->get('estado');
+
+        if($nuevoEstado == 'Resuelta'){
+            $consulta->setFechaCierre(new \DateTimeImmutable('now'));
+        }
+
+        if ($consulta && $nuevoEstado) {
+            $consulta->setEstado($nuevoEstado);
+            $em->flush();
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+
+    #[Route('/consulta/{id}/cerrar', name: 'consulta_cerrar', methods: ['POST'])]
+    public function cerrar(
+        int $id,
+        ConsultaRepository $repo,
+        EntityManagerInterface $em,
+        Request $request
+    ): Response {
+        $consulta = $repo->find($id);
+
+        if ($consulta && $consulta->getEstado() !== 'Resuelta') {
+            $consulta->setEstado('Resuelta'); // o el valor que uses para “cerrado”
+            $consulta->setFechaCierre(new \DateTimeImmutable('now'));
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('consultas_ver');
+    }
 
 
 

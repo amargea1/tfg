@@ -29,8 +29,6 @@ class SocioController extends AbstractController
 
         $socio = new SocioEntity();
 
-
-
         $form = $this->createForm(SocioType::class, $socio);
 
         $form->handleRequest($request);
@@ -54,5 +52,55 @@ class SocioController extends AbstractController
         ]);
     }
 
+
+    #[Route('/socio/ver', name: 'socio_ver')]
+    public function ver(SocioRepository $socioRepository): Response
+    {
+        $socio = $socioRepository->findAll();
+
+        return $this->render('panel/verSocios.html.twig', [
+            'socios' => $socio,
+        ]);
+    }
+
+    #[Route('/socio/detalle/{id}', name: 'socio_detalle')]
+    public function verDetalle(int $id, SocioRepository $socioRepository): Response
+    {
+
+        $socio = $socioRepository->find($id);
+
+        if (!$socio) {
+            throw $this->createNotFoundException('Socio no encontrado.');
+        }
+
+        return $this->render('panel/verSocioDetalle.html.twig', [
+            'socio' => $socio,
+        ]);
+    }
+
+    #[Route('/socio/editar/{id}', name: 'socio_editar')]
+    public function editar(int $id, Request $request, SocioRepository $socioRepository, EntityManagerInterface $em): Response
+    {
+        $socio = $socioRepository->find($id);
+
+        if (!$socio) {
+            throw $this->createNotFoundException('Socio no encontrado.');
+        }
+
+        $form = $this->createForm(SocioType::class, $socio);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            $this->addFlash('success', 'Socio actualizado con éxito.');
+            return $this->redirectToRoute('socio_detalle', ['id' => $socio->getId()]);
+        }
+
+        return $this->render('panel/editarSocio.html.twig', [
+            'form' => $form->createView(),
+            'socio' => $socio,
+        ]);
+    }
 
 }

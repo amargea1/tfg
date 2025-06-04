@@ -54,6 +54,7 @@ class ReclamacionType extends AbstractType
                 },
                 'label' => 'Nombre del familiar',
                 'placeholder' => 'Selecciona un familiar',
+                'required' => false,
             ])
 
 

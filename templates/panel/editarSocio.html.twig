@@ -46,15 +46,16 @@
             </ul>
         </aside>
 
-        <main class="rec-panel">
+        <main class="main-panel">
             <div class="top-bar text-end">
                 <a href="{{ path('admin_panel') }}" class="btn btn-outline-info me-3">Volver</a>
                 <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
             </div>
 
+
             <div class="container my-5">
                 <div class="card shadow p-4">
-                    <h2 class="text-center mb-4">Crear Familiar</h2>
+                    <h2 class="text-center mb-4">Editar socio con ID: {{ socio.id }}</h2>
 
                     {% for mensaje in app.flashes('error') %}
                         <div class="alert alert-danger">{{ mensaje }}</div>
@@ -118,14 +119,23 @@
                     </div>
 
                     <div class="mb-3">
-                        {{ form_label(form.numSocio) }}
-                        {{ form_widget(form.numSocio, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_label(form.fechaRegistro) }}
+                        {{ form_widget(form.fechaRegistro, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
+                    <div class="mb-3">
+                        {{ form_label(form.ordenRegistro) }}
+                        {{ form_widget(form.ordenRegistro, {'attr': {'class': 'form-control'}}) }}
+                    </div>
 
                     <div class="mb-3">
-                        {{ form_label(form.relacion) }}
-                        {{ form_widget(form.relacion, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_label(form.colectivo) }}
+                        {{ form_widget(form.colectivo, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.numSocio) }}
+                        {{ form_widget(form.numSocio, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
                     <div class="mb-3">
@@ -160,9 +170,9 @@
                     {{ form_end(form) }}
                 </div>
             </div>
+
+
+
         </main>
     </div>
-
-
 {% endblock %}
-
