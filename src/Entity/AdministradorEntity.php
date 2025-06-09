@@ -46,10 +46,8 @@ class AdministradorEntity extends UsuarioEntity
     private \DateTimeInterface $fechaCreacion;
 
     #[ORM\Column(type: 'datetime')]
-    private \DateTimeInterface $fechaUltimoAcceso; //como se haria automatico?
+    private \DateTimeInterface $fechaUltimoAcceso;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $estaActivo;
 
 
     public function __construct()
@@ -123,15 +121,6 @@ class AdministradorEntity extends UsuarioEntity
         $this->fechaUltimoAcceso = $fechaUltimoAcceso;
     }
 
-    public function isEstaActivo(): bool
-    {
-        return $this->estaActivo;
-    }
-
-    public function setEstaActivo(bool $estaActivo): void
-    {
-        $this->estaActivo = $estaActivo;
-    }
 
     public function getSeguimientos(): Collection
     {

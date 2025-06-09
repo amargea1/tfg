@@ -6,6 +6,7 @@ use App\Repository\ConsultaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ConsultaRepository::class)]
 #[ORM\Table(name: "consulta")]
@@ -28,9 +29,16 @@ class ConsultaEntity
     private Collection $admins;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private String $asunto;
+    #[Assert\NotBlank(message: "El asunto es obligatorio")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "El asunto no puede tener más de {{ limit }} caracteres"
+    )]
+    private string $asunto;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotNull(message: "La fecha de apertura es obligatoria")]
+    #[Assert\Type(\DateTimeInterface::class)]
     private \DateTimeInterface $fechaApertura;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -41,18 +49,60 @@ class ConsultaEntity
     private string $estado;
 
     #[ORM\Column(type: 'string', length: 500)]
-    private String $consulta;
+    #[Assert\NotBlank(message: "La consulta es obligatoria")]
+    #[Assert\Length(
+        max: 500,
+        maxMessage: "La consulta no puede tener más de {{ limit }} caracteres"
+    )]
+    private string $consulta;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private String $nombre;
+    #[Assert\NotBlank(message: "El nombre es obligatorio")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "El nombre no puede tener más de {{ limit }} caracteres"
+    )]
+    #[Assert\Regex(
+        pattern: "/^[\p{L} '-]+$/u",
+        message: "El nombre no puede contener números ni caracteres especiales"
+    )]
+    private string $nombre;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private String $apellidos;
+    #[Assert\NotBlank(message: "Los apellidos son obligatorios")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Los apellidos no pueden tener más de {{ limit }} caracteres"
+    )]
+    #[Assert\Regex(
+        pattern: "/^[\p{L} '-]+$/u",
+        message: "Los apellidos no pueden contener números ni caracteres especiales"
+    )]
+    private string $apellidos;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private String $email;
+    #[Assert\NotBlank(message: "El email es obligatorio")]
+    #[Assert\Email(message: "El email '{{ value }}' no es válido")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "El email no puede tener más de {{ limit }} caracteres"
+    )]
+    #[Assert\Regex(
+        pattern: "/^[^@\s]+@(?:hotmail\.com|gmail\.com|outlook\.com|yahoo\.com)$/i",
+        message: "El email debe pertenecer a dominios válidos: hotmail.com, gmail.com, outlook.com o yahoo.com"
+    )]
+    private string $email;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "El teléfono no puede tener más de {{ limit }} caracteres"
+    )]
+    #[Assert\Regex(
+        pattern: '/^\+?\d{7,15}$/',
+        message: 'El teléfono no es válido (solo números, puede incluir "+" y entre 7 y 15 dígitos).',
+        groups: ['telefono_validation']
+    )]
     private ?string $telefono = null;
 
     public function __construct()

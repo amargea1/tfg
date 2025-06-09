@@ -45,7 +45,14 @@ body {
     position: absolute;
     top: 20px;
     right: 30px;
+    margin-bottom: 1rem;
 }
+
+.alert {
+    max-width: 80%;  /* O el ancho que quieras */
+    white-space: normal; /* Para que el texto haga wrap y no quede en una sola línea */
+}
+
 
 h2 {
     margin-bottom: 25px;
@@ -63,6 +70,32 @@ h2 {
     margin: 0 auto;
     border-collapse: collapse;
     font-size: 0.95rem;
+}
+
+.reclamaciones-table3{
+    width: 50%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.reclamaciones-table3 thead {
+    background-color: #bce3df;
+}
+
+.reclamaciones-table3 th,
+.reclamaciones-table3 td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.reclamaciones-table3 tbody tr:nth-child(odd) {
+    background-color: #f8fefe;
+}
+
+.reclamaciones-table3 tbody tr:nth-child(even) {
+    background-color: #eaf9f8;
 }
 
 .reclamaciones-table2 thead {
@@ -155,6 +188,21 @@ h2 {
     width: 300px;
 }
 
+.btn-nuevo {
+    background-color: #e45826;
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    margin-right: 10px;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.2s;
+    float: right;
+    width: 210px;
+}
+
 .btn-detalles:hover {
     background-color: #cc3e0f;
 }
@@ -214,4 +262,19 @@ h2 {
 .menu a {
     color: inherit;          /* Hereda el color del texto del contenedor */
     text-decoration: none;   /* Quita el subrayado */
+}
+
+.btn-baja{
+    background-color: #45a8b4;
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    margin-right: 10px;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.2s;
+    float: right;
+    width: 300px;
 }

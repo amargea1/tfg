@@ -6,6 +6,7 @@ use App\Repository\CuotaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CuotaRepository::class)]
 #[ORM\Table(name: "cuota")]
@@ -17,14 +18,19 @@ class CuotaEntity
     private ?int $id = null;
 
     #[ORM\Column(type: "decimal", precision: 8, scale: 2)]
+    #[Assert\NotBlank(message: "El importe es obligatorio.")]
+    #[Assert\Type(type: 'numeric', message: 'El importe debe ser un número válido.')]
+    #[Assert\Positive(message: 'El importe debe ser un número positivo.')]
     private ?string $importe;
 
 
     #[ORM\Column(length: 50)]
-    #[Assert\Choice(choices: ['socio', 'familiar'], message: 'Tipo de cuota inválida')]
+    #[Assert\NotBlank(message: "El tipo de cuota es obligatorio.")]
+    #[Assert\Choice(choices: ['socio', 'familiar'], message: 'Tipo de cuota inválida.')]
     private ?string $tipo = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "La periodicidad es obligatoria.")]
     private ?string $periodicidad = null;
 
     #[ORM\OneToMany(targetEntity: SocioEntity::class, mappedBy: "cuota")]

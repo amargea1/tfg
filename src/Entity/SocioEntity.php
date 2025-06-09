@@ -6,6 +6,7 @@ use App\Repository\SocioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SocioRepository::class)]
 #[ORM\Table(name: "socio")]
@@ -31,8 +32,16 @@ class SocioEntity extends UsuarioEntity
     private ?string $modoPago = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^ES\d{22}$/',
+        message: 'El IBAN debe empezar por ES seguido de 22 dígitos.'
+    )]
     private ?string $iban = null;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^\+?\d{9,15}$/',
+        message: 'El número Bizum debe ser un teléfono válido, con entre 9 y 15 dígitos y puede empezar con +.'
+    )]
     private ?string $bizum = null;
 
     #[ORM\Column(type: "datetime")]
@@ -42,6 +51,7 @@ class SocioEntity extends UsuarioEntity
     private \DateTimeInterface $fechaRegistro;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\Positive(message: 'El orden de registro debe ser un número positivo.')]
     private int $ordenRegistro;
 
     #[ORM\Column(length: 50)]

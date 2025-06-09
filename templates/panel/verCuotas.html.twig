@@ -47,6 +47,7 @@
         </aside>
 
         <main class="main-panel">
+
             <div class="top-bar text-end">
                 <a href="{{ path('admin_panel') }}" class="btn btn-outline-info me-3">Volver</a>
                 <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
@@ -63,46 +64,53 @@
 
             <div class="container my-5">
 
-                    <h2 class="text-center mb-4">Listado de Consultas</h2>
+                    <h2 class="text-center mb-4">Listado de Cuotas</h2>
 
-                    <table class="reclamaciones-table2">
+                    <table class="reclamaciones-table3">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Asunto</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
+                            <th>Importe</th>
+                            <th>Tipo</th>
+                            <th>Periodicidad</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for consulta in consultas %}
+                        {% for cuota in cuotas %}
                             <tr>
-                                <td>{{ consulta.id }}</td>
+                                <td>{{ cuota.id }}</td>
                                 <td>
-                                    {{ consulta.nombre }}
-                                    {% if consulta.socio %}
-                                        (Socio)
-                                    {% elseif consulta.familiar %}
-                                        (Familiar)
-                                    {% endif %}
+                                    {{ cuota.importe }} €
                                 </td>
-                                <td>{{ consulta.apellidos }}</td>
-                                <td>{{ consulta.asunto }}</td>
-                                <td>{{ consulta.fechaApertura|date('d/m/Y') }}</td>
+                                <td>{{ cuota.tipo }}</td>
+                                <td>{{ cuota.periodicidad }}</td>
+
                                 <td>
-                                    <span class="estado estado-{{ consulta.estado|lower|replace({' ': '-'}) }}">
-                                        {{ consulta.estado }}</span>
+                                    <a href="{{ path('cuota_editar', {id: cuota.id}) }}" class="btn-detalles"><i class="fa-solid fa-pen-to-square"></i>
+                                        Editar</a>
+                                    <a href="{{ path('cuota_borrar', { id: cuota.id }) }}" class="btn-detalles" onclick="return confirm('¿Estás segura de que quieres borrar esta cuota?');">
+                                        <i class="fa-solid fa-trash"></i>
+                                        Eliminar</a>
                                 </td>
-                                <td><a href="{{ path('consulta_detalle', {id: consulta.id}) }}" class="btn-detalles">Detalles</a></td>
                             </tr>
+
+
                         {% else %}
                             <tr>
-                                <td colspan="9" class="text-center">No hay consultas registradas.</td>
+                                <td colspan="9" class="text-center">No hay cuotas registradas.</td>
                             </tr>
                         {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a href="{{ path('cuota_nueva') }}" class="btn-nuevo"><i class="fa-solid fa-plus"></i>
+                                    Nueva</a>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

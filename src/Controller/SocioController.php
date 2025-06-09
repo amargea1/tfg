@@ -39,6 +39,8 @@ class SocioController extends AbstractController
             $cuotaSocio = $cuotaRepository->find(1); // ← ID de la cuota estándar
             $socio->setCuota($cuotaSocio);
 
+            $socio->setEstaActivo(true);
+
             $em->persist($socio);
             $em->flush();
 
@@ -56,7 +58,7 @@ class SocioController extends AbstractController
     #[Route('/socio/ver', name: 'socio_ver')]
     public function ver(SocioRepository $socioRepository): Response
     {
-        $socio = $socioRepository->findAll();
+        $socio = $socioRepository->findBy(['estaActivo' => true]);
 
         return $this->render('panel/verSocios.html.twig', [
             'socios' => $socio,
@@ -103,4 +105,24 @@ class SocioController extends AbstractController
         ]);
     }
 
+
+    #[Route('/socio/baja/{id}', name: 'socio_baja')]
+    public function baja(int $id, SocioRepository $socioRepository, EntityManagerInterface $em): Response
+    {
+        $socio = $socioRepository->find($id);
+
+        if (!$socio) {
+            throw $this->createNotFoundException('Socio no encontrado.');
+        }
+
+        $socio->setEstaActivo(false);
+        $em->flush();
+
+        $this->addFlash('success', 'El socio ha sido dado de baja correctamente.');
+
+        return $this->redirectToRoute('socio_ver');
+    }
+
+
 }
+

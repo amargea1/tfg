@@ -94,7 +94,14 @@ h2 {
     padding: 20px;
     border-radius: 6px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center; /* Centra horizontalmente los elementos hijos */
+    max-height: 300px;
 }
+
+
 
 .action-card h3 {
     margin-bottom: 10px;

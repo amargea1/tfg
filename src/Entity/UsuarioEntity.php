@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UsuarioEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: "usuario")]
@@ -28,15 +29,35 @@ abstract class UsuarioEntity
     private ?string $rol = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'El nombre es obligatorio')]
+    #[Assert\Length(min: 2, max: 255)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u',
+        message: 'El nombre solo puede contener letras y espacios'
+    )]
     private string $nombre;
 
+
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Los apellidos son obligatorios')]
+    #[Assert\Length(min: 2, max: 255)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/u',
+        message: 'Los apellidos solo pueden contener letras y espacios'
+    )]
     private string $apellidos;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'El DNI es obligatorio')]
+    #[Assert\Regex(
+        pattern: '/^[0-9]{8}[A-Za-z]$/',
+        message: 'El DNI debe tener 8 números seguidos de una letra'
+    )]
     private string $dni;
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotNull(message: 'La fecha de nacimiento es obligatoria')]
+    #[Assert\LessThan('today', message: 'La fecha de nacimiento debe ser anterior al día actual')]
     private \DateTimeInterface $fechaNacimiento;
 
     #[ORM\Column(length: 20)]
@@ -44,22 +65,47 @@ abstract class UsuarioEntity
     private ?string $sexo = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'La dirección es obligatoria')]
     private string $direccion;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'La localidad es obligatoria')]
     private string $localidad;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'La provincia es obligatoria')]
     private string $provincia;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^\d{5}$/',
+        message: 'El código postal debe tener 5 dígitos'
+    )]
     private ?string $codigoPostal = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'El teléfono es obligatorio')]
+    #[Assert\Regex(
+        pattern: '/^(?:\+34|0034)?\d{9}$/',
+        message: 'El teléfono debe ser un número válido español de 9 dígitos, con o sin prefijo internacional'
+    )]
     private string $telefono;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "El email es obligatorio")]
+    #[Assert\Email(message: "El email '{{ value }}' no es válido")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "El email no puede tener más de {{ limit }} caracteres"
+    )]
+    #[Assert\Regex(
+        pattern: "/^[^@\s]+@(?:hotmail\.com|gmail\.com|outlook\.com|yahoo\.com)$/i",
+        message: "El email debe pertenecer a dominios válidos: hotmail.com, gmail.com, outlook.com o yahoo.com"
+    )]
     private string $email;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $estaActivo;
 
     public function getId(): ?int
     {
@@ -184,6 +230,26 @@ abstract class UsuarioEntity
     public function setEmail(string $email): void
     {
         $this->email = $email;
+    }
+
+    public function getRol(): ?string
+    {
+        return $this->rol;
+    }
+
+    public function setRol(?string $rol): void
+    {
+        $this->rol = $rol;
+    }
+
+    public function isEstaActivo(): bool
+    {
+        return $this->estaActivo;
+    }
+
+    public function setEstaActivo(bool $estaActivo): void
+    {
+        $this->estaActivo = $estaActivo;
     }
 
 

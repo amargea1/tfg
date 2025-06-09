@@ -52,6 +52,9 @@ class FamiliarController extends AbstractController
                 $cuotaFamiliar = $em->getRepository(CuotaEntity::class)->find(2);
                 $familiar->setCuota($cuotaFamiliar);
 
+                $familiar->setEstaActivo(true);
+
+
                 $em->persist($familiar);
                 $em->flush();
 

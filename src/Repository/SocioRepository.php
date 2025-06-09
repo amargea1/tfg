@@ -17,7 +17,10 @@ class SocioRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->select('COUNT(s.id)')
+            ->where('s.estaActivo = :activo')
+            ->setParameter('activo', true)
             ->getQuery()
             ->getSingleScalarResult();
     }
+
 }

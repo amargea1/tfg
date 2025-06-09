@@ -6,6 +6,7 @@ use App\Repository\ReclamacionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReclamacionRepository::class)]
 #[ORM\Table(name: "reclamacion")]
@@ -33,12 +34,16 @@ class ReclamacionEntity
 
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\NotNull(message: "La fecha de apertura es obligatoria")]
+    #[Assert\GreaterThanOrEqual("today", message: "La fecha de apertura no puede ser anterior al día actual")]
     private \DateTimeInterface $fechaApertura;
+
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $fechaCierre = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El tipo de atención es obligatorio")]
     #[Assert\Choice(choices: ['online', 'telefónica', 'presencial'], message: 'Atención inválida')]
     private ?string $atencion = null;
 
@@ -46,27 +51,43 @@ class ReclamacionEntity
     private bool $esFamiliar;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "El número de socio no puede tener más de {{ limit }} caracteres"
+    )]
     private string $numeroSocio;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El sector es obligatorio")]
     #[Assert\Choice(choices: ['Admon. Pública', 'Banca', 'Suministros', 'Comunicaciones', 'Vivienda', 'Comercio', 'Comercio online',
         'Transportes y viajes', 'Seguros', 'Sev. Profesionales', 'Otros'], message: 'Sector inválido')]
     private ?string $sector = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "El asunto es obligatorio")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "El asunto no puede tener más de {{ limit }} caracteres"
+    )]
     private string $asunto;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "La reclamación es obligatoria")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "La reclamación no puede tener más de {{ limit }} caracteres"
+    )]
     private string $reclamacion;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "El estado es obligatorio")]
     #[Assert\Choice(choices: ['Pendiente', 'Asignada', 'Resuelta'], message: 'Estado inválido')]
     private string $estado;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "La prioridad es obligatoria")]
     #[Assert\Choice(choices: ['baja', 'media', 'alta', 'urgente'], message: 'Prioridad inválida')]
     private ?string $prioridad = null;
-
     public function __construct()
     {
         $this->seguimientos = new ArrayCollection();

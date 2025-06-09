@@ -21,6 +21,23 @@
         {% endblock %}
     </head>
     <body>
+
+
         {% block body %}{% endblock %}
+
+
     </body>
+
+    <script>
+        // Espera 4 segundos y oculta las alertas automáticamente
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                // Usa Bootstrap 5 fade out
+                alert.classList.remove('show');
+                alert.classList.add('hide');
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 4000);
+    </script>
 </html>

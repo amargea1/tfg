@@ -1,12 +1,21 @@
-body {
+html, body {
+    height: 100%;
     margin: 0;
     font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body {
+    flex: 1;
 }
 
 .dashboard-container {
     display: flex;
-    height: 100%;
+    flex: 1;
 }
+
 
 .sidebar {
     width: 220px;

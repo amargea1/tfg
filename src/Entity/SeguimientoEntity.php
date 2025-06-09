@@ -6,6 +6,7 @@ use App\Repository\SeguimientoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SeguimientoRepository::class)]
 #[ORM\Table(name: "seguimiento")]
@@ -24,6 +25,7 @@ class SeguimientoEntity
 
 
     #[ORM\Column(type: 'datetime')]
+    #[Assert\GreaterThanOrEqual("today", message: "La fecha no puede ser anterior al día actual")]
     private \DateTimeInterface $fecha;
 
     #[ORM\Column(type: 'text')]

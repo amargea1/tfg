@@ -11,6 +11,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 class LoginController extends AbstractController
 {
@@ -24,13 +26,18 @@ class LoginController extends AbstractController
             $email = $request->request->get('email');
             $password = $request->request->get('password');
 
+
             $usuario = $em->getRepository(UsuarioEntity::class)->findOneBy(['email' => $email]);
 
             if ($usuario) {
                 $admin = $em->getRepository(AdministradorEntity::class)->findOneBy(['email' => $email]);
 
                 if ($admin && $admin->getPassword() === $password) {
-                    // ✅ Guardar datos en sesión
+
+                    $usuario->setFechaUltimoAcceso(new \DateTimeImmutable());
+                    $em->flush();
+
+                    //Guardar datos en sesión
                     $session->set('user_id', $usuario->getId());
                     $session->set('user_email', $usuario->getEmail());
                     $session->set('user_nombre', $usuario->getNombre());

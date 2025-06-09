@@ -20,12 +20,12 @@
                 </li>
 
                 <li>
-                    <a href="{{ path('admin_panel') }}">
+                    <a href="{{ path('socio_ver') }}">
                         <i class="fa-solid fa-users"></i> Socios
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('admin_panel') }}">
+                    <a href="{{ path('cuota_ver') }}">
                         <i class="fa-solid fa-coins"></i> Cuotas
                     </a>
                 </li>
@@ -50,9 +50,18 @@
 
         <main class="main-panel">
             <div class="top-bar text-end">
-                <a href="{{ path('consultas_ver') }}" class="btn btn-outline-info me-3">Volver</a>
+                <a href="{{ path('socio_ver') }}" class="btn btn-outline-info me-3">Volver</a>
                 <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
             </div>
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
 
             <div class="container my-5">
                 <h3 class="text-center mb-4">Socio con ID: {{ socio.id }}</h3>
@@ -139,7 +148,13 @@
 
                     <tr>
                         <th></th>
-                        <td><a href="{{ path('socio_editar', { id: socio.id }) }}" class="btn-detalles2">Editar datos</a>
+                        <td>
+                            <a href="{{ path('socio_editar', { id: socio.id }) }}" class="btn-detalles2"><i class="fa-solid fa-pen-to-square"></i>
+                                Editar datos</a>
+                            <a href="{{ path('socio_baja', { id: socio.id }) }}" class="btn-baja" onclick="return confirm('¿Estás segura de que quieres dar de baja a este socio?');">
+                                <i class="fa-solid fa-trash"></i>
+                                Dar de baja</a>
+
                         </td>
                     </tr>
 

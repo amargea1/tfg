@@ -6,6 +6,7 @@ use App\Repository\FamiliarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FamiliarRepository::class)]
 #[ORM\Table(name: "familiar")]
@@ -28,17 +29,28 @@ class FamiliarEntity extends UsuarioEntity
     private Collection $reclamaciones;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "La relación es obligatoria")]
     #[Assert\Choice(choices: ['Hijo/a', 'Cónyuge', 'Padre', 'Madre', 'Hermano/a', 'Otro'], message: 'Relación inválida')]
     private ?string $relacion = null;
 
     #[ORM\Column(length: 50)]
-    #[Assert\Choice(choices: ['efectivo', 'bizum', 'transferencia'], message: 'Modo de pago inválido')]
+    #[Assert\NotBlank(message: "El modo de pago es obligatorio")]
+    #[Assert\Choice(choices: ['Efectivo', 'Bizum', 'Transferencia'], message: 'Modo de pago inválido')]
     private ?string $modoPago = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^ES\d{22}$/',
+        message: 'El IBAN debe comenzar por "ES" seguido de 22 dígitos numéricos.'
+    )]
     private ?string $iban = null;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: '/^(?:\+34|0034)?\d{9}$/',
+        message: 'El número de Bizum debe ser un teléfono móvil válido de 9 dígitos, con o sin prefijo internacional.'
+    )]
     private ?string $bizum = null;
+
 
     #[ORM\Column(type: "datetime")]
     private \DateTimeInterface $fechaPago;
