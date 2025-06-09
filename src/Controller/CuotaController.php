@@ -20,8 +20,13 @@ class CuotaController extends AbstractController
 {
 
     #[Route('/cuota/ver', name: 'cuota_ver')]
-    public function ver(CuotaRepository $cuotaRepository): Response
+    public function ver(CuotaRepository $cuotaRepository, SessionInterface $session): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $cuota = $cuotaRepository->findAll();
 
         return $this->render('panel/verCuotas.html.twig', [
@@ -32,8 +37,19 @@ class CuotaController extends AbstractController
 
 
     #[Route('/cuota/editar/{id}', name: 'cuota_editar')]
-    public function editar(int $id, Request $request, CuotaRepository $cuotaRepo, EntityManagerInterface $em): Response
+    public function editar(int $id,
+                           Request $request,
+                           CuotaRepository $cuotaRepo,
+                           EntityManagerInterface $em,
+                           SessionInterface $session,
+
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $cuota = $cuotaRepo->find($id);
 
         if (!$cuota) {
@@ -57,8 +73,17 @@ class CuotaController extends AbstractController
     }
 
     #[Route('/cuota/nueva', name: 'cuota_nueva')]
-    public function nuevo(Request $request, EntityManagerInterface $em): Response
+    public function nuevo(Request $request,
+                          EntityManagerInterface $em,
+                          SessionInterface $session,
+
+    ): Response
     {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $cuota = new CuotaEntity();
 
@@ -82,8 +107,17 @@ class CuotaController extends AbstractController
     }
 
     #[Route('/cuota/borrar/{id}', name: 'cuota_borrar')]
-    public function baja(int $id, CuotaRepository $cuotaRepository, EntityManagerInterface $em): Response
+    public function baja(int $id,
+                         CuotaRepository $cuotaRepository,
+                         EntityManagerInterface $em,
+                         SessionInterface $session
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $cuota = $cuotaRepository->find($id);
 
         if (!$cuota) {

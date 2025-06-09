@@ -5,7 +5,11 @@ body {
 
 .dashboard-container {
     display: flex;
-    min-height: 100vh;
+    flex-direction: row; /* o row si quieres distribución horizontal */
+    width: 100vw;
+    min-height: 100vh;  /* Cambiado a min-height para que pueda crecer si es necesario */
+    overflow-x: hidden; /* Solo ocultamos scroll horizontal */
+    overflow-y: auto;
 }
 
 .sidebar {
@@ -179,6 +183,7 @@ h2 {
     color: white;
     padding: 5px 12px;
     margin-right: 10px;
+    margin-bottom: 10px;
     text-decoration: none;
     text-align: center;
     border-radius: 4px;
@@ -277,4 +282,10 @@ h2 {
     transition: background-color 0.2s;
     float: right;
     width: 300px;
+}
+
+.tabla-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Para iOS */
 }

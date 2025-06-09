@@ -37,12 +37,6 @@
                         <i class="fa-solid fa-file-lines"></i> Reclamaciones
                     </a>
                 </li>
-                <li>
-                    <a href="{{ path('admin_panel') }}">
-                        <i class="fa-solid fa-gear"></i> Configuración
-                    </a>
-                </li>
-
             </ul>
         </aside>
 
@@ -64,7 +58,7 @@
             <div class="container my-5">
 
                     <h2 class="text-center mb-4">Listado de Consultas</h2>
-
+                <div class="tabla-scroll">
                     <table class="reclamaciones-table2">
                         <thead>
                         <tr>
@@ -96,7 +90,8 @@
                                     <span class="estado estado-{{ consulta.estado|lower|replace({' ': '-'}) }}">
                                         {{ consulta.estado }}</span>
                                 </td>
-                                <td><a href="{{ path('consulta_detalle', {id: consulta.id}) }}" class="btn-detalles">Detalles</a></td>
+                                <td><a href="{{ path('consulta_detalle', {id: consulta.id}) }}" class="btn-detalles">
+                                        <i class="fa fa-eye"></i> Detalles</a></td>
                             </tr>
                         {% else %}
                             <tr>
@@ -106,7 +101,7 @@
                         </tbody>
                     </table>
                 </div>
-
+            </div>
         </main>
     </div>
 {% endblock %}

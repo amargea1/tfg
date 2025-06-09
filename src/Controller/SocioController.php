@@ -24,8 +24,17 @@ class SocioController extends AbstractController
 {
 
     #[Route('/socio/nuevo', name: 'socio_nuevo')]
-    public function nuevo(Request $request, EntityManagerInterface $em, SocioRepository $socioRepository): Response
+    public function nuevo(Request $request,
+                          EntityManagerInterface $em,
+                          SocioRepository $socioRepository,
+                          SessionInterface $session,
+    ): Response
     {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $socio = new SocioEntity();
 
@@ -65,8 +74,13 @@ class SocioController extends AbstractController
 
 
     #[Route('/socio/ver', name: 'socio_ver')]
-    public function ver(SocioRepository $socioRepository): Response
+    public function ver(SocioRepository $socioRepository, SessionInterface $session): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $socio = $socioRepository->findBy(['estaActivo' => true]);
 
         return $this->render('panel/verSocios.html.twig', [
@@ -75,8 +89,12 @@ class SocioController extends AbstractController
     }
 
     #[Route('/socio/detalle/{id}', name: 'socio_detalle')]
-    public function verDetalle(int $id, SocioRepository $socioRepository): Response
+    public function verDetalle(int $id, SocioRepository $socioRepository, SessionInterface $session): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $socio = $socioRepository->find($id);
 
@@ -90,8 +108,18 @@ class SocioController extends AbstractController
     }
 
     #[Route('/socio/editar/{id}', name: 'socio_editar')]
-    public function editar(int $id, Request $request, SocioRepository $socioRepository, EntityManagerInterface $em): Response
+    public function editar(int $id,
+                           Request $request,
+                           SocioRepository $socioRepository,
+                           EntityManagerInterface $em,
+                           SessionInterface $session,
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $socio = $socioRepository->find($id);
 
         if (!$socio) {
@@ -116,8 +144,17 @@ class SocioController extends AbstractController
 
 
     #[Route('/socio/baja/{id}', name: 'socio_baja')]
-    public function baja(int $id, SocioRepository $socioRepository, EntityManagerInterface $em): Response
+    public function baja(int $id,
+                         SocioRepository $socioRepository,
+                         EntityManagerInterface $em,
+                         SessionInterface $session,
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $socio = $socioRepository->find($id);
 
         if (!$socio) {

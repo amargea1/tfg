@@ -12,9 +12,10 @@ body {
     padding: 50px;
     padding-top: 0px;
     background: white;
-    max-width: 500px;
+    max-width: 600px!important;
     margin: 50px auto;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 .alertRed {
@@ -27,11 +28,13 @@ body {
 }
 
 .cabecera h1{
-    font-size: 20px;
+    font-size: 30px;
+    font-weight: 200;
+    margin-bottom: 40px;
 }
 
 .cabecera{
-    margin-bottom: 40px;
+
     display: flex;
     flex-direction: column;
     align-items: center; /* horizontalmente */
@@ -39,6 +42,7 @@ body {
 }
 
 .btn.btn-primary{
+    margin-top: 20px;
     background-color: #EF6330;
     border: #EF6330;
 }
@@ -48,3 +52,47 @@ body {
     border: #B0413E;
 }
 
+
+/* Teléfonos */
+@media (max-width: 576px) {
+    body {
+        font-size: 17px;
+    }
+
+    .form-login {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+
+    .img-logo {
+        width: 140px;
+        height: 120px;
+    }
+
+    .cabecera h1 {
+        font-size: 24px;
+    }
+
+    .btn.btn-primary {
+        font-size: 1.1rem;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .form-login {
+        padding: 2rem;
+        max-width: 90%;
+    }
+
+    .cabecera h1 {
+        font-size: 26px;
+    }
+}
+
+/* Portátiles medianos */
+@media (max-width: 992px) {
+    .form-login {
+        max-width: 500px;
+    }
+}

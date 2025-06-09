@@ -26,8 +26,12 @@ class ReclamacionController extends AbstractController
 {
 
     #[Route('/reclamacion/nueva', name: 'reclamacion_nueva')]
-    public function nueva(Request $request, EntityManagerInterface $em): Response
+    public function nueva(Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $reclamacion = new ReclamacionEntity();
         $reclamacion->setEstado('Pendiente');
@@ -72,8 +76,13 @@ class ReclamacionController extends AbstractController
     }
 
     #[Route('/reclamacion/ver', name: 'reclamacion_ver')]
-    public function ver(ReclamacionRepository $reclamacionRepository): Response
+    public function ver(ReclamacionRepository $reclamacionRepository, SessionInterface $session): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $reclamaciones = $reclamacionRepository->findAllWithFamiliar();
 
         return $this->render('panel/verReclamacion.html.twig', [
@@ -82,8 +91,17 @@ class ReclamacionController extends AbstractController
     }
 
     #[Route('/admin/reclamacion/{id}', name: 'reclamacion_detalle')]
-    public function verDetalle(int $id, ReclamacionRepository $reclamacionRepository, AdministradorRepository $adminRepo): Response
+    public function verDetalle(int $id,
+                               ReclamacionRepository $reclamacionRepository,
+                               AdministradorRepository $adminRepo,
+                               SessionInterface $session
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
 
         $reclamacion = $reclamacionRepository->find($id);
         $admins = $adminRepo->findAll();
@@ -99,8 +117,18 @@ class ReclamacionController extends AbstractController
     }
 
     #[Route('/reclamacion/{id}/cambiar-estado', name: 'reclamacion_cambiar_estado', methods: ['POST'])]
-    public function cambiarEstado(Request $request, ReclamacionRepository $repo, EntityManagerInterface $em, int $id): Response
+    public function cambiarEstado(Request $request,
+                                  ReclamacionRepository $repo,
+                                  EntityManagerInterface $em,
+                                  int $id,
+                                  SessionInterface $session
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $reclamacion = $repo->find($id);
         $nuevoEstado = $request->request->get('estado');
 
@@ -118,8 +146,15 @@ class ReclamacionController extends AbstractController
         ReclamacionRepository $repo,
         AdministradorRepository $adminRepo,
         EntityManagerInterface $em,
-        int $id
+        int $id,
+        SessionInterface $session
     ): Response {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $reclamacion = $repo->find($id);
         $adminId = $request->request->get('admins'); // usa 'admin' si el select es name="admin"
 
@@ -144,8 +179,15 @@ class ReclamacionController extends AbstractController
         Request $request,
         ReclamacionRepository $repo,
         EntityManagerInterface $em,
-        int $id
+        int $id,
+        SessionInterface $session
     ): Response {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $reclamacion = $repo->find($id);
         $fecha = $request->request->get('fecha');
         $comentario = $request->request->get('comentario');
@@ -168,8 +210,14 @@ class ReclamacionController extends AbstractController
         int $id,
         SeguimientoRepository $repo,
         EntityManagerInterface $em,
-        Request $request
+        Request $request,
+        SessionInterface $session
     ): Response {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
         $seguimiento = $repo->find($id);
 
         if ($seguimiento) {
@@ -185,8 +233,15 @@ class ReclamacionController extends AbstractController
         int $id,
         ReclamacionRepository $repo,
         EntityManagerInterface $em,
-        Request $request
+        Request $request,
+        SessionInterface $session
     ): Response {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $reclamacion = $repo->find($id);
 
         if ($reclamacion && $reclamacion->getEstado() !== 'resuelta') {

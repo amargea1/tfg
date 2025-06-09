@@ -39,12 +39,6 @@
                         <i class="fa-solid fa-file-lines"></i> Reclamaciones
                     </a>
                 </li>
-                <li>
-                    <a href="{{ path('admin_panel') }}">
-                        <i class="fa-solid fa-gear"></i> Configuración
-                    </a>
-                </li>
-
             </ul>
         </aside>
 
@@ -70,8 +64,7 @@
                     <tr>
                         <th>Nombre</th>
                         <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.nombre : reclamacion.socio.nombre }}
-                            <a href="{{ path('reclamacion_detalle', {id: reclamacion.esFamiliar ? reclamacion.familiar.id : reclamacion.socio.id }) }}"
-                               class="btn-detalles">Ver</a></td>
+                        </td>
                     </tr>
                     <tr>
                         <th>Apellidos</th>
@@ -131,7 +124,7 @@
                                     <option value="Resuelta" {{ reclamacion.estado == 'Resuelta' ? 'selected' : '' }}>Resuelta</option>
                                 </select>
                                 {% if reclamacion.estado != 'resuelta' %}
-                                <button type="submit" class="btn-detalles">Cambiar</button>
+                                <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
                                 {% endif %}
                             </form>
                         </td>
@@ -166,7 +159,7 @@
                                         <option value="{{ admin.id }}">{{ admin.nombre }} {{ admin.apellidos }}</option>
                                     {% endfor %}
                                 </select>
-                                <button type="submit" class="btn-detalles">Cambiar</button>
+                                <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
                             </form>
                         </td>
 
@@ -197,7 +190,7 @@
                                     <input type="text" name="comentario" class="form-control" placeholder="Comentario" required>
                                 </div>
                                 <br>
-                                <button type="submit" class="btn-detalles2">Guardar nuevo estado</button>
+                                <button type="submit" class="btn-detalles2"><i class="bi bi-save"></i> Guardar nuevo estado</button>
                             </form>
                         </td>
                     </tr>

@@ -39,12 +39,6 @@
                         <i class="fa-solid fa-file-lines"></i> Reclamaciones
                     </a>
                 </li>
-                <li>
-                    <a href="{{ path('admin_panel') }}">
-                        <i class="fa-solid fa-gear"></i> Configuración
-                    </a>
-                </li>
-
             </ul>
         </aside>
 
@@ -123,7 +117,8 @@
                                 </select>
 
 
-                                    <button type="submit" class="btn-detalles">Cambiar</button>
+                                    <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i>
+                                         Cambiar</button>
                                 {% else %}
                                 {{ consulta.estado }}
                                 {% endif %}
@@ -142,6 +137,7 @@
                         <th></th>
                         <td>
                             <a href="mailto:{{ consulta.email }}?subject=Respuesta a tu consulta&body=Hola {{ consulta.nombre }},%0A%0A[Escribe aquí tu respuesta...]%0A%0AConsulta:%0A{{ consulta.consulta | url_encode }}" class="btn-detalles2">
+                                <i class="bi bi-reply-fill"></i>
                                 Responder por correo
                             </a>
                         </td>

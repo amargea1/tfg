@@ -27,8 +27,16 @@ class ConsultaController extends AbstractController
 {
 
     #[Route('/consulta/ver', name: 'consultas_ver')]
-    public function ver(ConsultaRepository $consultaRepository): Response
+    public function ver(ConsultaRepository $consultaRepository,
+                        SessionInterface $session,
+    ): Response
     {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $consultas = $consultaRepository->findAll();
 
 
@@ -44,9 +52,15 @@ class ConsultaController extends AbstractController
         AdministradorRepository $adminRepo,
         SocioRepository $socioRepository,
         FamiliarRepository $familiarRepository,
+        SessionInterface $session,
 
     ): Response
     {
+
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
 
         $consulta = $consultaRepository->find($id);
         $admins = $adminRepo->findAll();
@@ -82,8 +96,18 @@ class ConsultaController extends AbstractController
     }
 
     #[Route('/consulta/{id}/cambiar-estado', name: 'consulta_cambiar_estado', methods: ['POST'])]
-    public function cambiarEstado(Request $request, ConsultaRepository $repo, EntityManagerInterface $em, int $id): Response
+    public function cambiarEstado(Request $request,
+                                  ConsultaRepository $repo,
+                                  EntityManagerInterface $em,
+                                  int $id,
+                                  SessionInterface $session,
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $consulta = $repo->find($id);
         $nuevoEstado = $request->request->get('estado');
 
@@ -105,8 +129,14 @@ class ConsultaController extends AbstractController
         int $id,
         ConsultaRepository $repo,
         EntityManagerInterface $em,
-        Request $request
+        Request $request,
+        SessionInterface $session,
     ): Response {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $consulta = $repo->find($id);
 
         if ($consulta && $consulta->getEstado() !== 'Resuelta') {

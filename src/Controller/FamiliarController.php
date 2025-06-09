@@ -26,8 +26,16 @@ class FamiliarController extends AbstractController
 {
 
     #[Route('/familiar/nuevo', name: 'familiar_nuevo')]
-    public function nuevo(Request $request, EntityManagerInterface $em): Response
+    public function nuevo(Request $request,
+                          EntityManagerInterface $em,
+                          SessionInterface $session
+    ): Response
     {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $familiar = new FamiliarEntity();
 
         $form = $this->createForm(FamiliarType::class, $familiar);
