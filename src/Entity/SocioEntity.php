@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SocioRepository::class)]
 #[ORM\Table(name: "socio")]
+#[ORM\HasLifecycleCallbacks]
 class SocioEntity extends UsuarioEntity
 {
 
@@ -70,6 +71,7 @@ class SocioEntity extends UsuarioEntity
         $this->reclamaciones = new ArrayCollection();
         $this->fechaRegistro = new \DateTime(); // Asignar fecha actual en el constructor
         $this->fechaPago = new \DateTime(); // Asignar fecha actual en el constructor
+
     }
 
     public function __toString(): string
@@ -245,5 +247,8 @@ class SocioEntity extends UsuarioEntity
 
         return $this;
     }
+
+
+
 
 }

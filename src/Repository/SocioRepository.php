@@ -23,4 +23,20 @@ class SocioRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function contarSociosHoy(): int
+    {
+        $inicioDia = new \DateTime('today');
+        $finDia = new \DateTime('tomorrow');
+
+        return (int) $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->where('s.fechaRegistro >= :inicio')
+            ->andWhere('s.fechaRegistro < :fin')
+            ->setParameter('inicio', $inicioDia)
+            ->setParameter('fin', $finDia)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
 }

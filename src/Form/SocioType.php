@@ -41,8 +41,12 @@ class SocioType extends AbstractType
             ->add('fechaRegistro', DateType::class, [
                 'widget' => 'single_text',
                 'html5' => true,
+                'disabled' => true,
             ])
-            ->add('ordenRegistro')
+            ->add('ordenRegistro', null, [
+                'label' => 'Orden registro',
+                'disabled' => true,
+            ])
             ->add('colectivo', ChoiceType::class, [
                 'choices' => [
                     'Jubilado' => 'Jubilado',
@@ -54,7 +58,11 @@ class SocioType extends AbstractType
                 ],
                 'placeholder' => 'Seleccionar colectivo',
             ])
-            ->add('numSocio')
+            ->add('numSocio', null, [
+                'label' => 'Número de socio',
+                'disabled' => true,
+            ])
+
             ->add('modoPago', ChoiceType::class, [
                 'choices' => [
                     'Efectivo' => 'efectivo',

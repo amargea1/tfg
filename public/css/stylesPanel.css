@@ -58,8 +58,14 @@ body {
 }
 
 h2 {
-    margin-bottom: 25px;
+    margin-bottom: 2rem;;
+    font-size: 1.5rem; /* o el tamaño que prefieras */
+    font-weight: 600; /* opcional */
 }
+.main-panel h2 {
+    margin-bottom: 2rem;
+}
+
 
 .stats {
     display: flex;
@@ -105,6 +111,8 @@ h2 {
 
 .action-card h3 {
     margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .btn-orange {
@@ -116,7 +124,7 @@ h2 {
     border-radius: 5px;
     text-decoration: none;
 
-    width: 100px;
+    width: 150px;
 }
 
 .menu a {

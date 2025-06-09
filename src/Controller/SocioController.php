@@ -24,10 +24,19 @@ class SocioController extends AbstractController
 {
 
     #[Route('/socio/nuevo', name: 'socio_nuevo')]
-    public function nuevo(Request $request, EntityManagerInterface $em): Response
+    public function nuevo(Request $request, EntityManagerInterface $em, SocioRepository $socioRepository): Response
     {
 
         $socio = new SocioEntity();
+
+        $contador= $socioRepository->contarSociosHoy();
+        $orden = $contador + 1;
+        $fecha = (new \DateTime())->format('Ymd');
+        $numero = str_pad((string) $orden, 4, '0', STR_PAD_LEFT);
+        $socio->setNumSocio($fecha . '-' . $numero);
+
+        $socio->setOrdenRegistro($orden);
+        $socio->setFechaRegistro(new \DateTime());
 
         $form = $this->createForm(SocioType::class, $socio);
 
