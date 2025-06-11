@@ -65,6 +65,8 @@ class SocioController extends AbstractController
 
             $this->addFlash('success', 'Socio registrado con éxito.');
             return $this->redirectToRoute('admin_panel');
+        } else{
+            $this->addFlash('error', 'Error al registrar socio.');
         }
 
         return $this->render('panel/crearSocio.html.twig', [
@@ -134,6 +136,8 @@ class SocioController extends AbstractController
 
             $this->addFlash('success', 'Socio actualizado con éxito.');
             return $this->redirectToRoute('socio_detalle', ['id' => $socio->getId()]);
+        } else{
+            $this->addFlash('error', 'Error al actualizar socio.');
         }
 
         return $this->render('panel/editarSocio.html.twig', [

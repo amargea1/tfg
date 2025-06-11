@@ -76,10 +76,10 @@ class ReclamacionType extends AbstractType
             ])
             ->add('prioridad', ChoiceType::class, [
                 'choices' => [
-                    'Baja' => 'baja',
-                    'Media' => 'media',
-                    'Alta' => 'alta',
-                    'Urgente' => 'urgente',
+                    'Baja' => 'Baja',
+                    'Media' => 'Media',
+                    'Alta' => 'Alta',
+                    'Urgente' => 'Urgente',
                 ],
                 'placeholder' => 'Nivel de prioridad',
             ])

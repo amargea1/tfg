@@ -86,7 +86,7 @@ class ReclamacionEntity
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "La prioridad es obligatoria")]
-    #[Assert\Choice(choices: ['baja', 'media', 'alta', 'urgente'], message: 'Prioridad inválida')]
+    #[Assert\Choice(choices: ['Baja', 'Media', 'Alta', 'Urgente'], message: 'Prioridad inválida')]
     private ?string $prioridad = null;
     public function __construct()
     {

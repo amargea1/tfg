@@ -61,9 +61,10 @@ class CuotaController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-
             $this->addFlash('success', 'Cuota actualizada con éxito.');
             return $this->redirectToRoute('cuota_ver');
+        } else {
+            this->addFlash('error', 'Error al actualizar la cuota.');
         }
 
         return $this->render('panel/editarCuota.html.twig', [
@@ -95,10 +96,10 @@ class CuotaController extends AbstractController
 
             $em->persist($cuota);
             $em->flush();
-
-
             $this->addFlash('success', 'Cuota registrada con éxito.');
             return $this->redirectToRoute('cuota_ver');
+        } else {
+            $this->addFlash('error', 'Error al registrar la cuota.');
         }
 
         return $this->render('panel/crearCuota.html.twig', [
@@ -122,6 +123,11 @@ class CuotaController extends AbstractController
 
         if (!$cuota) {
             throw $this->createNotFoundException('Cuota no encontrada.');
+        }
+
+        if (count($cuota->getSocios()) > 0 || count($cuota->getFamiliares()) > 0) {
+            $this->addFlash('error', 'No puedes eliminar una cuota asignada a socios o familiares.');
+            return $this->redirectToRoute('cuota_ver');
         }
 
         $em->remove($cuota);

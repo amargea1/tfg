@@ -41,6 +41,7 @@ body {
 .main-panel {
     flex-grow: 1;
     padding: 30px;
+    padding-top: 0px;
     background-color: #f9f9f9;
     position: relative;
 }
@@ -55,6 +56,10 @@ body {
 .alert {
     max-width: 80%;  /* O el ancho que quieras */
     white-space: normal; /* Para que el texto haga wrap y no quede en una sola línea */
+}
+
+.alert-error{
+    background-color: rgba(244, 3, 3, 0.48) !important;
 }
 
 
@@ -208,9 +213,13 @@ h2 {
     width: 210px;
 }
 
-.btn-detalles:hover {
-    background-color: #cc3e0f;
+.btn-filtrar{
+    background-color: #45a8b4!important;
+    color: white!important;
+    width: 100px;
+
 }
+
 
 .estado {
     padding: 4px 10px;
@@ -288,4 +297,45 @@ h2 {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; /* Para iOS */
+}
+
+@media (min-width: 1024px){
+
+    .btn-orange:hover{
+        background-color: #9a3310;
+
+    }
+
+    .btn-blue:hover {
+        background-color: #7c9a97;
+
+    }
+
+    .btn-detalles:hover {
+        background-color: #cc3e0f;
+    }
+
+    .btn-detalles2:hover {
+        background-color: #cc3e0f;
+    }
+
+    .btn-nuevo:hover {
+        background-color: #cc3e0f;
+    }
+
+    .btn-baja:hover {
+        background-color: #2f7881;
+    }
+}
+
+@media (min-width: 1060px){
+    .filtros{
+        margin-left: 5%;
+    }
+}
+
+@media (min-width: 1190px){
+    .filtros{
+        margin-left: 10%;
+    }
 }

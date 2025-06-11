@@ -8,55 +8,14 @@
 
 {% endblock %}
 
-{% block body %}
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo">
-            <ul class="menu">
-                <li>
-                    <a href="{{ path('admin_panel') }}">
-                        <i class="fa-solid fa-gauge"></i> Panel de control
-                    </a>
-                </li>
+{% block hb %}
+    <div class="d-flex ms-auto">
+        <a href="{{ path('reclamacion_ver') }}" class="btn btn-outline-info me-3">Volver</a>
+        <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
+    </div>
+{% endblock %}
 
-                <li>
-                    <a href="{{ path('socio_ver') }}">
-                        <i class="fa-solid fa-users"></i> Socios
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('cuota_ver') }}">
-                        <i class="fa-solid fa-coins"></i> Cuotas
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('consultas_ver') }}">
-                        <i class="fa-solid fa-comments"></i> Consultas
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('reclamacion_ver') }}">
-                        <i class="fa-solid fa-file-lines"></i> Reclamaciones
-                    </a>
-                </li>
-            </ul>
-        </aside>
-
-        <main class="main-panel">
-            <div class="top-bar text-end">
-                <a href="{{ path('reclamacion_ver') }}" class="btn btn-outline-info me-3">Volver</a>
-                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
-            </div>
-
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                    </div>
-                {% endfor %}
-            {% endfor %}
-
+{% block main %}
             <div class="container my-5">
                 <h3 class="text-center mb-4">Reclamación con ID: {{ reclamacion.id }}</h3>
 
@@ -119,14 +78,18 @@
                         <td>
                             <form method="post" action="{{ path('reclamacion_cambiar_estado', { id: reclamacion.id }) }}">
                                 <select name="estado" class="form-select form-select-sm d-inline w-auto me-2">
-                                    <option value="Pendiente" {{ reclamacion.estado == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
-                                    <option value="Asignada" {{ reclamacion.estado == 'Asignada' ? 'selected' : '' }}>Asignada</option>
-                                    <option value="Resuelta" {{ reclamacion.estado == 'Resuelta' ? 'selected' : '' }}>Resuelta</option>
+                                    <option value="{{ reclamacion.estado }}" selected>{{ reclamacion.estado }}</option>
+                                    {% for opcion in ['Pendiente', 'Asignada', 'Resuelta'] %}
+                                        {% if opcion != reclamacion.estado %}
+                                            <option value="{{ opcion }}">{{ opcion }}</option>
+                                        {% endif %}
+                                    {% endfor %}
                                 </select>
-                                {% if reclamacion.estado != 'resuelta' %}
-                                <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
+                                {% if reclamacion.estado != 'Resuelta' %}
+                                    <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
                                 {% endif %}
                             </form>
+
                         </td>
 
                     </tr>
@@ -138,6 +101,25 @@
                         <th>Forma de pago</th>
                         <td>{{ reclamacion.esFamiliar ? reclamacion.familiar.modoPago : reclamacion.socio.modoPago }}</td>
                     </tr>
+                    <tr>
+                        <th>Prioridad</th>
+                        <td>
+                            <form method="post" action="{{ path('reclamacion_cambiar_prioridad', { id: reclamacion.id }) }}">
+                                <select name="prioridad" class="form-select form-select-sm d-inline w-auto me-2">
+                                    <option value="{{ reclamacion.prioridad }}" selected>{{ reclamacion.prioridad }}</option>
+                                    {% for opcion in ['Urgente', 'Alta', 'Media', 'Baja'] %}
+                                        {% if opcion != reclamacion.prioridad %}
+                                            <option value="{{ opcion }}">{{ opcion }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+
+                                    <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
+
+                            </form>
+                        </td>
+                    </tr>
+
                     <tr>
                         <th>Reclamación</th>
                         <td style="white-space: pre-wrap;">{{ reclamacion.reclamacion }}</td>
@@ -195,9 +177,6 @@
                         </td>
                     </tr>
                 </table>
-
-
             </div>
-        </main>
-    </div>
+
 {% endblock %}

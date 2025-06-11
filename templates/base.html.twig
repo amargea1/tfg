@@ -22,9 +22,43 @@
     </head>
     <body>
 
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo">
+            <ul class="menu">
+                <li><a href="{{ path('admin_panel') }}"><i class="fa-solid fa-gauge"></i> Panel de control</a></li>
+                <li><a href="{{ path('socio_ver') }}"><i class="fa-solid fa-users"></i> Socios</a></li>
+                <li><a href="{{ path('cuota_ver') }}"><i class="fa-solid fa-coins"></i> Cuotas</a></li>
+                <li><a href="{{ path('consultas_ver') }}"><i class="fa-solid fa-comments"></i> Consultas</a></li>
+                <li><a href="{{ path('reclamacion_ver') }}"><i class="fa-solid fa-file-lines"></i> Reclamaciones</a></li>
+            </ul>
+        </aside>
 
-        {% block body %}{% endblock %}
+        <main class="main-panel">
 
+            <header class="header-bar d-flex justify-content-between align-items-center p-3 bg-light border-bottom mb-4 mt-0">
+
+                {% block hb %}{% endblock %}
+            </header>
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+
+        {% block main %}{% endblock %}
+
+            <footer class="footer text-center py-3 mt-lg-5 bg-light border-top">
+                <small>&copy; {{ "now"|date("Y") }} ConsuNet. Asociación de Consumidores. Todos los derechos reservados.</small>
+            </footer>
+
+        </main>
+    </div>
 
     </body>
 

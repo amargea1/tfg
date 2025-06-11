@@ -13,6 +13,7 @@ class UsuarioEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, UsuarioEntity::class);
     }
 
+
     public function findNombreById(int $id): ?string
     {
         $qb = $this->createQueryBuilder('u')
@@ -22,9 +23,11 @@ class UsuarioEntityRepository extends ServiceEntityRepository
             ->getQuery();
 
         try {
-            return $qb->getSingleScalarResult(); // Devuelve solo el nombre
+            return $qb->getSingleScalarResult();
         } catch (\Doctrine\ORM\NoResultException) {
             return null;
         }
     }
+
+
 }

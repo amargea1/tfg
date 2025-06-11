@@ -4,106 +4,63 @@
     <link rel="stylesheet" href="{{ asset('css/stylesPanel.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-
 {% endblock %}
 
-{% block body %}
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <img src="{{ asset('image/logo.png') }}" alt="Logo" class="logo">
-            <ul class="menu">
-                <li>
-                    <a href="{{ path('admin_panel') }}">
-                        <i class="fa-solid fa-gauge"></i> Panel de control
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ path('socio_ver') }}">
-                        <i class="fa-solid fa-users"></i> Socios
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('cuota_ver') }}">
-                        <i class="fa-solid fa-coins"></i> Cuotas
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('consultas_ver') }}">
-                        <i class="fa-solid fa-comments"></i> Consultas
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path('reclamacion_ver') }}">
-                        <i class="fa-solid fa-file-lines"></i> Reclamaciones
-                    </a>
-                </li>
-            </ul>
-        </aside>
-
-        <main class="main-panel">
-            <div class="top-bar">
-                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
-            </div>
-
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                    </div>
-                {% endfor %}
-            {% endfor %}
-
-            <h2>Hola, {{ nombre }}</h2>
-
-            <div class="stats">
-                <div class="stat-box">
-                    <strong>{{ total_socios }}</strong>
-                    <span>Socios totales</span>
-                </div>
-                <div class="stat-box">
-                    <strong>{{ rec_abiertas }}</strong>
-                    <span>Reclamaciones pendientes</span>
-                </div>
-                <div class="stat-box">
-                    <strong>{{ cons_abiertas }}</strong>
-                    <span>Consultas pendientes</span>
-                </div>
-            </div>
-
-            <div class="actions">
-                <div class="action-card">
-                    <h3>Abrir reclamación</h3>
-                    <p>Presentar una nueva reclamación</p>
-                    <a href="{{ path('reclamacion_nueva') }}" class="btn-orange"><i class="fa-solid fa-plus"></i>
-                        Crear</a>
-                </div>
-                <div class="action-card">
-                    <h3>Registrar socio</h3>
-                    <p>Dar de alta un nuevo socio</p>
-                    <a href="{{ path('socio_nuevo') }}" class="btn-orange"><i class="fa-solid fa-plus"></i>
-                        Registrar</a>
-                </div>
-                <div class="action-card">
-                    <h3>Registrar familiar</h3>
-                    <p>Dar de alta un nuevo familiar de un socio</p>
-                    <a href="{{ path('familiar_nuevo') }}" class="btn-orange"><i class="fa-solid fa-plus"></i>
-                        Registrar</a>
-                </div>
-                <div class="action-card">
-                    <h3>Ver reclamaciones</h3>
-                    <p>Ver reclamaciones pendientes</p>
-                    <a href="{{ path('reclamacion_ver') }}" class="btn-orange"><i class="fa-solid fa-eye"></i>
-                        Ver</a>
-                </div>
-                <div class="action-card">
-                    <h3>Ver consultas</h3>
-                    <p>Ver consultas pendientes</p>
-                    <a href="{{ path('consultas_ver') }}" class="btn-orange"><i class="fa-solid fa-eye"></i>
-                        Ver</a>
-                </div>
-            </div>
-        </main>
+    {% block hb %}
+    <div class="d-flex ms-auto">
+            <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
     </div>
+    {% endblock %}
+
+{% block main %}
+
+
+            <section class="px-4 py-3">
+                <h2>Hola, {{ nombre }}</h2>
+
+                <div class="stats my-4">
+                    <div class="stat-box">
+                        <strong>{{ total_socios }}</strong>
+                        <span>Socios totales</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>{{ rec_abiertas }}</strong>
+                        <span>Reclamaciones pendientes</span>
+                    </div>
+                    <div class="stat-box">
+                        <strong>{{ cons_abiertas }}</strong>
+                        <span>Consultas pendientes</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <div class="action-card">
+                        <h3>Abrir reclamación</h3>
+                        <p>Presentar una nueva reclamación</p>
+                        <a href="{{ path('reclamacion_nueva') }}" class="btn-orange"><i class="fa-solid fa-plus"></i> Crear</a>
+                    </div>
+                    <div class="action-card">
+                        <h3>Registrar socio</h3>
+                        <p>Dar de alta un nuevo socio</p>
+                        <a href="{{ path('socio_nuevo') }}" class="btn-orange"><i class="fa-solid fa-plus"></i> Registrar</a>
+                    </div>
+                    <div class="action-card">
+                        <h3>Registrar familiar</h3>
+                        <p>Dar de alta un nuevo familiar de un socio</p>
+                        <a href="{{ path('familiar_nuevo') }}" class="btn-orange"><i class="fa-solid fa-plus"></i> Registrar</a>
+                    </div>
+                    <div class="action-card">
+                        <h3>Ver reclamaciones</h3>
+                        <p>Ver reclamaciones pendientes</p>
+                        <a href="{{ path('reclamacion_ver') }}" class="btn-orange"><i class="fa-solid fa-eye"></i> Ver</a>
+                    </div>
+                    <div class="action-card">
+                        <h3>Ver consultas</h3>
+                        <p>Ver consultas pendientes</p>
+                        <a href="{{ path('consultas_ver') }}" class="btn-orange"><i class="fa-solid fa-eye"></i> Ver</a>
+                    </div>
+                </div>
+            </section>
+
+
 {% endblock %}

@@ -28,8 +28,31 @@ class ReclamacionRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->leftJoin('r.familiar', 'f')
             ->addSelect('f')
+            ->orderBy('r.fechaApertura', 'DESC')
             ->getQuery()
             ->getResult();
     }
+
+    public function findByEstadoAndPrioridadWithFamiliar(?string $estado, ?string $prioridad): array
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->leftJoin('r.familiar', 'f')
+            ->addSelect('f');
+
+        if ($estado) {
+            $qb->andWhere('r.estado = :estado')
+                ->setParameter('estado', $estado);
+        }
+
+        if ($prioridad) {
+            $qb->andWhere('r.prioridad = :prioridad')
+                ->setParameter('prioridad', $prioridad);
+        }
+
+        return $qb->orderBy('r.fechaApertura', 'DESC')
+        ->getQuery()
+            ->getResult();
+    }
+
 
 }

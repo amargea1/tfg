@@ -23,4 +23,21 @@ class ConsultaRepository extends ServiceEntityRepository
     }
 
 
+    public function findWithEstadoOrdered(string $estado): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.estado = :estado')
+            ->setParameter('estado', $estado)
+            ->orderBy('c.fechaApertura', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllOrderedByFechaDesc(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.fechaApertura', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

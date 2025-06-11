@@ -68,6 +68,8 @@ class ReclamacionController extends AbstractController
 
             $this->addFlash('success', 'Reclamación registrada con éxito.');
             return $this->redirectToRoute('admin_panel');
+        } else{
+            $this->addFlash('error', 'Error al registrar la reclamación.');
         }
 
         return $this->render('panel/crearReclamacion.html.twig', [
@@ -76,14 +78,21 @@ class ReclamacionController extends AbstractController
     }
 
     #[Route('/reclamacion/ver', name: 'reclamacion_ver')]
-    public function ver(ReclamacionRepository $reclamacionRepository, SessionInterface $session): Response
+    public function ver(Request $request, ReclamacionRepository $reclamacionRepository, SessionInterface $session): Response
     {
         $userId = $session->get('user_id');
         if (!$userId) {
             return $this->redirectToRoute('app_login');
         }
 
-        $reclamaciones = $reclamacionRepository->findAllWithFamiliar();
+        $estado = $request->query->get('estado');
+        $prioridad = $request->query->get('prioridad');
+
+        if ($estado || $prioridad) {
+            $reclamaciones = $reclamacionRepository->findByEstadoAndPrioridadWithFamiliar($estado, $prioridad);
+        } else {
+            $reclamaciones = $reclamacionRepository->findAllWithFamiliar();
+        }
 
         return $this->render('panel/verReclamacion.html.twig', [
             'reclamaciones' => $reclamaciones,
@@ -135,6 +144,40 @@ class ReclamacionController extends AbstractController
         if ($reclamacion && $nuevoEstado) {
             $reclamacion->setEstado($nuevoEstado);
             $em->flush();
+            $this->addFlash('success', 'Estado cambiado con éxito.');
+
+            if ($nuevoEstado == 'Resuelta'){
+                $reclamacion->setFechaCierre(new \DateTimeImmutable('now'));
+                $em->flush();
+            }
+        } else{
+            $this->addFlash('error', 'Error al cambiar el estado.');
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    #[Route('/reclamacion/{id}/cambiar-prioridad', name: 'reclamacion_cambiar_prioridad', methods: ['POST'])]
+    public function cambiarPrioridad(Request $request,
+                                  ReclamacionRepository $repo,
+                                  EntityManagerInterface $em,
+                                  int $id,
+                                  SessionInterface $session
+    ): Response
+    {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $reclamacion = $repo->find($id);
+        $nuevaPrioridad = $request->request->get('prioridad');
+
+        if ($reclamacion && $nuevaPrioridad) {
+            $reclamacion->setPrioridad($nuevaPrioridad);
+            $em->flush();
+            $this->addFlash('success', 'Prioridad cambiada con éxito.');
+        } else{
+            $this->addFlash('error', 'Error al cambiar la prioridad.');
         }
 
         return $this->redirect($request->headers->get('referer'));
@@ -168,6 +211,9 @@ class ReclamacionController extends AbstractController
                 }
                 $reclamacion->addAdmin($admin);
                 $em->flush();
+                $this->addFlash('success', 'Administrador cambiado con éxito.');
+            } else {
+                $this->addFlash('error', 'Error al cambiar el administrador.');
             }
         }
 
@@ -200,6 +246,9 @@ class ReclamacionController extends AbstractController
 
             $em->persist($seguimiento);
             $em->flush();
+            $this->addFlash('success', 'Seguimiento guardado con éxito.');
+        } else{
+            $this->addFlash('error', 'Error al guardar el seguimiento.');
         }
 
         return $this->redirect($request->headers->get('referer'));
@@ -223,6 +272,9 @@ class ReclamacionController extends AbstractController
         if ($seguimiento) {
             $em->remove($seguimiento);
             $em->flush();
+            $this->addFlash('success', 'Seguimiento eliminado con éxito.');
+        } else {
+            $this->addFlash('error', 'Error al eliminar el seguimiento.');
         }
 
         return $this->redirect($request->headers->get('referer')); // Vuelve a la página anterior
@@ -245,9 +297,12 @@ class ReclamacionController extends AbstractController
         $reclamacion = $repo->find($id);
 
         if ($reclamacion && $reclamacion->getEstado() !== 'resuelta') {
-            $reclamacion->setEstado('resuelta'); // o el valor que uses para “cerrado”
+            $reclamacion->setEstado('resuelta');
             $reclamacion->setFechaCierre(new \DateTimeImmutable('now'));
             $em->flush();
+            $this->addFlash('success', 'Reclamación cerrada con éxito.');
+        } else {
+            $this->addFlash('error', 'Error al cerrar la reclamacion.');
         }
 
         return $this->redirect($request->headers->get('referer'));

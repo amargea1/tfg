@@ -27,8 +27,10 @@ class ConsultaController extends AbstractController
 {
 
     #[Route('/consulta/ver', name: 'consultas_ver')]
-    public function ver(ConsultaRepository $consultaRepository,
+    public function ver(Request $request,
+                        ConsultaRepository $consultaRepository,
                         SessionInterface $session,
+
     ): Response
     {
 
@@ -38,6 +40,11 @@ class ConsultaController extends AbstractController
         }
 
         $consultas = $consultaRepository->findAll();
+        $estado = $request->query->get('estado');
+        if ($estado){
+            $consultas = $consultaRepository->findWithEstadoOrdered($estado);
+        } else {
+            $consultas = $consultaRepository->findAllOrderedByFechaDesc();        }
 
 
         return $this->render('panel/verConsultas.html.twig', [
@@ -118,6 +125,9 @@ class ConsultaController extends AbstractController
         if ($consulta && $nuevoEstado) {
             $consulta->setEstado($nuevoEstado);
             $em->flush();
+            $this->addFlash('success', 'Estado cambiado con éxito.');
+        } else {
+            $this->addFlash('error', 'Error al cambiar el estado.');
         }
 
         return $this->redirect($request->headers->get('referer'));
@@ -140,16 +150,16 @@ class ConsultaController extends AbstractController
         $consulta = $repo->find($id);
 
         if ($consulta && $consulta->getEstado() !== 'Resuelta') {
-            $consulta->setEstado('Resuelta'); // o el valor que uses para “cerrado”
+            $consulta->setEstado('Resuelta');
             $consulta->setFechaCierre(new \DateTimeImmutable('now'));
             $em->flush();
+            $this->addFlash('success', 'Consulta cerrada con éxito.');
+        } else {
+            $this->addFlash('error', 'Error al cerrar la consulta.');
         }
 
         return $this->redirectToRoute('consultas_ver');
     }
-
-
-
 
 
 }
