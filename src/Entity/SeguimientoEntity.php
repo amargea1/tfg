@@ -20,8 +20,8 @@ class SeguimientoEntity
     #[ORM\ManyToOne(targetEntity: ReclamacionEntity::class)]
     private ?ReclamacionEntity $reclamacion = null;
 
-    #[ORM\ManyToMany(targetEntity: AdministradorEntity::class, mappedBy: "seguimientos")]
-    private Collection $admins;
+    #[ORM\ManyToOne(targetEntity: AdministradorEntity::class, inversedBy: 'seguimientos')]
+    private ?AdministradorEntity $admin = null;
 
 
     #[ORM\Column(type: 'datetime')]
@@ -30,13 +30,6 @@ class SeguimientoEntity
 
     #[ORM\Column(type: 'text')]
     private string $comentario;
-
-    public function __construct()
-    {
-
-        $this->admins = new ArrayCollection();
-
-    }
 
     public function getId(): ?int
     {
@@ -53,14 +46,14 @@ class SeguimientoEntity
         $this->reclamacion = $reclamacion;
     }
 
-    public function getAdmins(): Collection
+    public function getAdmin(): ?AdministradorEntity
     {
-        return $this->admins;
+        return $this->admin;
     }
 
-    public function setAdmins(Collection $admins): void
+    public function setAdmin(?AdministradorEntity $admin): void
     {
-        $this->admins = $admins;
+        $this->admin = $admin;
     }
 
     public function getFecha(): \DateTimeInterface
@@ -82,22 +75,5 @@ class SeguimientoEntity
     {
         $this->comentario = $comentario;
     }
-
-    public function addAdmin(AdministradorEntity $admin): self
-    {
-        if (!$this->admins->contains($admin)) {
-            $this->admins[] = $admin;
-        }
-
-        return $this;
-    }
-
-    public function removeAdmin(AdministradorEntity $admin): self
-    {
-        $this->admins->removeElement($admin);
-
-        return $this;
-    }
-
 
 }

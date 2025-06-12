@@ -65,7 +65,7 @@ class SocioController extends AbstractController
 
             $this->addFlash('success', 'Socio registrado con éxito.');
             return $this->redirectToRoute('admin_panel');
-        } else{
+        } elseif ($form->isSubmitted()) {
             $this->addFlash('error', 'Error al registrar socio.');
         }
 
@@ -136,7 +136,7 @@ class SocioController extends AbstractController
 
             $this->addFlash('success', 'Socio actualizado con éxito.');
             return $this->redirectToRoute('socio_detalle', ['id' => $socio->getId()]);
-        } else{
+        } elseif ($form->isSubmitted()){
             $this->addFlash('error', 'Error al actualizar socio.');
         }
 

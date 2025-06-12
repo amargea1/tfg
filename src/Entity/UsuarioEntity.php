@@ -112,16 +112,6 @@ abstract class UsuarioEntity
         return $this->id;
     }
 
-    public function getRolAdmin(): ?string
-    {
-        return $this->rol;
-    }
-
-    public function setRolAdmin(?string $rol): void
-    {
-        $this->rol = $rol;
-    }
-
     public function getNombre(): string
     {
         return $this->nombre;
@@ -251,8 +241,4 @@ abstract class UsuarioEntity
     {
         $this->estaActivo = $estaActivo;
     }
-
-
-
-
 }

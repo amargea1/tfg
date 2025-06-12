@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('css/stylesTables.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block hb %}
+    <div class="d-flex ms-auto">
+        <a href="{{ path('admin_panel') }}" class="btn btn-outline-info me-3">Volver</a>
+        <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Cerrar sesión</a>
+    </div>
+{% endblock %}
+
+{% block main %}
+            <div class="container my-5">
+
+                    <h2 class="text-center mb-4">Listado de Administradores</h2>
+                <div class="tabla-scroll">
+                    <table class="reclamaciones-table2">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Fecha registro</th>
+                            <th>Rol</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for admin in admins %}
+                            <tr>
+                                <td>{{ admin.id }}</td>
+                                <td>
+                                    {{ admin.nombre }}
+                                </td>
+                                <td>{{ admin.apellidos }}</td>
+                                <td>{{ admin.fechaCreacion|date('d/m/Y')  }}</td>
+                                <td>{{ admin.rol }}</td>
+                                <td>
+                                    <a href="{{ path('admin_detalle', {id: admin.id}) }}" class="btn-detalles"><i class="fa-solid fa-eye"></i>
+                                        Detalles</a>
+                                </td>
+
+                        {% else %}
+                            <tr>
+                                <td colspan="9" class="text-center">No hay consultas registradas.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+{% endblock %}

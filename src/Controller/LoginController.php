@@ -41,6 +41,7 @@ class LoginController extends AbstractController
                     $session->set('user_id', $usuario->getId());
                     $session->set('user_email', $usuario->getEmail());
                     $session->set('user_nombre', $usuario->getNombre());
+                    $session->set('user_rol', $admin->getRol());
 
                     return $this->redirectToRoute('admin_panel');
 

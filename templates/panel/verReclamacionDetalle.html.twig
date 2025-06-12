@@ -60,9 +60,11 @@
                             {% if reclamacion.estado != 'resuelta' %}
 
                                 <form method="post" action="{{ path('reclamacion_cerrar', { id: reclamacion.id }) }}" onsubmit="return confirm('¿Seguro que quieres cerrar esta reclamación?');" style="display: inline;">
+                                    {% if reclamacion.estado != 'Resuelta' %}
                                     <button class="btn-detalles">
                                         Cerrar <i class="bi bi-lock"></i>
                                     </button>
+                                    {% endif %}
                                 </form>
 
                             {% endif %}
@@ -76,20 +78,7 @@
                     <tr>
                         <th>Estado</th>
                         <td>
-                            <form method="post" action="{{ path('reclamacion_cambiar_estado', { id: reclamacion.id }) }}">
-                                <select name="estado" class="form-select form-select-sm d-inline w-auto me-2">
-                                    <option value="{{ reclamacion.estado }}" selected>{{ reclamacion.estado }}</option>
-                                    {% for opcion in ['Pendiente', 'Asignada', 'Resuelta'] %}
-                                        {% if opcion != reclamacion.estado %}
-                                            <option value="{{ opcion }}">{{ opcion }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                                {% if reclamacion.estado != 'Resuelta' %}
-                                    <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
-                                {% endif %}
-                            </form>
-
+                            {{ reclamacion.estado }}
                         </td>
 
                     </tr>
@@ -113,9 +102,9 @@
                                         {% endif %}
                                     {% endfor %}
                                 </select>
-
+                                {% if reclamacion.estado != 'Resuelta' %}
                                     <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
-
+                                {% endif %}
                             </form>
                         </td>
                     </tr>
@@ -137,12 +126,24 @@
 
                             <form method="post" action="{{ path('reclamacion_cambiar_asignacion', { id: reclamacion.id }) }}" class="mt-2">
                                 <select name="admins" class="form-select form-select-sm d-inline w-auto me-2">
+                                    <option value="">Seleccionar</option>
                                     {% for admin in admins %}
-                                        <option value="{{ admin.id }}">{{ admin.nombre }} {{ admin.apellidos }}</option>
+                                        <option value="{{ admin.id }}"
+                                                {% if reclamacion.admins|first and admin.id == reclamacion.admins|first.id %}
+                                                    selected
+                                                {% endif %}
+                                        >
+                                            {{ admin.nombre }} {{ admin.apellidos }}
+                                        </option>
                                     {% endfor %}
                                 </select>
-                                <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i> Cambiar</button>
+                                {% if reclamacion.estado != 'Resuelta' %}
+                                <button type="submit" class="btn-detalles">
+                                    <i class="bi bi-arrow-left-right"></i> Cambiar
+                                </button>
+                                {% endif %}
                             </form>
+
                         </td>
 
                     </tr>
@@ -153,9 +154,11 @@
                                 <div class="seguimiento-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                                     <span>{{ entrada.fecha|date('d/m/Y') }} - {{ entrada.comentario }}</span>
                                     <form method="post" action="{{ path('seguimiento_eliminar', { id: entrada.id }) }}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este seguimiento?');" style="margin: 0;">
+                                        {% if reclamacion.estado != 'Resuelta' %}
                                         <button class="btn-detalles" style="display: flex; align-items: center; gap: 4px;">
                                             Eliminar <i class="bi bi-trash"></i>
                                         </button>
+                                        {% endif %}
                                     </form>
                                 </div>
                             {% else %}
@@ -172,7 +175,9 @@
                                     <input type="text" name="comentario" class="form-control" placeholder="Comentario" required>
                                 </div>
                                 <br>
-                                <button type="submit" class="btn-detalles2"><i class="bi bi-save"></i> Guardar nuevo estado</button>
+                                {% if reclamacion.estado != 'Resuelta' %}
+                                <button type="submit" class="btn-detalles2"><i class="bi bi-save"></i> Guardar nuevo seguimiento</button>
+                                {% endif %}
                             </form>
                         </td>
                     </tr>

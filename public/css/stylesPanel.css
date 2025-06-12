@@ -1,12 +1,14 @@
-
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    overflow: hidden; /* evita doble scroll si todo está dentro de dashboard-container */
 }
 
 .dashboard-container {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
 .sidebar {
@@ -14,6 +16,7 @@ body {
     background-color: #163245;
     color: white;
     padding: 20px;
+    flex-shrink: 0;
 }
 
 .sidebar .logo {
@@ -40,7 +43,7 @@ body {
     padding: 30px;
     padding-top: 0px;
     background-color: #f9f9f9;
-    position: relative;
+    overflow-y: auto;
 }
 
 .btn-logout {
@@ -49,18 +52,16 @@ body {
     padding: 8px 15px;
     text-decoration: none;
     border-radius: 5px;
-
 }
 
 h2 {
-    margin-bottom: 2rem;;
-    font-size: 1.5rem; /* o el tamaño que prefieras */
-    font-weight: 600; /* opcional */
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 .main-panel h2 {
     margin-bottom: 2rem;
 }
-
 
 .stats {
     display: flex;
@@ -98,11 +99,11 @@ h2 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center; /* Centra horizontalmente los elementos hijos */
-    max-height: 300px;
+    align-items: center;
+    /* max-height: 300px;  Eliminado para permitir crecimiento dinámico */
+    height: 100%; /* ocupa todo el alto del grid sin romper */
+    box-sizing: border-box;
 }
-
-
 
 .action-card h3 {
     margin-bottom: 10px;
@@ -118,23 +119,20 @@ h2 {
     padding: 8px 15px;
     border-radius: 5px;
     text-decoration: none;
-
     width: 150px;
 }
 
 footer.footer {
-    flex-shrink: 0; /* para que no se reduzca */
+    flex-shrink: 0;
 }
 
 .menu a {
-    color: inherit;          /* Hereda el color del texto del contenedor */
-    text-decoration: none;   /* Quita el subrayado */
+    color: inherit;
+    text-decoration: none;
 }
 
-@media (min-width: 1024px){
-
-    .btn-orange:hover{
+@media (min-width: 1024px) {
+    .btn-orange:hover {
         background-color: #9a3310;
-
     }
 }

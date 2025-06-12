@@ -49,6 +49,13 @@
                         <p>Dar de alta un nuevo familiar de un socio</p>
                         <a href="{{ path('familiar_nuevo') }}" class="btn-orange"><i class="fa-solid fa-plus"></i> Registrar</a>
                     </div>
+                    {% if app.session.get('user_rol') == 'ROLE_SUPERADMIN' %}
+                        <div class="action-card">
+                            <h3>Registrar administrador</h3>
+                            <p>Dar de alta un nuevo administrador</p>
+                            <a href="{{ path('admin_nuevo') }}" class="btn-orange"><i class="fa-solid fa-plus"></i> Registrar</a>
+                        </div>
+                    {% endif %}
                     <div class="action-card">
                         <h3>Ver reclamaciones</h3>
                         <p>Ver reclamaciones pendientes</p>

@@ -28,9 +28,13 @@
             <ul class="menu">
                 <li><a href="{{ path('admin_panel') }}"><i class="fa-solid fa-gauge"></i> Panel de control</a></li>
                 <li><a href="{{ path('socio_ver') }}"><i class="fa-solid fa-users"></i> Socios</a></li>
+                {% if app.session.get('user_rol') == 'ROLE_SUPERADMIN' %}
+                <li><a href="{{ path('admin_ver') }}"><i class="fa fa-user-shield"></i> Admins</a></li>
+                {% endif %}
                 <li><a href="{{ path('cuota_ver') }}"><i class="fa-solid fa-coins"></i> Cuotas</a></li>
                 <li><a href="{{ path('consultas_ver') }}"><i class="fa-solid fa-comments"></i> Consultas</a></li>
                 <li><a href="{{ path('reclamacion_ver') }}"><i class="fa-solid fa-file-lines"></i> Reclamaciones</a></li>
+                <li><a href="{{ path('admin_editar', {'id': app.session.get('user_id')}) }}"><i class="fa fa-user-edit"></i> Editar perfil</a></li>
             </ul>
         </aside>
 

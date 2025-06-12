@@ -89,6 +89,7 @@
                         <th>Consulta</th>
                         <td style="white-space: pre-wrap;">{{ consulta.consulta }}</td>
                     </tr>
+                    {% if consulta.estado != 'Resuelta' %}
                     <tr>
                         <th></th>
                         <td>
@@ -98,6 +99,7 @@
                             </a>
                         </td>
                     </tr>
+                    {% endif %}
                 </table>
             </div>
 {% endblock %}

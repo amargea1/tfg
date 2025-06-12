@@ -28,12 +28,7 @@ class AdministradorEntity extends UsuarioEntity
     )]
     private Collection $consultas;
 
-    #[ORM\ManyToMany(targetEntity: SeguimientoEntity::class, inversedBy: "admins")]
-    #[ORM\JoinTable(
-        name: "admin_seguimientos",
-        joinColumns: [new ORM\JoinColumn(name: "admin_id", referencedColumnName: "id")],
-        inverseJoinColumns: [new ORM\JoinColumn(name: "seguimiento_id", referencedColumnName: "id")]
-    )]
+    #[ORM\OneToMany(targetEntity: SeguimientoEntity::class, mappedBy: 'admin', cascade: ['persist', 'remove'])]
     private Collection $seguimientos;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -120,7 +115,6 @@ class AdministradorEntity extends UsuarioEntity
     {
         $this->fechaUltimoAcceso = $fechaUltimoAcceso;
     }
-
 
     public function getSeguimientos(): Collection
     {
