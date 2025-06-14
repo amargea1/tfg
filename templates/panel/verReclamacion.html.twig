@@ -2,8 +2,9 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ asset('css/stylesTables.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block hb %}
@@ -15,94 +16,104 @@
 
 {% block main %}
 
-            <div class="container my-5">
+    <div class="container my-5">
 
-                    <h2 class="text-center mb-4">Listado de Reclamaciones</h2>
+        <h2 class="text-center mb-4">Listado de Reclamaciones</h2>
 
-                <form method="GET" action="{{ path('reclamacion_ver') }}" class="mb-4 d-flex gap-2 align-items-center">
-                    <select name="estado" class="form-select" style="width: 150px;">
-                        <option value="">Estado (todos)</option>
-                        <option value="Pendiente" {% if app.request.query.get('estado') == 'Pendiente' %}selected{% endif %}>Pendiente</option>
-                        <option value="Asignada" {% if app.request.query.get('estado') == 'Asignada' %}selected{% endif %}>Asignada</option>
-                        <option value="Resuelta" {% if app.request.query.get('estado') == 'Resuelta' %}selected{% endif %}>Resuelta</option>
+        <form method="GET" action="{{ path('reclamacion_ver') }}" class="mb-4 d-flex gap-2 align-items-center">
+            <select name="estado" class="form-select" style="width: 150px;">
+                <option value="">Estado (todos)</option>
+                <option value="Pendiente" {% if app.request.query.get('estado') == 'Pendiente' %}selected{% endif %}>
+                    Pendiente
+                </option>
+                <option value="Asignada" {% if app.request.query.get('estado') == 'Asignada' %}selected{% endif %}>
+                    Asignada
+                </option>
+                <option value="Resuelta" {% if app.request.query.get('estado') == 'Resuelta' %}selected{% endif %}>
+                    Resuelta
+                </option>
 
-                    </select>
+            </select>
 
-                    <select name="prioridad" class="form-select" style="width: 150px;">
-                        <option value="">Prioridad (todas)</option>
-                        <option value="Urgente" {% if app.request.query.get('prioridad') == 'Urgente' %}selected{% endif %}>Urgente</option>
-                        <option value="Alta" {% if app.request.query.get('prioridad') == 'Alta' %}selected{% endif %}>Alta</option>
-                        <option value="Media" {% if app.request.query.get('prioridad') == 'Media' %}selected{% endif %}>Media</option>
-                        <option value="Baja" {% if app.request.query.get('prioridad') == 'Baja' %}selected{% endif %}>Baja</option>
-                    </select>
+            <select name="prioridad" class="form-select" style="width: 150px;">
+                <option value="">Prioridad (todas)</option>
+                <option value="Urgente" {% if app.request.query.get('prioridad') == 'Urgente' %}selected{% endif %}>
+                    Urgente
+                </option>
+                <option value="Alta" {% if app.request.query.get('prioridad') == 'Alta' %}selected{% endif %}>Alta
+                </option>
+                <option value="Media" {% if app.request.query.get('prioridad') == 'Media' %}selected{% endif %}>Media
+                </option>
+                <option value="Baja" {% if app.request.query.get('prioridad') == 'Baja' %}selected{% endif %}>Baja
+                </option>
+            </select>
 
-                    <button type="submit" class="btn btn-filtrar">Filtrar</button>
-                </form>
-                <div class="tabla-scroll">
-                    <table class="reclamaciones-table">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Nº Socio</th>
-                            <th>Asunto</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Prioridad</th>
-                            <th>Asignado a</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for reclamacion in reclamaciones %}
-                            <tr>
-                                <td>{{ reclamacion.id }}</td>
-                                <td>
-                                    {% if reclamacion.familiar %}
-                                        {{ reclamacion.familiar.nombre }} (Familiar)
-                                    {% else %}
-                                        {{ reclamacion.socio.nombre }}
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if reclamacion.familiar %}
-                                        {{ reclamacion.familiar.apellidos }}
-                                    {% else %}
-                                        {{ reclamacion.socio.apellidos }}
-                                    {% endif %}
-                                </td>
-                                <td>{{ reclamacion.numeroSocio }}</td>
-                                <td>{{ reclamacion.asunto }}</td>
-                                <td>{{ reclamacion.fechaApertura|date('d/m/Y') }}</td>
-                                <td>
+            <button type="submit" class="btn btn-filtrar">Filtrar</button>
+        </form>
+        <div class="tabla-scroll">
+            <table class="reclamaciones-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Nº Socio</th>
+                    <th>Asunto</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Asignado a</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for reclamacion in reclamaciones %}
+                    <tr>
+                        <td>{{ reclamacion.id }}</td>
+                        <td>
+                            {% if reclamacion.familiar %}
+                                {{ reclamacion.familiar.nombre }} (Familiar)
+                            {% else %}
+                                {{ reclamacion.socio.nombre }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if reclamacion.familiar %}
+                                {{ reclamacion.familiar.apellidos }}
+                            {% else %}
+                                {{ reclamacion.socio.apellidos }}
+                            {% endif %}
+                        </td>
+                        <td>{{ reclamacion.numeroSocio }}</td>
+                        <td>{{ reclamacion.asunto }}</td>
+                        <td>{{ reclamacion.fechaApertura|date('d/m/Y') }}</td>
+                        <td>
                                     <span class="estado estado-{{ reclamacion.estado|lower|replace({' ': '-'}) }}">
                                         {{ reclamacion.estado }}</span>
-                                </td>
-                                <td>
+                        </td>
+                        <td>
                                     <span class="prioridad prioridad-{{ reclamacion.prioridad|lower|replace({' ': '-'}) }}">
                                         {{ reclamacion.prioridad }}</span>
-                                </td>
-                                <td>
-                                    {% if reclamacion.admins is empty %}
-                                        Sin asignar
-                                    {% else %}
-                                        {% for admin in reclamacion.admins %}
-                                            {{ admin.nombre }} {{ admin.apellidos }} ({{ admin.especialidad }})<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                </td>
-
-
-                                <td><a href="{{ path('reclamacion_detalle', {id: reclamacion.id}) }}" class="btn-detalles"><i class="fa fa-eye"></i> Detalles</a></td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="9" class="text-center">No hay reclamaciones registradas.</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        </td>
+                        <td>
+                            {% if reclamacion.admins is empty %}
+                                Sin asignar
+                            {% else %}
+                                {% for admin in reclamacion.admins %}
+                                    {{ admin.nombre }} {{ admin.apellidos }} ({{ admin.especialidad }})<br>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ path('reclamacion_detalle', {id: reclamacion.id}) }}" class="btn-detalles"><i
+                                        class="fa fa-eye"></i> Detalles</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center">No hay reclamaciones registradas.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

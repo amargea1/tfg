@@ -51,13 +51,12 @@ class AdministradorEntity extends UsuarioEntity
     private ?string $especialidad = null;
 
 
-
     public function __construct()
     {
         $this->reclamaciones = new ArrayCollection();
         $this->consultas = new ArrayCollection();
         $this->seguimientos = new ArrayCollection();
-        $this->fechaCreacion = new \DateTime(); // Se establece la fecha actual al crear el objeto.
+        $this->fechaCreacion = new \DateTime();
         $this->fechaUltimoAcceso = new \DateTime();
     }
 
@@ -91,8 +90,6 @@ class AdministradorEntity extends UsuarioEntity
     {
         $this->consultas = $consultas;
     }
-
-
 
     public function getUsername(): string
     {

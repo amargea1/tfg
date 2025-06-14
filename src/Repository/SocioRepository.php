@@ -28,7 +28,7 @@ class SocioRepository extends ServiceEntityRepository
         $inicioDia = new \DateTime('today');
         $finDia = new \DateTime('tomorrow');
 
-        return (int) $this->createQueryBuilder('s')
+        return (int)$this->createQueryBuilder('s')
             ->select('COUNT(s.id)')
             ->where('s.fechaRegistro >= :inicio')
             ->andWhere('s.fechaRegistro < :fin')
@@ -37,6 +37,4 @@ class SocioRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
-
-
 }

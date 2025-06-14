@@ -2,8 +2,9 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ asset('css/stylesForm.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block hb %}
@@ -14,55 +15,53 @@
 {% endblock %}
 
 {% block main %}
-            <div class="container my-5">
-                <div class="card shadow p-4">
-                    <h2 class="text-center mb-4">Crear nueva cuota</h2>
+    <div class="container my-5">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">Crear nueva cuota</h2>
 
-                    {% for mensaje in app.flashes('error') %}
-                        <div class="alert alert-danger">{{ mensaje }}</div>
-                    {% endfor %}
+            {% for mensaje in app.flashes('error') %}
+                <div class="alert alert-danger">{{ mensaje }}</div>
+            {% endfor %}
 
-                    {{ form_start(form) }}
+            {{ form_start(form) }}
 
-                    <div class="mb-3">
-                        {{ form_label(form.importe) }}
-                        {{ form_widget(form.importe, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.importe.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.importe) }}
-                            </div>
-                        {% endif %}
+            <div class="mb-3">
+                {{ form_label(form.importe) }}
+                {{ form_widget(form.importe, {'attr': {'class': 'form-control'}}) }}
+                {% if form.importe.vars.errors|length > 0 %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.importe) }}
                     </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.tipo) }}
-                        {{ form_widget(form.tipo, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.tipo.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.tipo) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.periodicidad) }}
-                        {{ form_widget(form.periodicidad, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.periodicidad.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.periodicidad) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="d-flex justify-content-between mt-4">
-                        <button type="submit" class="btn-orange">
-                            Guardar
-                        </button>
-
-                    </div>
-                    {{ form_end(form) }}
-                </div>
+                {% endif %}
             </div>
 
+            <div class="mb-3">
+                {{ form_label(form.tipo) }}
+                {{ form_widget(form.tipo, {'attr': {'class': 'form-control'}}) }}
+                {% if form.tipo.vars.errors|length > 0 %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.tipo) }}
+                    </div>
+                {% endif %}
+            </div>
 
+            <div class="mb-3">
+                {{ form_label(form.periodicidad) }}
+                {{ form_widget(form.periodicidad, {'attr': {'class': 'form-control'}}) }}
+                {% if form.periodicidad.vars.errors|length > 0 %}
+                    <div class="invalid-feedback d-block">
+                        {{ form_errors(form.periodicidad) }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn-orange">
+                    Guardar
+                </button>
+
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

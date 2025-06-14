@@ -6,14 +6,6 @@ use App\Entity\AdministradorEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<AdministradorEntity>
- *
- * @method AdministradorEntity|null find($id, $lockMode = null, $lockVersion = null)
- * @method AdministradorEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @method AdministradorEntity[]    findAll()
- * @method AdministradorEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class AdministradorRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

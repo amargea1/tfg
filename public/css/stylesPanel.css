@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     height: 100vh;
-    overflow: hidden; /* evita doble scroll si todo está dentro de dashboard-container */
+    overflow: hidden;
 }
 
 .dashboard-container {
@@ -100,8 +100,7 @@ h2 {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    /* max-height: 300px;  Eliminado para permitir crecimiento dinámico */
-    height: 100%; /* ocupa todo el alto del grid sin romper */
+    height: 100%;
     box-sizing: border-box;
 }
 

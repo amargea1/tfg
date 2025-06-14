@@ -6,14 +6,6 @@ use App\Entity\FamiliarEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<FamiliarEntity>
- *
- * @method FamiliarEntity|null find($id, $lockMode = null, $lockVersion = null)
- * @method FamiliarEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @method FamiliarEntity[]    findAll()
- * @method FamiliarEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class FamiliarRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

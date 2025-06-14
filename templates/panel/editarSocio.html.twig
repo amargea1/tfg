@@ -2,8 +2,9 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ asset('css/stylesForm.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block hb %}
@@ -14,214 +15,215 @@
 {% endblock %}
 
 {% block main %}
-        <main class="main-panel">
-            <div class="container my-5">
-                <div class="card shadow p-4">
-                    <h2 class="text-center mb-4">Editar socio {{ socio.nombre }} {{ socio.apellidos }} con ID: {{ socio.id }}</h2>
+    <main class="main-panel">
+        <div class="container my-5">
+            <div class="card shadow p-4">
+                <h2 class="text-center mb-4">Editar socio {{ socio.nombre }} {{ socio.apellidos }} con
+                    ID: {{ socio.id }}</h2>
 
-                    {% for mensaje in app.flashes('error') %}
-                        <div class="alert alert-danger">{{ mensaje }}</div>
-                    {% endfor %}
+                {% for mensaje in app.flashes('error') %}
+                    <div class="alert alert-danger">{{ mensaje }}</div>
+                {% endfor %}
 
-                    {{ form_start(form) }}
+                {{ form_start(form) }}
 
-                    <div class="mb-3">
-                        {{ form_label(form.nombre) }}
-                        {{ form_widget(form.nombre, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.nombre.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.nombre) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.apellidos) }}
-                        {{ form_widget(form.apellidos, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.apellidos.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.apellidos) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.dni) }}
-                        {{ form_widget(form.dni, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.dni.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.dni) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.fechaNacimiento) }}
-                        {{ form_widget(form.fechaNacimiento, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.fechaNacimiento.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.fechaNacimiento) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.sexo) }}
-                        {{ form_widget(form.sexo, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.sexo.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.sexo) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.direccion) }}
-                        {{ form_widget(form.direccion, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.direccion.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.direccion) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.localidad) }}
-                        {{ form_widget(form.localidad, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.localidad.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.localidad) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.provincia) }}
-                        {{ form_widget(form.provincia, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.provincia.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.provincia) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.codigoPostal) }}
-                        {{ form_widget(form.codigoPostal, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.codigoPostal.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.codigoPostal) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.telefono) }}
-                        {{ form_widget(form.telefono, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.telefono.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.telefono) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.email) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.email.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.email) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.fechaRegistro) }}
-                        {{ form_widget(form.fechaRegistro, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.fechaRegistro.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.fechaRegistro) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.ordenRegistro) }}
-                        {{ form_widget(form.ordenRegistro, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.ordenRegistro.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.ordenRegistro) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.colectivo) }}
-                        {{ form_widget(form.colectivo, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.colectivo.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.colectivo) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.numSocio) }}
-                        {{ form_widget(form.numSocio, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.numSocio.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.numSocio) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.modoPago) }}
-                        {{ form_widget(form.modoPago, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.modoPago.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.modoPago) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.iban) }}
-                        {{ form_widget(form.iban, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.iban.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.iban) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.bizum) }}
-                        {{ form_widget(form.bizum, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.bizum.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.bizum) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        {{ form_label(form.fechaPago) }}
-                        {{ form_widget(form.fechaPago, {'attr': {'class': 'form-control'}}) }}
-                        {% if form.fechaPago.vars.errors|length > 0 %}
-                            <div class="invalid-feedback d-block">
-                                {{ form_errors(form.fechaPago) }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <div class="d-flex justify-content-between mt-4">
-                        <button type="submit" class="btn-orange">
-                            Guardar
-                        </button>
-                    </div>
-                    {{ form_end(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.nombre) }}
+                    {{ form_widget(form.nombre, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.nombre.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.nombre) }}
+                        </div>
+                    {% endif %}
                 </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.apellidos) }}
+                    {{ form_widget(form.apellidos, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.apellidos.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.apellidos) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.dni) }}
+                    {{ form_widget(form.dni, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.dni.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.dni) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.fechaNacimiento) }}
+                    {{ form_widget(form.fechaNacimiento, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.fechaNacimiento.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.fechaNacimiento) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.sexo) }}
+                    {{ form_widget(form.sexo, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.sexo.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.sexo) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.direccion) }}
+                    {{ form_widget(form.direccion, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.direccion.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.direccion) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.localidad) }}
+                    {{ form_widget(form.localidad, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.localidad.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.localidad) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.provincia) }}
+                    {{ form_widget(form.provincia, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.provincia.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.provincia) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.codigoPostal) }}
+                    {{ form_widget(form.codigoPostal, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.codigoPostal.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.codigoPostal) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.telefono) }}
+                    {{ form_widget(form.telefono, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.telefono.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.telefono) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.email.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.email) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.fechaRegistro) }}
+                    {{ form_widget(form.fechaRegistro, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.fechaRegistro.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.fechaRegistro) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.ordenRegistro) }}
+                    {{ form_widget(form.ordenRegistro, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.ordenRegistro.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.ordenRegistro) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.colectivo) }}
+                    {{ form_widget(form.colectivo, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.colectivo.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.colectivo) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.numSocio) }}
+                    {{ form_widget(form.numSocio, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.numSocio.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.numSocio) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.modoPago) }}
+                    {{ form_widget(form.modoPago, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.modoPago.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.modoPago) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.iban) }}
+                    {{ form_widget(form.iban, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.iban.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.iban) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.bizum) }}
+                    {{ form_widget(form.bizum, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.bizum.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.bizum) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.fechaPago) }}
+                    {{ form_widget(form.fechaPago, {'attr': {'class': 'form-control'}}) }}
+                    {% if form.fechaPago.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {{ form_errors(form.fechaPago) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn-orange">
+                        Guardar
+                    </button>
+                </div>
+                {{ form_end(form) }}
             </div>
-        </main>
+        </div>
+    </main>
 {% endblock %}

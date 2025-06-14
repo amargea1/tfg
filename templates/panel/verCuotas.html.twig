@@ -2,8 +2,9 @@
 
 {% block head %}
     <link rel="stylesheet" href="{{ asset('css/stylesTables.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block hb %}
@@ -14,54 +15,56 @@
 {% endblock %}
 
 {% block main %}
-            <div class="container my-5">
-                <h2 class="text-center mb-4">Listado de Cuotas</h2>
-                    <table class="reclamaciones-table3">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Importe</th>
-                            <th>Tipo</th>
-                            <th>Periodicidad</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for cuota in cuotas %}
-                            <tr>
-                                <td>{{ cuota.id }}</td>
-                                <td>
-                                    {{ cuota.importe }} €
-                                </td>
-                                <td>{{ cuota.tipo }}</td>
-                                <td>{{ cuota.periodicidad }}</td>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Listado de Cuotas</h2>
+        <table class="reclamaciones-table3">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Importe</th>
+                <th>Tipo</th>
+                <th>Periodicidad</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cuota in cuotas %}
+                <tr>
+                    <td>{{ cuota.id }}</td>
+                    <td>
+                        {{ cuota.importe }} €
+                    </td>
+                    <td>{{ cuota.tipo }}</td>
+                    <td>{{ cuota.periodicidad }}</td>
 
-                                <td>
-                                    <a href="{{ path('cuota_editar', {id: cuota.id}) }}" class="btn-detalles"><i class="fa-solid fa-pen-to-square"></i>
-                                        Editar</a>
-                                    <a href="{{ path('cuota_borrar', { id: cuota.id }) }}" class="btn-detalles" onclick="return confirm('¿Estás segura de que quieres borrar esta cuota?');">
-                                        <i class="fa-solid fa-trash"></i>
-                                        Eliminar</a>
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="9" class="text-center">No hay cuotas registradas.</td>
-                            </tr>
-                        {% endfor %}
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <a href="{{ path('cuota_nueva') }}" class="btn-nuevo"><i class="fa-solid fa-plus"></i>
-                                    Nueva</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <td>
+                        <a href="{{ path('cuota_editar', {id: cuota.id}) }}" class="btn-detalles"><i
+                                    class="fa-solid fa-pen-to-square"></i>
+                            Editar</a>
+                        <a href="{{ path('cuota_borrar', { id: cuota.id }) }}" class="btn-detalles"
+                           onclick="return confirm('¿Estás segura de que quieres borrar esta cuota?');">
+                            <i class="fa-solid fa-trash"></i>
+                            Eliminar</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" class="text-center">No hay cuotas registradas.</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="{{ path('cuota_nueva') }}" class="btn-nuevo"><i class="fa-solid fa-plus"></i>
+                        Nueva</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="container my-5">
         <h2 class="text-center mb-4">Pendientes de pago</h2>
         <table class="reclamaciones-table2">
@@ -87,8 +90,8 @@
                     </td>
 
                     <td>
-                        <a href="{{ path('socio_pagar', {id: sp.socio.id}) }}" class="btn-detalles2"><i class="fa-solid fa-pen-to-square"></i>
-                            Realizar pago</a>
+                        <a href="{{ path('socio_pagar', {id: sp.socio.id}) }}" class="btn-detalles">
+                            <i class="fas fa-wallet"></i> Pagar</a>
                     </td>
                 </tr>
             {% else %}

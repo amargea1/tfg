@@ -25,7 +25,6 @@ class ReclamacionEntity
     #[ORM\JoinColumn(nullable: true)]
     private ?SocioEntity $socio = null;
 
-
     #[ORM\ManyToMany(targetEntity: AdministradorEntity::class, mappedBy: "reclamaciones")]
     private Collection $admins;
 
@@ -88,8 +87,6 @@ class ReclamacionEntity
     #[Assert\NotBlank(message: "La prioridad es obligatoria")]
     #[Assert\Choice(choices: ['Baja', 'Media', 'Alta', 'Urgente'], message: 'Prioridad inválida')]
     private ?string $prioridad = null;
-
-
 
 
     public function __construct()
@@ -275,7 +272,6 @@ class ReclamacionEntity
         return $this;
     }
 
-
     public function removeAdmin(AdministradorEntity $admin): self
     {
         if ($this->admins->removeElement($admin)) {
@@ -284,7 +280,4 @@ class ReclamacionEntity
 
         return $this;
     }
-
-
-
 }

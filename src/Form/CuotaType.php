@@ -27,8 +27,7 @@ class CuotaType extends AbstractType
                 'label' => 'Tipo de cuota',
                 'placeholder' => 'Seleccione un tipo',
             ])
-            ->add('periodicidad')
-        ;
+            ->add('periodicidad');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

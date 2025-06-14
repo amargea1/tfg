@@ -2,38 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\ConsultaEntity;
-use App\Entity\ReclamacionEntity;
-use App\Entity\SeguimientoEntity;
-use App\Entity\SocioEntity;
-use App\Entity\UsuarioEntity;
-use App\Form\ReclamacionType;
 use App\Repository\AdministradorRepository;
 use App\Repository\ConsultaRepository;
 use App\Repository\FamiliarRepository;
-use App\Repository\ReclamacionRepository;
-use App\Repository\SeguimientoRepository;
 use App\Repository\SocioRepository;
-use App\Repository\UsuarioEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ConsultaController extends AbstractController
 {
 
     #[Route('/consulta/ver', name: 'consultas_ver')]
-    public function ver(Request $request,
+    public function ver(Request            $request,
                         ConsultaRepository $consultaRepository,
-                        SessionInterface $session,
+                        SessionInterface   $session,
 
     ): Response
     {
-
         $userId = $session->get('user_id');
         if (!$userId) {
             return $this->redirectToRoute('app_login');
@@ -41,10 +30,11 @@ class ConsultaController extends AbstractController
 
         $consultas = $consultaRepository->findAll();
         $estado = $request->query->get('estado');
-        if ($estado){
+        if ($estado) {
             $consultas = $consultaRepository->findWithEstadoOrdered($estado);
         } else {
-            $consultas = $consultaRepository->findAllOrderedByFechaDesc();        }
+            $consultas = $consultaRepository->findAllOrderedByFechaDesc();
+        }
 
 
         return $this->render('panel/verConsultas.html.twig', [
@@ -54,12 +44,12 @@ class ConsultaController extends AbstractController
 
     #[Route('/admin/consulta/{id}', name: 'consulta_detalle')]
     public function verDetalle(
-        int $id,
-        ConsultaRepository $consultaRepository,
+        int                     $id,
+        ConsultaRepository      $consultaRepository,
         AdministradorRepository $adminRepo,
-        SocioRepository $socioRepository,
-        FamiliarRepository $familiarRepository,
-        SessionInterface $session,
+        SocioRepository         $socioRepository,
+        FamiliarRepository      $familiarRepository,
+        SessionInterface        $session,
 
     ): Response
     {
@@ -103,11 +93,11 @@ class ConsultaController extends AbstractController
     }
 
     #[Route('/consulta/{id}/cambiar-estado', name: 'consulta_cambiar_estado', methods: ['POST'])]
-    public function cambiarEstado(Request $request,
-                                  ConsultaRepository $repo,
+    public function cambiarEstado(Request                $request,
+                                  ConsultaRepository     $repo,
                                   EntityManagerInterface $em,
-                                  int $id,
-                                  SessionInterface $session,
+                                  int                    $id,
+                                  SessionInterface       $session,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -118,7 +108,7 @@ class ConsultaController extends AbstractController
         $consulta = $repo->find($id);
         $nuevoEstado = $request->request->get('estado');
 
-        if($nuevoEstado == 'Resuelta'){
+        if ($nuevoEstado == 'Resuelta') {
             $consulta->setFechaCierre(new \DateTimeImmutable('now'));
         }
 
@@ -134,11 +124,11 @@ class ConsultaController extends AbstractController
     }
 
     #[Route('/consulta/{id}/cambiar_via', name: 'consulta_cambiar_via', methods: ['POST'])]
-    public function cambiarVia(Request $request,
-                                  ConsultaRepository $repo,
-                                  EntityManagerInterface $em,
-                                  int $id,
-                                  SessionInterface $session,
+    public function cambiarVia(Request                $request,
+                               ConsultaRepository     $repo,
+                               EntityManagerInterface $em,
+                               int                    $id,
+                               SessionInterface       $session,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -163,12 +153,12 @@ class ConsultaController extends AbstractController
 
     #[Route('/consulta/{id}/cerrar', name: 'consulta_cerrar', methods: ['POST'])]
     public function cerrar(
-        int $id,
-        ConsultaRepository $repo,
+        int                    $id,
+        ConsultaRepository     $repo,
         EntityManagerInterface $em,
-        Request $request,
-        SessionInterface $session,
-    ): Response {
+        SessionInterface       $session,
+    ): Response
+    {
         $userId = $session->get('user_id');
         if (!$userId) {
             return $this->redirectToRoute('app_login');
@@ -187,6 +177,5 @@ class ConsultaController extends AbstractController
 
         return $this->redirectToRoute('consultas_ver');
     }
-
 
 }

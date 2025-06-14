@@ -50,7 +50,7 @@ class ReclamacionRepository extends ServiceEntityRepository
         }
 
         return $qb->orderBy('r.fechaApertura', 'DESC')
-        ->getQuery()
+            ->getQuery()
             ->getResult();
     }
 

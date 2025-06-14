@@ -9,14 +9,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ReclamacionType extends AbstractType
@@ -25,8 +20,8 @@ class ReclamacionType extends AbstractType
     {
         $builder
             ->add('fechaApertura', DateType::class, [
-                'widget' => 'single_text', // muestra un <input type="date">
-                'data' => new \DateTimeImmutable(), // fecha actual por defecto
+                'widget' => 'single_text',
+                'data' => new \DateTimeImmutable(),
                 'html5' => true,
             ])
             ->add('atencion', ChoiceType::class, [
@@ -50,13 +45,11 @@ class ReclamacionType extends AbstractType
                 ],
 
             ])
-
             ->add('esFamiliar', CheckboxType::class, [
                 'label' => '¿Es familiar?',
                 'required' => false,
                 'mapped' => false,
             ])
-
             ->add('familiar', EntityType::class, [
                 'class' => FamiliarEntity::class,
                 'choice_label' => function ($familiar) {
@@ -69,7 +62,6 @@ class ReclamacionType extends AbstractType
                     'class' => 'js-familiar-select',
                 ],
             ])
-
             ->add('sector', ChoiceType::class, [
                 'choices' => [
                     'Admon. Pública' => 'Admon. Pública',
@@ -99,8 +91,7 @@ class ReclamacionType extends AbstractType
             ->add('reclamacion', TextareaType::class, [
                 'label' => 'Reclamación',
                 'required' => true,
-            ])
-        ;
+            ]);
 
     }
 

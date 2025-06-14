@@ -107,8 +107,6 @@ class CuotaEntity
         $this->familiares = $familiares;
     }
 
-
-
     public function addFamiliar(FamiliarEntity $familiar): self
     {
         if (!$this->familiares->contains($familiar)) {
@@ -119,15 +117,13 @@ class CuotaEntity
         return $this;
     }
 
-    public function removeFamiliar(FamiliarEntity $familiar) : self
+    public function removeFamiliar(FamiliarEntity $familiar): self
     {
         if ($this->familiares->removeElement($familiar)) {
             if ($familiar->getCuota() === $this) {
                 $familiar->setCuota(null);
             }
         }
-
-
         return $this;
     }
 
@@ -141,7 +137,7 @@ class CuotaEntity
         return $this;
     }
 
-    public function removeSocio(SocioEntity $socio) : self
+    public function removeSocio(SocioEntity $socio): self
     {
         if ($this->socios->removeElement($socio)) {
             if ($socio->getCuota() === $this) {
@@ -151,8 +147,6 @@ class CuotaEntity
 
         return $this;
     }
-
-
 }
 
 

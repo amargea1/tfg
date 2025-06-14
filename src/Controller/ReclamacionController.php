@@ -2,25 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\ConsultaEntity;
 use App\Entity\ReclamacionEntity;
 use App\Entity\SeguimientoEntity;
-use App\Entity\SocioEntity;
-use App\Entity\UsuarioEntity;
 use App\Form\ReclamacionType;
 use App\Repository\AdministradorRepository;
-use App\Repository\ConsultaRepository;
 use App\Repository\ReclamacionRepository;
 use App\Repository\SeguimientoRepository;
-use App\Repository\SocioRepository;
-use App\Repository\UsuarioEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ReclamacionController extends AbstractController
 {
@@ -90,10 +83,10 @@ class ReclamacionController extends AbstractController
     }
 
     #[Route('/admin/reclamacion/{id}', name: 'reclamacion_detalle')]
-    public function verDetalle(int $id,
-                               ReclamacionRepository $reclamacionRepository,
+    public function verDetalle(int                     $id,
+                               ReclamacionRepository   $reclamacionRepository,
                                AdministradorRepository $adminRepo,
-                               SessionInterface $session
+                               SessionInterface        $session
     ): Response
     {
         $userId = $session->get('user_id');
@@ -117,13 +110,14 @@ class ReclamacionController extends AbstractController
 
     #[Route('/reclamacion/{id}/cambiar-prioridad', name: 'reclamacion_cambiar_prioridad', methods: ['POST'])]
     public function cambiarPrioridad(
-        Request $request,
-        ReclamacionRepository $repo,
+        Request                 $request,
+        ReclamacionRepository   $repo,
         AdministradorRepository $adminRepo,
-        EntityManagerInterface $em,
-        int $id,
-        SessionInterface $session
-    ): Response {
+        EntityManagerInterface  $em,
+        int                     $id,
+        SessionInterface        $session
+    ): Response
+    {
         $userId = $session->get('user_id');
         if (!$userId) {
             return $this->redirectToRoute('app_login');
@@ -156,25 +150,24 @@ class ReclamacionController extends AbstractController
 
     #[Route('/reclamacion/{id}/cambiar-asignacion', name: 'reclamacion_cambiar_asignacion', methods: ['POST'])]
     public function cambiarAsignacion(
-        Request $request,
-        ReclamacionRepository $repo,
+        Request                 $request,
+        ReclamacionRepository   $repo,
         AdministradorRepository $adminRepo,
-        EntityManagerInterface $em,
-        SeguimientoRepository $seguimientoRepository,
-        int $id,
-        SessionInterface $session
-    ): Response {
+        EntityManagerInterface  $em,
+        int                     $id,
+        SessionInterface        $session
+    ): Response
+    {
         $userId = $session->get('user_id');
         if (!$userId) {
             return $this->redirectToRoute('app_login');
         }
 
         $reclamacion = $repo->find($id);
-        $nuevoAdminId = $request->request->get('admins'); // nombre del select
+        $nuevoAdminId = $request->request->get('admins');
         $adminActual = $adminRepo->find($userId);
 
         if ($reclamacion) {
-            // Quitar todos los admins actuales
             foreach ($reclamacion->getAdmins() as $adminAsignado) {
                 $reclamacion->removeAdmin($adminAsignado);
             }
@@ -212,12 +205,13 @@ class ReclamacionController extends AbstractController
 
     #[Route('/reclamacion/{id}/nuevo-estado', name: 'reclamacion_nuevo_estado', methods: ['POST'])]
     public function nuevoEstado(
-        Request $request,
-        ReclamacionRepository $repo,
+        Request                $request,
+        ReclamacionRepository  $repo,
         EntityManagerInterface $em,
-        int $id,
-        SessionInterface $session
-    ): Response {
+        int                    $id,
+        SessionInterface       $session
+    ): Response
+    {
 
         $userId = $session->get('user_id');
         if (!$userId) {
@@ -237,7 +231,7 @@ class ReclamacionController extends AbstractController
             $em->persist($seguimiento);
             $em->flush();
             $this->addFlash('success', 'Seguimiento guardado con éxito.');
-        } else{
+        } else {
             $this->addFlash('error', 'Error al guardar el seguimiento.');
         }
 
@@ -246,12 +240,13 @@ class ReclamacionController extends AbstractController
 
     #[Route('/seguimiento/{id}/eliminar', name: 'seguimiento_eliminar', methods: ['POST'])]
     public function eliminar(
-        int $id,
-        SeguimientoRepository $repo,
+        int                    $id,
+        SeguimientoRepository  $repo,
         EntityManagerInterface $em,
-        Request $request,
-        SessionInterface $session
-    ): Response {
+        Request                $request,
+        SessionInterface       $session
+    ): Response
+    {
 
         $userId = $session->get('user_id');
         if (!$userId) {
@@ -267,18 +262,19 @@ class ReclamacionController extends AbstractController
             $this->addFlash('error', 'Error al eliminar el seguimiento.');
         }
 
-        return $this->redirect($request->headers->get('referer')); // Vuelve a la página anterior
+        return $this->redirect($request->headers->get('referer'));
     }
 
     #[Route('/reclamacion/{id}/cerrar', name: 'reclamacion_cerrar', methods: ['POST'])]
     public function cerrarReclamacion(
-        int $id,
-        ReclamacionRepository $repo,
+        int                     $id,
+        ReclamacionRepository   $repo,
         AdministradorRepository $adminRepo,
-        EntityManagerInterface $em,
-        Request $request,
-        SessionInterface $session
-    ): Response {
+        EntityManagerInterface  $em,
+        Request                 $request,
+        SessionInterface        $session
+    ): Response
+    {
         $userId = $session->get('user_id');
         if (!$userId) {
             return $this->redirectToRoute('app_login');
@@ -291,7 +287,6 @@ class ReclamacionController extends AbstractController
             $reclamacion->setEstado('Resuelta');
             $reclamacion->setFechaCierre(new \DateTimeImmutable());
 
-            // Crear entrada de seguimiento
             $seguimiento = new SeguimientoEntity();
             $seguimiento->setFecha(new \DateTimeImmutable());
             $seguimiento->setComentario("Reclamación cerrada. Estado cambiado a 'Resuelta'.");
@@ -308,10 +303,4 @@ class ReclamacionController extends AbstractController
 
         return $this->redirect($request->headers->get('referer'));
     }
-
-
-
-
-
-
 }

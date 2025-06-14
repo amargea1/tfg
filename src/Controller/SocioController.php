@@ -3,32 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\CuotaEntity;
-use App\Entity\ReclamacionEntity;
 use App\Entity\SocioEntity;
-use App\Entity\UsuarioEntity;
 use App\Form\PagoType;
-use App\Form\ReclamacionType;
 use App\Form\SocioType;
-use App\Repository\ConsultaRepository;
-use App\Repository\ReclamacionRepository;
 use App\Repository\SocioRepository;
-use App\Repository\UsuarioEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SocioController extends AbstractController
 {
 
     #[Route('/socio/nuevo', name: 'socio_nuevo')]
-    public function nuevo(Request $request,
+    public function nuevo(Request                $request,
                           EntityManagerInterface $em,
-                          SocioRepository $socioRepository,
-                          SessionInterface $session,
+                          SocioRepository        $socioRepository,
+                          SessionInterface       $session,
     ): Response
     {
 
@@ -39,10 +32,10 @@ class SocioController extends AbstractController
 
         $socio = new SocioEntity();
 
-        $contador= $socioRepository->contarSociosHoy();
+        $contador = $socioRepository->contarSociosHoy();
         $orden = $contador + 1;
         $fecha = (new \DateTime())->format('Ymd');
-        $numero = str_pad((string) $orden, 4, '0', STR_PAD_LEFT);
+        $numero = str_pad((string)$orden, 4, '0', STR_PAD_LEFT);
         $socio->setNumSocio($fecha . '-' . $numero);
 
         $socio->setOrdenRegistro($orden);
@@ -55,7 +48,7 @@ class SocioController extends AbstractController
             $socio = $form->getData();
 
             $cuotaRepository = $em->getRepository(CuotaEntity::class);
-            $cuotaSocio = $cuotaRepository->find(1); // ← ID de la cuota estándar
+            $cuotaSocio = $cuotaRepository->find(1);
             $socio->setCuota($cuotaSocio);
 
             $socio->setEstaActivo(true);
@@ -111,11 +104,11 @@ class SocioController extends AbstractController
     }
 
     #[Route('/socio/editar/{id}', name: 'socio_editar')]
-    public function editar(int $id,
-                           Request $request,
-                           SocioRepository $socioRepository,
+    public function editar(int                    $id,
+                           Request                $request,
+                           SocioRepository        $socioRepository,
                            EntityManagerInterface $em,
-                           SessionInterface $session,
+                           SessionInterface       $session,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -137,7 +130,7 @@ class SocioController extends AbstractController
 
             $this->addFlash('success', 'Socio actualizado con éxito.');
             return $this->redirectToRoute('socio_detalle', ['id' => $socio->getId()]);
-        } elseif ($form->isSubmitted()){
+        } elseif ($form->isSubmitted()) {
             $this->addFlash('error', 'Error al actualizar socio.');
         }
 
@@ -148,11 +141,11 @@ class SocioController extends AbstractController
     }
 
     #[Route('/socio/pagar/{id}', name: 'socio_pagar')]
-    public function pagar(int $id,
-                           Request $request,
-                           SocioRepository $socioRepository,
-                           EntityManagerInterface $em,
-                           SessionInterface $session,
+    public function pagar(int                    $id,
+                          Request                $request,
+                          SocioRepository        $socioRepository,
+                          EntityManagerInterface $em,
+                          SessionInterface       $session,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -174,7 +167,7 @@ class SocioController extends AbstractController
 
             $this->addFlash('success', 'Pago registrado con éxito.');
             return $this->redirectToRoute('cuota_ver');
-        } elseif ($form->isSubmitted()){
+        } elseif ($form->isSubmitted()) {
             $this->addFlash('error', 'Error al registrr pago.');
         }
 
@@ -186,10 +179,10 @@ class SocioController extends AbstractController
 
 
     #[Route('/socio/baja/{id}', name: 'socio_baja')]
-    public function baja(int $id,
-                         SocioRepository $socioRepository,
+    public function baja(int                    $id,
+                         SocioRepository        $socioRepository,
                          EntityManagerInterface $em,
-                         SessionInterface $session,
+                         SessionInterface       $session,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -210,7 +203,5 @@ class SocioController extends AbstractController
 
         return $this->redirectToRoute('socio_ver');
     }
-
-
 }
 

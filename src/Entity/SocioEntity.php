@@ -63,14 +63,13 @@ class SocioEntity extends UsuarioEntity
     private ?string $numSocio = null;
 
 
-
     public function __construct()
     {
         $this->familiares = new ArrayCollection();
         $this->consultas = new ArrayCollection();
         $this->reclamaciones = new ArrayCollection();
-        $this->fechaRegistro = new \DateTime(); // Asignar fecha actual en el constructor
-        $this->fechaPago = new \DateTime(); // Asignar fecha actual en el constructor
+        $this->fechaRegistro = new \DateTime();
+        $this->fechaPago = new \DateTime();
 
     }
 
@@ -209,7 +208,7 @@ class SocioEntity extends UsuarioEntity
         return $this;
     }
 
-    public function removeConsulta(ConsultaEntity $consulta) : self
+    public function removeConsulta(ConsultaEntity $consulta): self
     {
         $this->consultas->removeElement($consulta);
 
@@ -225,7 +224,7 @@ class SocioEntity extends UsuarioEntity
         return $this;
     }
 
-    public function removeReclamacion(ReclamacionEntity $reclamacion) : self
+    public function removeReclamacion(ReclamacionEntity $reclamacion): self
     {
         $this->reclamaciones->removeElement($reclamacion);
 
@@ -241,14 +240,10 @@ class SocioEntity extends UsuarioEntity
         return $this;
     }
 
-    public function removeFamiliar(FamiliarEntity $familiar) : self
+    public function removeFamiliar(FamiliarEntity $familiar): self
     {
         $this->familiares->removeElement($familiar);
 
         return $this;
     }
-
-
-
-
 }

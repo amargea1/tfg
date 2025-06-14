@@ -3,36 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\AdministradorEntity;
-use App\Entity\CuotaEntity;
-use App\Entity\ReclamacionEntity;
-use App\Entity\SocioEntity;
 use App\Entity\UsuarioEntity;
 use App\Form\AdminType;
 use App\Form\CambioPasswordType;
-use App\Form\ReclamacionType;
-use App\Form\SocioType;
 use App\Repository\AdministradorRepository;
-use App\Repository\ConsultaRepository;
-use App\Repository\ReclamacionRepository;
-use App\Repository\SocioRepository;
-use App\Repository\UsuarioEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\MakerBundle\Tests\tmp\current_project_xml\src\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AdminController extends AbstractController
 {
 
     #[Route('/admin/nuevo', name: 'admin_nuevo')]
-    public function nuevo(Request $request,
+    public function nuevo(Request                $request,
                           EntityManagerInterface $em,
-                          AdministradorRepository $administradorRepository,
-                          SessionInterface $session,
+                          SessionInterface       $session,
     ): Response
     {
 
@@ -78,8 +66,8 @@ class AdminController extends AbstractController
 
     #[Route('/admin/ver', name: 'admin_ver')]
     public function ver(AdministradorRepository $administradorRepository,
-                        SessionInterface $session,
-                        EntityManagerInterface $em,
+                        SessionInterface        $session,
+                        EntityManagerInterface  $em,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -101,10 +89,10 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/detalle/{id}', name: 'admin_detalle')]
-    public function verDetalle(int $id,
+    public function verDetalle(int                     $id,
                                AdministradorRepository $administradorRepository,
-                               SessionInterface $session,
-                               EntityManagerInterface $em,
+                               SessionInterface        $session,
+                               EntityManagerInterface  $em,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -130,11 +118,11 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/{id}/cambiar-rol', name: 'admin_cambiar_rol', methods: ['POST'])]
-    public function cambiarRol(Request $request,
+    public function cambiarRol(Request                 $request,
                                AdministradorRepository $administradorRepository,
-                               EntityManagerInterface $em,
-                               int $id,
-                               SessionInterface $session
+                               EntityManagerInterface  $em,
+                               int                     $id,
+                               SessionInterface        $session
     ): Response
     {
         $userId = $session->get('user_id');
@@ -156,11 +144,11 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/{id}/cambiar-especialidad', name: 'admin_cambiar_especialidad', methods: ['POST'])]
-    public function cambiarEspecialidad(Request $request,
-                               AdministradorRepository $administradorRepository,
-                               EntityManagerInterface $em,
-                               int $id,
-                               SessionInterface $session
+    public function cambiarEspecialidad(Request                 $request,
+                                        AdministradorRepository $administradorRepository,
+                                        EntityManagerInterface  $em,
+                                        int                     $id,
+                                        SessionInterface        $session
     ): Response
     {
         $userId = $session->get('user_id');
@@ -183,12 +171,13 @@ class AdminController extends AbstractController
 
     #[Route('/admin/editar/{id}', name: 'admin_editar')]
     public function editar(
-        int $id,
-        Request $request,
+        int                     $id,
+        Request                 $request,
         AdministradorRepository $adminRepo,
-        EntityManagerInterface $em,
-        SessionInterface $session
-    ): Response {
+        EntityManagerInterface  $em,
+        SessionInterface        $session
+    ): Response
+    {
         $userId = $session->get('user_id');
         if (!$userId) {
             return $this->redirectToRoute('app_login');
@@ -240,12 +229,11 @@ class AdminController extends AbstractController
     }
 
 
-
     #[Route('/admin/baja/{id}', name: 'admin_baja')]
-    public function baja(int $id,
+    public function baja(int                     $id,
                          AdministradorRepository $adminRepository,
-                         EntityManagerInterface $em,
-                         SessionInterface $session,
+                         EntityManagerInterface  $em,
+                         SessionInterface        $session,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -266,7 +254,5 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('admin_ver');
     }
-
-
 }
 

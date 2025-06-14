@@ -162,7 +162,7 @@ class FamiliarEntity extends UsuarioEntity
         return $this;
     }
 
-    public function removeConsulta(ConsultaEntity $consulta) : self
+    public function removeConsulta(ConsultaEntity $consulta): self
     {
         $this->consultas->removeElement($consulta);
 
@@ -178,13 +178,10 @@ class FamiliarEntity extends UsuarioEntity
         return $this;
     }
 
-    public function removeReclamacion(ReclamacionEntity $reclamacion) : self
+    public function removeReclamacion(ReclamacionEntity $reclamacion): self
     {
         $this->reclamaciones->removeElement($reclamacion);
 
         return $this;
     }
-
-
-
 }

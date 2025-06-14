@@ -3,9 +3,6 @@
 namespace App\Form;
 
 use App\Entity\FamiliarEntity;
-use App\Entity\SocioEntity;
-
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -18,7 +15,6 @@ class FamiliarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-
             ->add('nombre')
             ->add('apellidos')
             ->add('dni')
@@ -74,8 +70,7 @@ class FamiliarType extends AbstractType
                 'data' => new \DateTimeImmutable(),
                 'widget' => 'single_text',
                 'html5' => true,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

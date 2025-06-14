@@ -195,8 +195,6 @@ class ConsultaEntity
         $this->fechaCierre = $fechaCierre;
     }
 
-
-
     public function getConsulta(): string
     {
         return $this->consulta;
@@ -257,8 +255,6 @@ class ConsultaEntity
         $this->telefono = $telefono;
     }
 
-
-
     public function addAdmin(AdministradorEntity $admin): self
     {
         if (!$this->admins->contains($admin)) {
@@ -268,12 +264,10 @@ class ConsultaEntity
         return $this;
     }
 
-    public function removeAdmin(AdministradorEntity $admin) : self
+    public function removeAdmin(AdministradorEntity $admin): self
     {
         $this->admins->removeElement($admin);
 
         return $this;
     }
-
-
 }

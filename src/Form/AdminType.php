@@ -9,8 +9,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-
 
 class AdminType extends AbstractType
 {
@@ -65,22 +63,20 @@ class AdminType extends AbstractType
             ->add('codigoPostal')
             ->add('telefono')
             ->add('email')
-            ->add('username')
-
-            ;
-            if ($options['mostrar_fecha_creacion']) {
-                $builder->add('fechaCreacion', DateType::class, [
-                    'widget' => 'single_text',
-                    'html5' => true,
-                    'disabled' => true,
-                ]);
-            }
+            ->add('username');
+        if ($options['mostrar_fecha_creacion']) {
+            $builder->add('fechaCreacion', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
+                'disabled' => true,
+            ]);
+        }
 
         if ($options['mostrar_password']) {
-        $builder->add('password', PasswordType::class, [
-        'label' => 'Contraseña',
-        'required' => true,
-        ]);
+            $builder->add('password', PasswordType::class, [
+                'label' => 'Contraseña',
+                'required' => true,
+            ]);
         }
     }
 

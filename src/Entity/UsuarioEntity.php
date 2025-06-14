@@ -2,15 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UsuarioEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: "usuario")]
 #[ORM\InheritanceType("JOINED")]
-#[ORM\DiscriminatorColumn(name: "tipo_usuario", type: "string")] //Esta columna llamada "tipo" se usará en la tabla usuario para saber qué tipo exacto de objeto es cada fila.
-//Por ejemplo: "socio", "familiar" o "no_socio".
+#[ORM\DiscriminatorColumn(name: "tipo_usuario", type: "string")] //Esta columna llamada se usará en la tabla usuario para saber qué tipo exacto de objeto es cada fila.
 #[ORM\DiscriminatorMap([
     "socio" => SocioEntity::class,
     "familiar" => FamiliarEntity::class,
@@ -18,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 ])]
 abstract class UsuarioEntity
 {
-    //No pongo relaciones: Porque Usuario es una clase abstracta y no tiene relaciones directas. Las relaciones las tienen sus hijas
+    //No pongo relaciones porque usuario es una clase abstracta y no tiene relaciones directas. Las relaciones las tienen sus hijas
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
@@ -36,7 +34,6 @@ abstract class UsuarioEntity
         message: 'El nombre solo puede contener letras y espacios'
     )]
     private string $nombre;
-
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(message: 'Los apellidos son obligatorios')]

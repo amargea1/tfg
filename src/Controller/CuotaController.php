@@ -5,9 +5,7 @@ namespace App\Controller;
 
 use App\Entity\CuotaEntity;
 use App\Form\CuotaType;
-
 use App\Repository\CuotaRepository;
-
 use App\Repository\SocioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +13,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class CuotaController extends AbstractController
 {
 
     #[Route('/cuota/ver', name: 'cuota_ver')]
-    public function ver(CuotaRepository $cuotaRepository,
+    public function ver(CuotaRepository  $cuotaRepository,
                         SessionInterface $session,
-                        SocioRepository $socioRepository,
+                        SocioRepository  $socioRepository,
     ): Response
     {
         $userId = $session->get('user_id');
@@ -60,14 +57,12 @@ class CuotaController extends AbstractController
         ]);
     }
 
-
-
     #[Route('/cuota/editar/{id}', name: 'cuota_editar')]
-    public function editar(int $id,
-                           Request $request,
-                           CuotaRepository $cuotaRepo,
+    public function editar(int                    $id,
+                           Request                $request,
+                           CuotaRepository        $cuotaRepo,
                            EntityManagerInterface $em,
-                           SessionInterface $session,
+                           SessionInterface       $session,
 
     ): Response
     {
@@ -98,9 +93,9 @@ class CuotaController extends AbstractController
     }
 
     #[Route('/cuota/nueva', name: 'cuota_nueva')]
-    public function nuevo(Request $request,
+    public function nuevo(Request                $request,
                           EntityManagerInterface $em,
-                          SessionInterface $session,
+                          SessionInterface       $session,
 
     ): Response
     {
@@ -122,7 +117,7 @@ class CuotaController extends AbstractController
             $em->flush();
             $this->addFlash('success', 'Cuota registrada con éxito.');
             return $this->redirectToRoute('cuota_ver');
-        } elseif ($form->isSubmitted())  {
+        } elseif ($form->isSubmitted()) {
             $this->addFlash('error', 'Error al registrar la cuota.');
         }
 
@@ -132,10 +127,10 @@ class CuotaController extends AbstractController
     }
 
     #[Route('/cuota/borrar/{id}', name: 'cuota_borrar')]
-    public function baja(int $id,
-                         CuotaRepository $cuotaRepository,
+    public function baja(int                    $id,
+                         CuotaRepository        $cuotaRepository,
                          EntityManagerInterface $em,
-                         SessionInterface $session
+                         SessionInterface       $session
     ): Response
     {
         $userId = $session->get('user_id');

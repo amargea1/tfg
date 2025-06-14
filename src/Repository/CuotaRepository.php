@@ -6,14 +6,6 @@ use App\Entity\CuotaEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<CuotaEntity>
- *
- * @method CuotaEntity|null find($id, $lockMode = null, $lockVersion = null)
- * @method CuotaEntity|null findOneBy(array $criteria, array $orderBy = null)
- * @method CuotaEntity[]    findAll()
- * @method CuotaEntity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class CuotaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

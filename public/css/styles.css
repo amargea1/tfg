@@ -7,8 +7,8 @@ body {
 .form-login {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* horizontalmente */
-    justify-content: flex-start; /* Alinea los elementos hacia arriba */
+    align-items: stretch;
+    justify-content: flex-start;
     padding: 50px;
     padding-top: 0px;
     background: white;
@@ -37,7 +37,7 @@ body {
 
     display: flex;
     flex-direction: column;
-    align-items: center; /* horizontalmente */
+    align-items: center; /
     justify-content: flex-start;
 }
 
@@ -48,9 +48,6 @@ body {
 }
 
 
-
-
-/* Teléfonos */
 @media (max-width: 576px) {
     body {
         font-size: 17px;
@@ -75,7 +72,7 @@ body {
     }
 }
 
-/* Tablets */
+
 @media (max-width: 768px) {
     .form-login {
         padding: 2rem;
@@ -87,7 +84,7 @@ body {
     }
 }
 
-/* Portátiles medianos */
+
 @media (max-width: 992px) {
     .form-login {
         max-width: 500px;

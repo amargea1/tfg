@@ -7,21 +7,20 @@ use App\Entity\UsuarioEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'app_login', methods: ['GET', 'POST'])]
     public function login(
-        Request $request,
+        Request                $request,
         EntityManagerInterface $em,
-        SessionInterface $session
-    ): Response {
+        SessionInterface       $session
+    ): Response
+    {
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $password = $request->request->get('password');
