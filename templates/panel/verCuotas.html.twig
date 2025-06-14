@@ -62,4 +62,42 @@
                         </tbody>
                     </table>
                 </div>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Pendientes de pago</h2>
+        <table class="reclamaciones-table2">
+            <thead>
+            <tr>
+                <th>Socio</th>
+                <th>Fecha último pago</th>
+                <th>Días de retraso</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sp in sociosPendientes %}
+                <tr>
+                    <td>{{ sp.socio.nombre }} {{ sp.socio.apellidos }}</td>
+                    <td>{{ sp.socio.fechaPago|date('d/m/Y') }}</td>
+                    <td>
+                        {% if sp.diasRetraso is not null %}
+                            {{ sp.diasRetraso }} días
+                        {% else %}
+                            Sin registro
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{{ path('socio_pagar', {id: sp.socio.id}) }}" class="btn-detalles2"><i class="fa-solid fa-pen-to-square"></i>
+                            Realizar pago</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9" class="text-center">Todos los socios están al día.</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

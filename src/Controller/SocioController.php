@@ -6,6 +6,7 @@ use App\Entity\CuotaEntity;
 use App\Entity\ReclamacionEntity;
 use App\Entity\SocioEntity;
 use App\Entity\UsuarioEntity;
+use App\Form\PagoType;
 use App\Form\ReclamacionType;
 use App\Form\SocioType;
 use App\Repository\ConsultaRepository;
@@ -141,6 +142,43 @@ class SocioController extends AbstractController
         }
 
         return $this->render('panel/editarSocio.html.twig', [
+            'form' => $form->createView(),
+            'socio' => $socio,
+        ]);
+    }
+
+    #[Route('/socio/pagar/{id}', name: 'socio_pagar')]
+    public function pagar(int $id,
+                           Request $request,
+                           SocioRepository $socioRepository,
+                           EntityManagerInterface $em,
+                           SessionInterface $session,
+    ): Response
+    {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $socio = $socioRepository->find($id);
+
+        if (!$socio) {
+            throw $this->createNotFoundException('Socio no encontrado.');
+        }
+
+        $form = $this->createForm(PagoType::class, $socio);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            $this->addFlash('success', 'Pago registrado con éxito.');
+            return $this->redirectToRoute('cuota_ver');
+        } elseif ($form->isSubmitted()){
+            $this->addFlash('error', 'Error al registrr pago.');
+        }
+
+        return $this->render('panel/realizarPago.html.twig', [
             'form' => $form->createView(),
             'socio' => $socio,
         ]);

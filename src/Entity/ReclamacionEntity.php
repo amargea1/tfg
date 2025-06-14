@@ -71,10 +71,10 @@ class ReclamacionEntity
     )]
     private string $asunto;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 1000)]
     #[Assert\NotBlank(message: "La reclamación es obligatoria")]
     #[Assert\Length(
-        max: 255,
+        max: 1000,
         maxMessage: "La reclamación no puede tener más de {{ limit }} caracteres"
     )]
     private string $reclamacion;

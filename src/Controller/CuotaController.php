@@ -8,6 +8,7 @@ use App\Form\CuotaType;
 
 use App\Repository\CuotaRepository;
 
+use App\Repository\SocioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,10 @@ class CuotaController extends AbstractController
 {
 
     #[Route('/cuota/ver', name: 'cuota_ver')]
-    public function ver(CuotaRepository $cuotaRepository, SessionInterface $session): Response
+    public function ver(CuotaRepository $cuotaRepository,
+                        SessionInterface $session,
+                        SocioRepository $socioRepository,
+    ): Response
     {
         $userId = $session->get('user_id');
         if (!$userId) {
@@ -28,9 +32,31 @@ class CuotaController extends AbstractController
         }
 
         $cuota = $cuotaRepository->findAll();
+        $socios = $socioRepository->findAll();
+        $hoy = new \DateTimeImmutable();
+        $sociosPendientes = [];
+
+        foreach ($socios as $socio) {
+            $fechaPago = $socio->getFechaPago();
+
+
+            $fechaProximoPago = $fechaPago->modify('+1 year');
+
+            if ($hoy > $fechaProximoPago) {
+                // Está en retraso
+                $intervalo = $fechaProximoPago->diff($hoy);
+                $diasRetraso = $intervalo->days;
+
+                $sociosPendientes[] = [
+                    'socio' => $socio,
+                    'diasRetraso' => $diasRetraso,
+                ];
+            }
+        }
 
         return $this->render('panel/verCuotas.html.twig', [
             'cuotas' => $cuota,
+            'sociosPendientes' => $sociosPendientes,
         ]);
     }
 
