@@ -168,7 +168,7 @@ class SocioController extends AbstractController
             $this->addFlash('success', 'Pago registrado con éxito.');
             return $this->redirectToRoute('cuota_ver');
         } elseif ($form->isSubmitted()) {
-            $this->addFlash('error', 'Error al registrr pago.');
+            $this->addFlash('error', 'Error al registrar cobro.');
         }
 
         return $this->render('panel/realizarPago.html.twig', [

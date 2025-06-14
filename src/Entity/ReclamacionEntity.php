@@ -34,9 +34,9 @@ class ReclamacionEntity
 
     #[ORM\Column(type: 'datetime')]
     #[Assert\NotNull(message: "La fecha de apertura es obligatoria")]
-    #[Assert\GreaterThanOrEqual("today", message: "La fecha de apertura no puede ser anterior al día actual")]
+    #[Assert\LessThanOrEqual("today", message: "La fecha de apertura no puede ser futura")]
+    #[Assert\GreaterThanOrEqual("-1 month", message: "La fecha de apertura no puede tener más de un mes de antigüedad")]
     private \DateTimeInterface $fechaApertura;
-
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $fechaCierre = null;

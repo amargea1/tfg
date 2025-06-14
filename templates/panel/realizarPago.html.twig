@@ -21,7 +21,7 @@
                 <h2 class="text-center mb-4">Pagar cuota para socio {{ socio.nombre }} {{ socio.apellidos }}</h2>
 
                 {% for mensaje in app.flashes('error') %}
-                    <div class="alert alert-danger">{{ mensaje }}</div>
+                    <div class="alert alert-error">{{ mensaje }}</div>
                 {% endfor %}
 
                 {{ form_start(form) }}

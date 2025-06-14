@@ -133,14 +133,17 @@
                         <select name="admins" class="form-select form-select-sm d-inline w-auto me-2">
                             <option value="">Seleccionar</option>
                             {% for admin in admins %}
-                                <option value="{{ admin.id }}"
-                                        {% if reclamacion.admins|first and admin.id == reclamacion.admins|first.id %}
-                                            selected
-                                        {% endif %}
-                                >
-                                    {{ admin.nombre }} {{ admin.apellidos }} ({{ admin.especialidad }})
-                                </option>
+                                {% if admin.estaActivo %}
+                                    <option value="{{ admin.id }}"
+                                            {% if reclamacion.admins|first and admin.id == reclamacion.admins|first.id %}
+                                                selected
+                                            {% endif %}
+                                    >
+                                        {{ admin.nombre }} {{ admin.apellidos }} ({{ admin.especialidad }})
+                                    </option>
+                                {% endif %}
                             {% endfor %}
+
                         </select>
                         {% if reclamacion.estado != 'Resuelta' %}
                             <button type="submit" class="btn-detalles">
@@ -148,10 +151,9 @@
                             </button>
                         {% endif %}
                     </form>
-
                 </td>
-
             </tr>
+
             <tr>
                 <th>Seguimiento</th>
                 <td>

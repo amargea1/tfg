@@ -25,7 +25,9 @@ class SeguimientoEntity
 
 
     #[ORM\Column(type: 'datetime')]
-    #[Assert\GreaterThanOrEqual("today", message: "La fecha no puede ser anterior al día actual")]
+    #[Assert\NotNull(message: "La fecha es obligatoria")]
+    #[Assert\LessThanOrEqual("today", message: "La fecha no puede ser futura")]
+    #[Assert\GreaterThanOrEqual("-1 month", message: "La fecha no puede tener más de un mes de antigüedad")]
     private \DateTimeInterface $fecha;
 
     #[ORM\Column(type: 'text')]

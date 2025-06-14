@@ -31,7 +31,7 @@ class AdminController extends AbstractController
 
         $usuario = $em->getRepository(UsuarioEntity::class)->find($userId);
         if (!$usuario || $usuario->getRol() !== 'ROLE_SUPERADMIN') {
-            $this->addFlash('warning', 'Acceso denegado, debes tener permisos de super administrador.');
+            $this->addFlash('warning', 'Acceso denegado, debes tener permisos SUPER.');
             return $this->redirectToRoute('admin_panel');
         }
 
@@ -52,10 +52,10 @@ class AdminController extends AbstractController
             $em->flush();
 
 
-            $this->addFlash('success', 'Administrador registrado con éxito.');
+            $this->addFlash('success', 'Gestor registrado con éxito.');
             return $this->redirectToRoute('admin_panel');
         } elseif ($form->isSubmitted()) {
-            $this->addFlash('error', 'Error al registrar administrador.');
+            $this->addFlash('error', 'Error al registrar gestor.');
         }
 
         return $this->render('panel/crearAdmin.html.twig', [
@@ -77,7 +77,7 @@ class AdminController extends AbstractController
 
         $usuario = $em->getRepository(UsuarioEntity::class)->find($userId);
         if (!$usuario || $usuario->getRol() !== 'ROLE_SUPERADMIN') {
-            $this->addFlash('warning', 'Acceso denegado, debes tener permisos de super administrador.');
+            $this->addFlash('warning', 'Acceso denegado, debes tener permisos de SUPER.');
             return $this->redirectToRoute('admin_panel');
         }
 
@@ -102,14 +102,14 @@ class AdminController extends AbstractController
 
         $usuario = $em->getRepository(UsuarioEntity::class)->find($userId);
         if (!$usuario || $usuario->getRol() !== 'ROLE_SUPERADMIN') {
-            $this->addFlash('warning', 'Acceso denegado, debes tener permisos de super administrador.');
+            $this->addFlash('warning', 'Acceso denegado, debes tener permisos de SUPER.');
             return $this->redirectToRoute('admin_panel');
         }
 
         $admin = $administradorRepository->find($id);
 
         if (!$admin) {
-            throw $this->createNotFoundException('Admin no encontrado.');
+            throw $this->createNotFoundException('Gestor no encontrado.');
         }
 
         return $this->render('panel/verAdminDetalle.html.twig', [
@@ -186,7 +186,7 @@ class AdminController extends AbstractController
         $admin = $adminRepo->find($id);
 
         if (!$admin) {
-            throw $this->createNotFoundException('Admin no encontrado.');
+            throw $this->createNotFoundException('Gestor no encontrado.');
         }
 
         $form = $this->createForm(AdminType::class, $admin, [
@@ -202,7 +202,7 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            $this->addFlash('success', 'Datos del administrador actualizados correctamente.');
+            $this->addFlash('success', 'Datos del gestor actualizados correctamente.');
             return $this->redirectToRoute('admin_panel');
         }
 
@@ -244,13 +244,13 @@ class AdminController extends AbstractController
         $admin = $adminRepository->find($id);
 
         if (!$admin) {
-            throw $this->createNotFoundException('Admin no encontrado.');
+            throw $this->createNotFoundException('Gestor no encontrado.');
         }
 
         $admin->setEstaActivo(false);
         $em->flush();
 
-        $this->addFlash('success', 'El admin ha sido dado de baja correctamente.');
+        $this->addFlash('success', 'El gestor ha sido dado de baja correctamente.');
 
         return $this->redirectToRoute('admin_ver');
     }

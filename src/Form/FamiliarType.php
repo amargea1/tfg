@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\FamiliarEntity;
+use App\Entity\SocioEntity;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -50,10 +52,17 @@ class FamiliarType extends AbstractType
                 ],
                 'placeholder' => 'Relación con el socio',
             ])
-            ->add('numSocio', TextType::class, [
-                'mapped' => false,
-                'label' => 'Número de socio',
-                'required' => true,
+            ->add('socio', EntityType::class, [
+                'class' => SocioEntity::class,
+                'choice_label' => function ($socio) {
+                    return $socio->getNombre() . ' ' . $socio->getApellidos();
+                },
+
+                'label' => 'Socio',
+                'placeholder' => 'Selecciona un socio',
+                'attr' => [
+                    'class' => 'js-socio-select',
+                ],
             ])
             ->add('modoPago', ChoiceType::class, [
                 'choices' => [

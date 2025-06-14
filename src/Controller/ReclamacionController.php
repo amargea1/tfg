@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ReclamacionController extends AbstractController
 {
@@ -30,30 +31,44 @@ class ReclamacionController extends AbstractController
         $reclamacion->setEstado('Pendiente');
 
         $form = $this->createForm(ReclamacionType::class, $reclamacion);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamacion = $form->getData();
 
-            $socioSeleccionado = $form->get('socio')->getData();
-            if ($socioSeleccionado) {
-                $reclamacion->setSocio($socioSeleccionado);
-                $reclamacion->setNumeroSocio($socioSeleccionado->getNumSocio());
-            }
-
             $esFamiliar = $form->get('esFamiliar')->getData();
-            $reclamacion->setEsFamiliar($esFamiliar);
+
+            if ($esFamiliar) {
+                $familiarSeleccionado = $form->get('familiar')->getData();
+                $reclamacion->setFamiliar($familiarSeleccionado);
+                $reclamacion->setEsFamiliar(true);
+
+                $socio = $familiarSeleccionado->getSocio();
+                if ($socio) {
+                    $reclamacion->setSocio($socio);
+                    $reclamacion->setNumeroSocio($socio->getNumSocio());
+                } else {
+                    $this->addFlash('error', 'El familiar no tiene un socio asignado.');
+                    return $this->redirectToRoute('reclamacion_nueva');
+                }
+            } else {
+                $reclamacion->setEsFamiliar(false);
+                $socioSeleccionado = $form->get('socio')->getData();
+                if ($socioSeleccionado) {
+                    $reclamacion->setSocio($socioSeleccionado);
+                    $reclamacion->setNumeroSocio($socioSeleccionado->getNumSocio());
+                } else {
+                    $this->addFlash('error', 'Debes seleccionar un socio.');
+                    return $this->redirectToRoute('reclamacion_nueva');
+                }
+            }
 
             $em->persist($reclamacion);
             $em->flush();
 
-
             $this->addFlash('success', 'Reclamación registrada con éxito.');
             return $this->redirectToRoute('admin_panel');
-        } elseif ($form->isSubmitted()) {
-            $this->addFlash('error', 'Error al registrar la reclamación.');
         }
-
 
         return $this->render('panel/crearReclamacion.html.twig', [
             'form' => $form->createView()
@@ -209,7 +224,8 @@ class ReclamacionController extends AbstractController
         ReclamacionRepository  $repo,
         EntityManagerInterface $em,
         int                    $id,
-        SessionInterface       $session
+        SessionInterface       $session,
+        ValidatorInterface     $validator,
     ): Response
     {
 
@@ -228,9 +244,18 @@ class ReclamacionController extends AbstractController
             $seguimiento->setComentario($comentario);
             $seguimiento->setReclamacion($reclamacion);
 
-            $em->persist($seguimiento);
-            $em->flush();
-            $this->addFlash('success', 'Seguimiento guardado con éxito.');
+            $errores = $validator->validate($seguimiento);
+
+            if (count($errores) > 0) {
+                foreach ($errores as $error) {
+                    $this->addFlash('error', $error->getPropertyPath() . ': ' . $error->getMessage());
+                }
+            } else {
+                $em->persist($seguimiento);
+                $em->flush();
+                $this->addFlash('success', 'Seguimiento guardado con éxito.');
+            }
+
         } else {
             $this->addFlash('error', 'Error al guardar el seguimiento.');
         }

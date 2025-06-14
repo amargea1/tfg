@@ -45,7 +45,10 @@ class SocioEntity extends UsuarioEntity
     )]
     private ?string $bizum = null;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotNull(message: "La fecha de pago es obligatoria")]
+    #[Assert\LessThanOrEqual("today", message: "La fecha de pago no puede ser futura")]
+    #[Assert\GreaterThanOrEqual("-1 month", message: "La fecha de pago no puede tener más de un mes de antigüedad")]
     private \DateTimeInterface $fechaPago;
 
     #[ORM\Column(type: 'datetime')]

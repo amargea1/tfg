@@ -39,6 +39,7 @@ class ReclamacionType extends AbstractType
                 },
 
                 'label' => 'Socio',
+                'required' => false,
                 'placeholder' => 'Selecciona un socio',
                 'attr' => [
                     'class' => 'js-socio-select',

@@ -70,6 +70,15 @@ h2 {
     margin-bottom: 25px;
 }
 
+.alert {
+    max-width: 100%;
+    white-space: normal;
+}
+
+.alert-error{
+    background-color: rgba(244, 3, 3, 0.48) !important;
+}
+
 .stats {
     display: flex;
     gap: 20px;

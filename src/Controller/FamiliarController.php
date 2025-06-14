@@ -35,9 +35,7 @@ class FamiliarController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $familiar = $form->getData();
 
-            $numSocio = $form->get('numSocio')->getData();
-
-            $socio = $em->getRepository(SocioEntity::class)->findOneBy(['numSocio' => $numSocio]);
+            $socio = $form->get('socio')->getData();
 
             if (!$socio) {
                 $this->addFlash('error', 'No se encontró ningún socio con ese número.');
