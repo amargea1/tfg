@@ -105,6 +105,10 @@ class ConsultaEntity
     )]
     private ?string $telefono = null;
 
+    #[ORM\Column(length: 50)]
+    #[Assert\Choice(choices: ['Correo', 'Presencial', 'Teléfono'], message: 'Vía de respuesta inválida')]
+    private string $viaRespuesta;
+
     public function __construct()
     {
         $this->admins = new ArrayCollection();
@@ -128,6 +132,16 @@ class ConsultaEntity
     public function setSocio(?SocioEntity $socio): void
     {
         $this->socio = $socio;
+    }
+
+    public function getViaRespuesta(): string
+    {
+        return $this->viaRespuesta;
+    }
+
+    public function setViaRespuesta(string $viaRespuesta): void
+    {
+        $this->viaRespuesta = $viaRespuesta;
     }
 
     public function getFamiliar(): ?FamiliarEntity

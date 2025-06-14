@@ -29,7 +29,7 @@
                 <li><a href="{{ path('admin_panel') }}"><i class="fa-solid fa-gauge"></i> Panel de control</a></li>
                 <li><a href="{{ path('socio_ver') }}"><i class="fa-solid fa-users"></i> Socios</a></li>
                 {% if app.session.get('user_rol') == 'ROLE_SUPERADMIN' %}
-                <li><a href="{{ path('admin_ver') }}"><i class="fa fa-user-shield"></i> Admins</a></li>
+                <li><a href="{{ path('admin_ver') }}"><i class="fa fa-user-shield"></i> Gestores</a></li>
                 {% endif %}
                 <li><a href="{{ path('cuota_ver') }}"><i class="fa-solid fa-coins"></i> Cuotas</a></li>
                 <li><a href="{{ path('consultas_ver') }}"><i class="fa-solid fa-comments"></i> Consultas</a></li>
@@ -78,4 +78,5 @@
             });
         }, 4000);
     </script>
+    {% block script %}{% endblock %}
 </html>

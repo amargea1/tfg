@@ -41,26 +41,15 @@ class ReclamacionController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamacion = $form->getData();
-            $numeroSocio = $form->get('numeroSocio')->getData();
 
-            $socio = $em->getRepository(SocioEntity::class)->findOneBy(['numSocio' => $numeroSocio]);
-
-            if (!$socio) {
-                $this->addFlash('error', 'Número de socio no válido');
-                // Volver a mostrar el formulario con mensaje
-                return $this->render('panel/crearReclamacion.html.twig', [
-                    'form' => $form->createView()
-                ]);
+            $socioSeleccionado = $form->get('socio')->getData();
+            if ($socioSeleccionado) {
+                $reclamacion->setSocio($socioSeleccionado);
+                $reclamacion->setNumeroSocio($socioSeleccionado->getNumSocio());
             }
 
             $esFamiliar = $form->get('esFamiliar')->getData();
             $reclamacion->setEsFamiliar($esFamiliar);
-
-            $reclamacion->setSocio($socio);
-            $reclamacion->setNumeroSocio($socio->getNumSocio());
-
-
-            $reclamacion->setSocio($socio);
 
             $em->persist($reclamacion);
             $em->flush();
@@ -125,37 +114,6 @@ class ReclamacionController extends AbstractController
             'admins' => $admins,
         ]);
     }
-
-//    #[Route('/reclamacion/{id}/cambiar-estado', name: 'reclamacion_cambiar_estado', methods: ['POST'])]
-//    public function cambiarEstado(Request $request,
-//                                  ReclamacionRepository $repo,
-//                                  EntityManagerInterface $em,
-//                                  int $id,
-//                                  SessionInterface $session
-//    ): Response
-//    {
-//        $userId = $session->get('user_id');
-//        if (!$userId) {
-//            return $this->redirectToRoute('app_login');
-//        }
-//
-//        $reclamacion = $repo->find($id);
-//        $nuevoEstado = $request->request->get('estado');
-//
-//        if ($reclamacion && $nuevoEstado) {
-//            $reclamacion->setEstado($nuevoEstado);
-//            $em->flush();
-//            $this->addFlash('success', 'Estado cambiado con éxito.');
-//
-//            if ($nuevoEstado == 'Resuelta'){
-//                $reclamacion->setFechaCierre(new \DateTimeImmutable('now'));
-//                $em->flush();
-//            }
-//        } else{
-//            $this->addFlash('error', 'Error al cambiar el estado.');
-//        }
-//        return $this->redirect($request->headers->get('referer'));
-//    }
 
     #[Route('/reclamacion/{id}/cambiar-prioridad', name: 'reclamacion_cambiar_prioridad', methods: ['POST'])]
     public function cambiarPrioridad(

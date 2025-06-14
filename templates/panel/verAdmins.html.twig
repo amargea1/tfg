@@ -16,7 +16,7 @@
 {% block main %}
             <div class="container my-5">
 
-                    <h2 class="text-center mb-4">Listado de Administradores</h2>
+                    <h2 class="text-center mb-4">Listado de Gestores</h2>
                 <div class="tabla-scroll">
                     <table class="reclamaciones-table2">
                         <thead>
@@ -26,6 +26,7 @@
                             <th>Apellidos</th>
                             <th>Fecha registro</th>
                             <th>Rol</th>
+                            <th>Especialidad</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -37,8 +38,9 @@
                                     {{ admin.nombre }}
                                 </td>
                                 <td>{{ admin.apellidos }}</td>
-{#                                <td>{{ admin.fechaCreacion|date('d/m/Y')  }}</td>#}
+                                <td>{{ admin.fechaCreacion|date('d/m/Y')  }}</td>
                                 <td>{{ admin.rol }}</td>
+                                <td>{{ admin.especialidad }}</td>
                                 <td>
                                     <a href="{{ path('admin_detalle', {id: admin.id}) }}" class="btn-detalles"><i class="fa-solid fa-eye"></i>
                                         Detalles</a>
@@ -46,7 +48,7 @@
 
                         {% else %}
                             <tr>
-                                <td colspan="9" class="text-center">No hay consultas registradas.</td>
+                                <td colspan="9" class="text-center">No hay gestores registrados.</td>
                             </tr>
                         {% endfor %}
                         </tbody>

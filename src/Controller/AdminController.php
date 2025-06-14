@@ -155,6 +155,32 @@ class AdminController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
+    #[Route('/admin/{id}/cambiar-especialidad', name: 'admin_cambiar_especialidad', methods: ['POST'])]
+    public function cambiarEspecialidad(Request $request,
+                               AdministradorRepository $administradorRepository,
+                               EntityManagerInterface $em,
+                               int $id,
+                               SessionInterface $session
+    ): Response
+    {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $admin = $administradorRepository->find($id);
+        $nuevaEspe = $request->request->get('especialidad');
+
+        if ($admin && $nuevaEspe) {
+            $admin->setEspecialidad($nuevaEspe);
+            $em->flush();
+            $this->addFlash('success', 'Especialidad cambiada con éxito.');
+        } else {
+            $this->addFlash('error', 'Error al cambiar especialidad.');
+        }
+        return $this->redirect($request->headers->get('referer'));
+    }
+
     #[Route('/admin/editar/{id}', name: 'admin_editar')]
     public function editar(
         int $id,

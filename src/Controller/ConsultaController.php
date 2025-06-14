@@ -133,6 +133,33 @@ class ConsultaController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
+    #[Route('/consulta/{id}/cambiar_via', name: 'consulta_cambiar_via', methods: ['POST'])]
+    public function cambiarVia(Request $request,
+                                  ConsultaRepository $repo,
+                                  EntityManagerInterface $em,
+                                  int $id,
+                                  SessionInterface $session,
+    ): Response
+    {
+        $userId = $session->get('user_id');
+        if (!$userId) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $consulta = $repo->find($id);
+        $via = $request->request->get('via_respuesta');
+
+        if ($consulta && $via) {
+            $consulta->setViaRespuesta($via);
+            $em->flush();
+            $this->addFlash('success', 'Vía de respuesta cambiada con éxito.');
+        } else {
+            $this->addFlash('error', 'Error al cambiar la vía de respuesta.');
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
 
     #[Route('/consulta/{id}/cerrar', name: 'consulta_cerrar', methods: ['POST'])]
     public function cerrar(

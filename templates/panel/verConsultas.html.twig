@@ -35,7 +35,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>Apellidos</th>
                             <th>Asunto</th>
                             <th>Fecha</th>
                             <th>Estado</th>
@@ -47,14 +46,14 @@
                             <tr>
                                 <td>{{ consulta.id }}</td>
                                 <td>
-                                    {{ consulta.nombre }}
                                     {% if consulta.socio %}
-                                        (Socio)
+                                        {{ consulta.socio.nombre }} {{ consulta.socio.apellidos }} (Socio)
                                     {% elseif consulta.familiar %}
-                                        (Familiar)
+                                        {{ consulta.familiar.nombre }} {{ consulta.familiar.apellidos }} (Familiar)
+                                    {% else %}
+                                        {{ consulta.nombre }} {{ consulta.apellidos }}
                                     {% endif %}
                                 </td>
-                                <td>{{ consulta.apellidos }}</td>
                                 <td>{{ consulta.asunto }}</td>
                                 <td>{{ consulta.fechaApertura|date('d/m/Y') }}</td>
                                 <td>

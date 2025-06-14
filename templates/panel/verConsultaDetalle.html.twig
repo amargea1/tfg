@@ -24,22 +24,50 @@
                         <th>Nombre</th>
                         <td>
                             {{ consulta.nombre }}
-                            {% if tipoConsulta %}
-                                ({{ tipoConsulta }})
+                            {% if tipoConsulta =='Socio' %}
+                                {{ consulta.socio.nombre }} ({{ tipoConsulta }})
+                            {% endif %}
+                            {% if tipoConsulta =='Familiar' %}
+                                {{ consulta.familiar.nombre }} ({{ tipoConsulta }})
                             {% endif %}
                         </td>
                     </tr>
                     <tr>
                         <th>Apellidos</th>
-                        <td>{{ consulta.apellidos }}</td>
+                        <td>
+                            {{ consulta.apellidos }}
+                            {% if tipoConsulta =='Socio' %}
+                                {{ consulta.socio.apellidos }}
+                            {% endif %}
+                            {% if tipoConsulta =='Familiar' %}
+                                {{ consulta.familiar.apellidos }}
+                            {% endif %}
+                        </td>
+
                     </tr>
                     <tr>
                         <th>Correo</th>
-                        <td>{{ consulta.email }}</td>
+                        <td>
+                            {{ consulta.email }}
+                            {% if tipoConsulta =='Socio' %}
+                                {{ consulta.socio.email }}
+                            {% endif %}
+                            {% if tipoConsulta =='Familiar' %}
+                                {{ consulta.familiar.email }}
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <th>Teléfono</th>
-                        <td>{{ consulta.telefono }}</td>
+                        <td>
+                            {{ consulta.telefono }}
+                            {% if tipoConsulta =='Socio' %}
+                                {{ consulta.socio.telefono }}
+                            {% endif %}
+                            {% if tipoConsulta =='Familiar' %}
+                                {{ consulta.familiar.telefono }}
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <th>Asunto</th>
@@ -89,17 +117,24 @@
                         <th>Consulta</th>
                         <td style="white-space: pre-wrap;">{{ consulta.consulta }}</td>
                     </tr>
-                    {% if consulta.estado != 'Resuelta' %}
                     <tr>
-                        <th></th>
+                        <th>Respuesta vía</th>
                         <td>
-                            <a href="mailto:{{ consulta.email }}?subject=Respuesta a tu consulta&body=Hola {{ consulta.nombre }},%0A%0A[Escribe aquí tu respuesta...]%0A%0AConsulta:%0A{{ consulta.consulta | url_encode }}" class="btn-detalles2">
-                                <i class="bi bi-reply-fill"></i>
-                                Responder por correo
-                            </a>
+                            {% if consulta.estado != 'Resuelta' %}
+                            <form method="post" action="{{ path('consulta_cambiar_via', { id: consulta.id }) }}">
+                                <select name="via_respuesta" class="form-select form-select-sm d-inline w-auto me-2">
+                                    <option value="Correo" {{ consulta.viaRespuesta == 'Correo' ? 'selected' : '' }}>Correo</option>
+                                    <option value="Teléfono" {{ consulta.viaRespuesta == 'Teléfono' ? 'selected' : '' }}>Teléfono</option>
+                                    <option value="Presencial" {{ consulta.viaRespuesta == 'Presencial' ? 'selected' : '' }}>Presencial</option>
+                                </select>
+                                <button type="submit" class="btn-detalles"><i class="bi bi-arrow-left-right"></i>
+                                    Cambiar</button>
+                                {% else %}
+                                    {{ consulta.viaRespuesta }}
+                                {% endif %}
+                            </form>
                         </td>
                     </tr>
-                    {% endif %}
                 </table>
             </div>
 {% endblock %}

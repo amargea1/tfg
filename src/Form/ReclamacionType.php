@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\FamiliarEntity;
 use App\Entity\ReclamacionEntity;
+use App\Entity\SocioEntity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -36,9 +37,18 @@ class ReclamacionType extends AbstractType
                 ],
                 'placeholder' => 'Tipo de atención',
             ])
-            ->add('numeroSocio', TextType::class, [
-                'mapped' => false,  // NO está mapeado a la entidad, solo para buscar
-                'label' => 'Número de Socio',
+            ->add('socio', EntityType::class, [
+                'class' => SocioEntity::class,
+                'choice_label' => function ($socio) {
+                    return $socio->getNombre() . ' ' . $socio->getApellidos();
+                },
+
+                'label' => 'Socio',
+                'placeholder' => 'Selecciona un socio',
+                'attr' => [
+                    'class' => 'js-socio-select',
+                ],
+
             ])
 
             ->add('esFamiliar', CheckboxType::class, [
@@ -55,8 +65,10 @@ class ReclamacionType extends AbstractType
                 'label' => 'Nombre del familiar',
                 'placeholder' => 'Selecciona un familiar',
                 'required' => false,
+                'attr' => [
+                    'class' => 'js-familiar-select',
+                ],
             ])
-
 
             ->add('sector', ChoiceType::class, [
                 'choices' => [

@@ -6,6 +6,7 @@ use App\Repository\AdministradorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdministradorRepository::class)]
 #[ORM\Table(name: "administrador")]
@@ -43,6 +44,12 @@ class AdministradorEntity extends UsuarioEntity
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $fechaUltimoAcceso;
 
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "El sector es obligatorio")]
+    #[Assert\Choice(choices: ['Admon. Pública', 'Banca', 'Suministros', 'Comunicaciones', 'Vivienda', 'Comercio', 'Comercio online',
+        'Transportes y viajes', 'Seguros', 'Sev. Profesionales', 'Otros'], message: 'Sector inválido')]
+    private ?string $especialidad = null;
+
 
 
     public function __construct()
@@ -63,6 +70,17 @@ class AdministradorEntity extends UsuarioEntity
     {
         $this->reclamaciones = $reclamaciones;
     }
+
+    public function getEspecialidad(): ?string
+    {
+        return $this->especialidad;
+    }
+
+    public function setEspecialidad(?string $especialidad): void
+    {
+        $this->especialidad = $especialidad;
+    }
+
 
     public function getConsultas(): Collection
     {
@@ -95,6 +113,7 @@ class AdministradorEntity extends UsuarioEntity
     {
         $this->password = $password;
     }
+
 
     public function getFechaCreacion(): \DateTimeInterface
     {

@@ -88,7 +88,7 @@
                                         Sin asignar
                                     {% else %}
                                         {% for admin in reclamacion.admins %}
-                                            {{ admin.nombre }} {{ admin.apellidos }}<br>
+                                            {{ admin.nombre }} {{ admin.apellidos }} ({{ admin.especialidad }})<br>
                                         {% endfor %}
                                     {% endif %}
                                 </td>

@@ -43,6 +43,22 @@ class AdminType extends AbstractType
                 ],
                 'placeholder' => 'Seleccionar sexo',
             ])
+            ->add('especialidad', ChoiceType::class, [
+                'choices' => [
+                    'Admon. Pública' => ' Admon. Pública',
+                    'Banca' => 'Banca',
+                    'Suministros' => 'Suministros',
+                    'Comunicaciones' => 'Comunicaciones',
+                    'Vivienda' => 'Vivienda',
+                    'Comercio' => 'Comercio',
+                    'Comercio online' => 'Comercio online',
+                    'Transportes y viajes' => 'Transportes y viajes',
+                    'Seguros' => 'Seguros',
+                    'Sev. Profesionales' => 'Sev. Profesionales',
+                    'Otros' => 'Otros',
+                ],
+                'placeholder' => 'Seleccionar especialidad',
+            ])
             ->add('direccion')
             ->add('localidad')
             ->add('provincia')
@@ -50,6 +66,7 @@ class AdminType extends AbstractType
             ->add('telefono')
             ->add('email')
             ->add('username')
+
             ;
             if ($options['mostrar_fecha_creacion']) {
                 $builder->add('fechaCreacion', DateType::class, [

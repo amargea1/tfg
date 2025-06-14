@@ -88,6 +88,10 @@ class ReclamacionEntity
     #[Assert\NotBlank(message: "La prioridad es obligatoria")]
     #[Assert\Choice(choices: ['Baja', 'Media', 'Alta', 'Urgente'], message: 'Prioridad inválida')]
     private ?string $prioridad = null;
+
+
+
+
     public function __construct()
     {
         $this->seguimientos = new ArrayCollection();
@@ -239,8 +243,6 @@ class ReclamacionEntity
     {
         $this->prioridad = $prioridad;
     }
-
-
 
     public function addSeguimiento(SeguimientoEntity $seguimiento): self
     {
