@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: symfony-app
+    env: php
+    runtime: php  # ← ESTA LÍNEA ES LA QUE FALTABA
+    plan: free
+    region: oregon
+    buildCommand: |
+      composer install --no-interaction --prefer-dist --optimize-autoloader
+      php bin/console cache:clear
+    startCommand: php -S 0.0.0.0:10000 -t public
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_DEBUG
+        value: 0
