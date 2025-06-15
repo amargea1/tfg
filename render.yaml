@@ -1,16 +1,15 @@
 services:
   - type: web
-    name: symfony-app
+    name: tfg
     env: php
-    runtime: php  # ← ESTA LÍNEA ES LA QUE FALTABA
-    plan: free
+    runtime: php          # <-- esta línea es clave
     region: oregon
-    buildCommand: |
-      composer install --no-interaction --prefer-dist --optimize-autoloader
-      php bin/console cache:clear
-    startCommand: php -S 0.0.0.0:10000 -t public
+    branch: master
+    buildCommand: "composer install --no-interaction --prefer-dist --optimize-autoloader"
+    startCommand: "php -S 0.0.0.0:10000 -t public"
     envVars:
       - key: APP_ENV
-        value: prod
-      - key: APP_DEBUG
-        value: 0
+        value: "prod"
+      - key: DATABASE_URL
+        value: "mysql://usuario:password@host:puerto/base_de_datos"
+    autoDeploy: true
